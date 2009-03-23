@@ -17,8 +17,8 @@ For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/
 
 == Installation ==
 
-   1. Upload the ‘post-snippets’ folder  to the ‘/wp-content/plugins/’ directory.
-   2. Activate the plugin through the ‘Plugins’ menu in WordPress.
+   1. Upload the 'post-snippets' folder  to the '/wp-content/plugins/' directory.
+   2. Activate the plugin through the 'Plugins' menu in WordPress.
    3. Go to Settings -> Post Snippets and start entering your snippets.
 
 
