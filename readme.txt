@@ -15,6 +15,7 @@ This admin plugin stores snippets of HTML code or reoccurring text that you ofte
 For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
 Some features:
+
 * **Insert** All defined snippets are available through a window via a TinyMCE button in the post editor.
 * **Admin** Easy to use administration panel where you can add, edit and remove snippets.
 * **Variables** Each snippet can have as many custom variables as you like, which can used on insert.
