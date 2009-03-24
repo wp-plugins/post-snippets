@@ -6,7 +6,7 @@ global $wpdb;
 
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
-	wp_die(__("You are not allowed to be here"));
+	wp_die(__( "You are not allowed to be here", 'post-snippets' ));
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -106,11 +106,11 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 
 	<div class="mceActionPanel">
 		<div style="float: left">
-			<input type="button" id="cancel" name="cancel" value="<?php _e("Cancel"); ?>" onclick="tinyMCEPopup.close();" />
+			<input type="button" id="cancel" name="cancel" value="<?php _e( 'Cancel', 'post-snippets' ); ?>" onclick="tinyMCEPopup.close();" />
 		</div>
 
 		<div style="float: right">
-			<input type="submit" id="insert" name="insert" value="<?php _e("Insert"); ?>" onclick="insertSnippet();" />
+			<input type="submit" id="insert" name="insert" value="<?php _e( 'Insert', 'post-snippets' ); ?>" onclick="insertSnippet();" />
 		</div>
 	</div>
 </form>
