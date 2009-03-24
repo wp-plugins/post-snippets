@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button.
-Version: 1.0
+Version: 1.1
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 
@@ -40,6 +40,7 @@ class postSnippets {
 	}
 
 	function init_hooks(){
+		load_plugin_textdomain(	'post-snippets', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		add_action('admin_menu', array(&$this,'wp_admin'));
 	}
 
@@ -71,7 +72,7 @@ class postSnippets {
 			    'vars' => "",
 			    'snippet' => ""));
 			update_option($this->plugin_options, $snippets);
-			$this->admin_message( __('A snippet named Untitled has been added.') );
+			$this->admin_message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
 		}
 		
 		// Update Snippets
@@ -84,7 +85,7 @@ class postSnippets {
 					$snippets[$i]['snippet'] = trim(stripslashes($_POST[$i.'_snippet']));
 				}
 				update_option($this->plugin_options, $snippets);
-				$this->admin_message( __('Snippets have been updated.') );
+				$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
 			}
 		}
 
@@ -100,7 +101,7 @@ class postSnippets {
 					}
 				}
 				update_option($this->plugin_options, $newsnippets);
-				$this->admin_message( __('Selected snippets have been deleted.') );
+				$this->admin_message( __( 'Selected snippets have been deleted.', 'post-snippets' ) );
 			}
 		}
 ?>
@@ -112,8 +113,8 @@ class postSnippets {
 
     <div class="tablenav">
         <div class="alignleft actions">
-            <input type="submit" name="add-snippet" value="<?php _e('Add New Snippet') ?>" class="button-secondary" />
-            <input type="submit" name="delete-selected" value="<?php _e('Delete Selected') ?>" class="button-secondary" />
+            <input type="submit" name="add-snippet" value="<?php _e( 'Add New Snippet', 'post-snippets' ) ?>" class="button-secondary" />
+            <input type="submit" name="delete-selected" value="<?php _e( 'Delete Selected', 'post-snippets' ) ?>" class="button-secondary" />
         </div>
     </div>
     <div class="clear"></div>
@@ -122,18 +123,18 @@ class postSnippets {
         <thead>
         <tr>
             <th scope="col" class="check-column"><input type="checkbox" /></th>
-            <th scope="col" style="width: 180px;"><?php _e('Title') ?></th>
-            <th scope="col" style="width: 180px;"><?php _e('Variables') ?></th>
-            <th scope="col"><?php _e('Snippet') ?></th>
+            <th scope="col" style="width: 180px;"><?php _e( 'Title', 'post-snippets' ) ?></th>
+            <th scope="col" style="width: 180px;"><?php _e( 'Variables', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
         </tr>
         </thead>
     
         <tfoot>
         <tr>
             <th scope="col" class="check-column"><input type="checkbox" /></th>
-            <th scope="col"><?php _e('Title') ?></th>
-            <th scope="col"><?php _e('Variables') ?></th>
-            <th scope="col"><?php _e('Snippet') ?></th>
+            <th scope="col"><?php _e( 'Title', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'Variables', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
         </tr>
         </tfoot>
     
@@ -155,10 +156,10 @@ class postSnippets {
 	    </tbody>
 	</table>
 	<div class="submit">
-		<input type="submit" name="update-post-snippets" value="<?php _e('Update Snippets') ?>"  class="button-primary" /></div>
+		<input type="submit" name="update-post-snippets" value="<?php _e( 'Update Snippets', 'post-snippets' ) ?>"  class="button-primary" /></div>
 	</form>
-	<h3><?php _e('Help'); ?></h3>
-	<p><?php _e('<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.<br/><br/><strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name<br/><br/><strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.'); ?></p>
+	<h3><?php _e( 'Help', 'post-snippets' ); ?></h3>
+	<p><?php _e( '<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.<br/><br/><strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name<br/><br/><strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets' ); ?></p>
 </div>
 <?php
 	}
