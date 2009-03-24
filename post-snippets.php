@@ -6,7 +6,7 @@ Description: Stores snippets of HTML code or reoccurring text that you often use
 Version: 1.1
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
-
+Text Domain: post-snippets 
 
 Copyright 2009  Johan Steen  (email : artstorm [at] gmail [dot] com)
 
