@@ -1,12 +1,12 @@
 === Post Snippets ===
 Contributors: artstorm
 Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/
-Tags: post, admin, snippet, snippets, html, custom, page, dynamic
+Tags: post, admin, snippet, snippets, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.1
+Stable tag: 1.2
 
-Store snippets of HTML code or reoccurring text that you often use in your posts.
+Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
 == Description ==
 
@@ -16,9 +16,10 @@ For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/
 
 Some features:
 
-* **Insert** All defined snippets are available through a window via a TinyMCE button in the post editor.
+* **Insert** All defined snippets is inserted from a button directly in the post editor.
+* **Buttons** The snippets are available in the viusal editor with a TinyMCE button and in the HTML editor with quicktag buttons.
 * **Admin** Easy to use administration panel where you can add, edit and remove snippets.
-* **Variables** Each snippet can have as many custom variables as you like, which can used on insert.
+* **Variables** Each snippet can have as many custom variables as you like, which can be used on insert.
 * **Uninstall** If you delete the plugin from your plugins panel it cleans up all data it has created in the Wordpress database. 
 
 
@@ -43,6 +44,9 @@ Meditation.
 
 == Changelog ==
 
+= 1.2 =
+ * Added support for Quicktags so the snippets can be made available in the HTML editor as well.
+ 
 = 1.1 =
  * Included Swedish translation.
  * Added TextDomain functionality for I18n.

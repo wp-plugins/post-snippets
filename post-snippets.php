@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button.
-Version: 1.1
+Version: 1.2
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -39,9 +39,88 @@ class postSnippets {
 		$this->init_hooks();
 	}
 
-	function init_hooks(){
+	function init_hooks() {
 		load_plugin_textdomain(	'post-snippets', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		add_action('admin_menu', array(&$this,'wp_admin'));
+		add_action('admin_footer', array(&$this,'quicktags'));
+	}
+
+	/**
+	* Handling of QuickTags in the HTML editor
+	*
+	*/
+	function quicktags() {
+		$quicktag_pages = array( 'post.php', 'post-new.php', 'page-new.php', 'page.php', 'comment.php' );
+		for($i = 0; $i < count($quicktag_pages); $i++) {
+			if( strpos($_SERVER['REQUEST_URI'], $quicktag_pages[$i]) ) {
+
+				$snippets = get_option($this->plugin_options);
+				if (!empty($snippets)) {
+					echo '
+						<script type="text/javascript">
+							<!--
+							if (postSnippetsToolbar = document.getElementById("ed_toolbar")) {
+								var postSnippetsNr, postSnippetsButton;
+						';
+								for ($i = 0; $i < count($snippets); $i++) {
+
+									// Make it js safe
+									$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+									$var_arr = explode(",",$snippets[$i]['vars']);
+									$theVariables = "";
+									if (!empty($var_arr[0])) {
+										for ($j = 0; $j < count($var_arr); $j++) {
+											$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
+											if ( $j < (count($var_arr) -1) )
+												$theVariables = $theVariables . ", ";
+											
+										}
+									}
+		
+									echo '
+										postSnippetsNr = edButtons.length;
+										edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.$snippets[$i]['snippet'].'\',  \'\',       \'\', -1);
+										var postSnippetsButton = postSnippetsToolbar.lastChild;
+										
+										while (postSnippetsButton.nodeType != 1) {
+											postSnippetsButton = postSnippetsButton.previousSibling;
+										}
+										
+										postSnippetsButton = postSnippetsButton.cloneNode(true);
+										postSnippetsToolbar.appendChild(postSnippetsButton);
+										postSnippetsButton.value = \'' . $snippets[$i]['title'] . '\';
+										postSnippetsButton.title = postSnippetsNr;
+										var variables' . $i .' = new Array('.$theVariables.');
+										postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, \''.$theSnippet.'\', variables' . $i .', parseInt(this.title));}
+										postSnippetsButton.id = "ed_ps' . $i .'";
+									';
+								}
+						echo '
+							}
+							function edInsertSnippet(myField,theSnippet,theVariables) {
+								var myValue;
+								var insertString;
+								insertString = theSnippet;
+								for (x in theVariables)
+								{
+									myValue = prompt(theVariables[x]);
+									var searchfor = \'{\' + theVariables[x] + \'}\';
+									var re = new RegExp(searchfor, \'g\');
+									insertString = insertString.replace(re, myValue);
+									
+								}
+								theSnippet = insertString;
+								if (theSnippet) {
+									edInsertContent(myField, theSnippet);
+								}
+							}							
+							//-->
+						</script>
+						';
+				}
+				break;
+			}
+		}
 	}
 
 	/**
@@ -164,6 +243,7 @@ class postSnippets {
 <?php
 	}
 }
+
 
 add_action( 'plugins_loaded', create_function( '', 'global $postSnippets; $postSnippets = new postSnippets();' ) );
 
