@@ -1,0 +1,97 @@
+# Translation Template for Post Snippets.
+# Copyright (C) 2009 Johan Steen
+# This file is distributed under the same license as the PACKAGE package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Post Snippets\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/post-snippets\n"
+"POT-Creation-Date: 2009-03-24 09:38+0000\n"
+"PO-Revision-Date: 2009-04-01 13:03+0100\n"
+"Last-Translator: Johan Steen <artstorm@gmail.com>\n"
+"Language-Team:  <artstorm@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-Country: SWEDEN\n"
+
+#: post-snippets.php:75
+msgid "A snippet named Untitled has been added."
+msgstr "Ett nytt avsnitt med namnet Untitled har lagts till."
+
+#: post-snippets.php:88
+msgid "Snippets have been updated."
+msgstr "Avsnitten har uppdaterats."
+
+#: post-snippets.php:104
+msgid "Selected snippets have been deleted."
+msgstr "Valda avsnitt har raderats."
+
+#: post-snippets.php:116
+msgid "Add New Snippet"
+msgstr "Lägg Till Nytt Avsnitt"
+
+#: post-snippets.php:117
+msgid "Delete Selected"
+msgstr "Radera Valda"
+
+#: post-snippets.php:126
+#: post-snippets.php:135
+msgid "Title"
+msgstr "Titel"
+
+#: post-snippets.php:127
+#: post-snippets.php:136
+msgid "Variables"
+msgstr "Variabler"
+
+#: post-snippets.php:128
+#: post-snippets.php:137
+msgid "Snippet"
+msgstr "Avsnitt"
+
+#: post-snippets.php:159
+msgid "Update Snippets"
+msgstr "Uppdatera Avsnitt"
+
+#: post-snippets.php:161
+msgid "Help"
+msgstr "Hjälp"
+
+#: post-snippets.php:162
+msgid "<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.<br/><br/><strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name<br/><br/><strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href=\"{url}\"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables."
+msgstr "<strong>Titel</strong><br/>Ge avsnittet en titel som hjälper dig att identifiera det i inläggsredigeraren.<br/><br/><strong>Variabler</strong><br/>En kommaseparerad lista av egendefinerade variabler som du kan referera i ditt avsnitt.<br/><br/>Exempel:<br/>url,namn<br/><br/><strong>Avsnitt</strong><br/>Detta är blocket med text eller HTML att lägga till inlägget när du väljer ett avsnitt med insättnings knappen i TinyMCE panelen i inläggsredigeraren. Om du har definerat egna variabler kan du referera dem i avnittet genom att omsluta dem med {}.<br/><br/>Exempel:<br/>För att referera variabler i exemplet ovan, skulle du skriva {url} and {namn}.<br/><br/>Så om du har det här avsnittet:<br/><i>Det är websidan till &lt;a href=\"{url}\"&gt;{namn}&lt;/a&gt;</i><br/>När du infogar avsnittet i ditt inlägg kan du fylla i vad som ska ersätta url och namn."
+
+#: tinymce/window.php:9
+msgid "You are not allowed to be here"
+msgstr "Du har inte tillåtelse att vara här"
+
+#: tinymce/window.php:109
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: tinymce/window.php:113
+msgid "Insert"
+msgstr "Infoga"
+
+#. Plugin Name of an extension
+msgid "Post Snippets"
+msgstr "Post Snippets"
+
+#. Plugin URI of an extension
+msgid "http://coding.cglounge.com/wordpress-plugins/post-snippets/"
+msgstr "http://coding.cglounge.com/wordpress-plugins/post-snippets/"
+
+#. Description of an extension
+msgid "Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button."
+msgstr "Lagrar avsnitt (snippets) av HTML kod eller återkommande text som du ofta använder i dina inlägg. Du kan använda fördefinerade variabler för att ersätta delar av ditt avsnitt vid infogning. All avsnitt är tillgängliga i inläggsredigeraren via en TinyMCE knapp."
+
+#. Author of an extension
+msgid "Johan Steen"
+msgstr "Johan Steen"
+
+#. Author URI of an extension
+msgid "http://coding.cglounge.com/"
+msgstr "http://coding.cglounge.com/"
+
