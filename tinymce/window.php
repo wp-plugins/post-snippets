@@ -48,7 +48,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 			if (!empty($var_arr[0])) {
 				for ($j = 0; $j < count($var_arr); $j++) { ?>
 					var var_<?= $i ?>_<?= $j ?> = document.getElementById('var_<?= $i ?>_<?= $j ?>').value;
-					insertString = insertString.replace(/{<?= $var_arr[$j] ?>}/g, var_<?= $i ?>_<?= $j ?>);
+					insertString = insertString.replace(/\{<?= $var_arr[$j] ?>\}/g, var_<?= $i ?>_<?= $j ?>);
 			<?php } } ?>
 		}
 		<?php }	?>
