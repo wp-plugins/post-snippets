@@ -2,7 +2,7 @@
 /*
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
-Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button, Quicktags or Shortcodes.
+Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
 Version: 1.3
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
@@ -272,17 +272,6 @@ class postSnippets {
 				<p><?php _e( '<strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name', 'post-snippets' ); ?></p>
 
 				<p><?php _e( '<strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets' ); ?></p>
-            </div>
-        </div>
-    </div>
-
-    <div id="poststuff" class="ui-sortable">
-        <div class="postbox closed">
-            <h3><?php _e( 'About Post Snippets', 'post-snippets' ); ?></h3>
-            <div class="inside">
-
-                <p><?php echo $info1; ?><br />&copy; Copyright 2009 - <?php _e( date("Y") ); ?> <a href="http://coding.cglounge.com/">Johan Steen</a> | <?php echo $info2; ?></p>
-        
             </div>
         </div>
     </div>
