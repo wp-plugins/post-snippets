@@ -2,8 +2,8 @@
 /*
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
-Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button.
-Version: 1.2
+Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button, Quicktags or Shortcodes.
+Version: 1.3
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -28,21 +28,46 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class postSnippets {
 	var $plugin_options = "post_snippets_options";
 
+	/**
+	* Constructor
+	*
+	*/
 	function postSnippets()
 	{
 		// define URL
 		define('postSnippets_ABSPATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' );
 		define('postSnippets_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
-		
-		include_once (dirname (__FILE__)."/tinymce/tinymce.php");
 
-		$this->init_hooks();
+		// Define the domain for translations
+		load_plugin_textdomain(	'post-snippets', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+
+		// Check installed Wordpress version.
+		global $wp_version;
+		if ( version_compare($wp_version, '2.7', '>=') ) {
+			include_once (dirname (__FILE__)."/tinymce/tinymce.php");
+			$this->init_hooks();
+		} else {
+			$this->version_warning();
+		}
 	}
 
+	/**
+	* Initializes the hooks for the plugin
+	*
+	* @returns	Nothing
+	*/
 	function init_hooks() {
-		load_plugin_textdomain(	'post-snippets', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 		add_action('admin_menu', array(&$this,'wp_admin'));
 		add_action('admin_footer', array(&$this,'quicktags'));
+	}
+	
+	/**
+	* Displays a warning when installed in an old Wordpress Version
+	*
+	* @returns	Nothing
+	*/
+	function version_warning() {
+		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 2.7 or later!', 'post-snippets').'</strong></p></div>';
 	}
 
 	/**
@@ -237,14 +262,47 @@ class postSnippets {
 	<div class="submit">
 		<input type="submit" name="update-post-snippets" value="<?php _e( 'Update Snippets', 'post-snippets' ) ?>"  class="button-primary" /></div>
 	</form>
-	<h3><?php _e( 'Help', 'post-snippets' ); ?></h3>
-	<p><?php _e( '<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.<br/><br/><strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name<br/><br/><strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets' ); ?></p>
+
+    <div id="poststuff" class="ui-sortable">
+        <div class="postbox closed">
+            <h3><?php _e( 'Help', 'post-snippets' ); ?></h3>
+            <div class="inside">
+				<p><?php _e( '<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.', 'post-snippets' ); ?></p>
+							
+				<p><?php _e( '<strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name', 'post-snippets' ); ?></p>
+
+				<p><?php _e( '<strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets' ); ?></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="poststuff" class="ui-sortable">
+        <div class="postbox closed">
+            <h3><?php _e( 'About Post Snippets', 'post-snippets' ); ?></h3>
+            <div class="inside">
+
+                <p><?php echo $info1; ?><br />&copy; Copyright 2009 - <?php _e( date("Y") ); ?> <a href="http://coding.cglounge.com/">Johan Steen</a> | <?php echo $info2; ?></p>
+        
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    <!--
+	<?php global $wp_version; ?>
+    <?php if ( version_compare( $wp_version, '2.6.999', '<' ) ) { ?>
+    jQuery('.postbox h3').prepend('<a class="togbox">+</a> ');
+    <?php } ?>
+    jQuery('.postbox h3').click( function() { jQuery(jQuery(this).parent().get(0)).toggleClass('closed'); } );
+    jQuery('.postbox.close-me').each(function(){
+        jQuery(this).addClass("closed");
+    });
+    //-->
+    </script>        
 </div>
 <?php
 	}
 }
 
-
 add_action( 'plugins_loaded', create_function( '', 'global $postSnippets; $postSnippets = new postSnippets();' ) );
-
 ?>
