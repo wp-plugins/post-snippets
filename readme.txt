@@ -1,10 +1,10 @@
 === Post Snippets ===
 Contributors: artstorm
 Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/
-Tags: post, admin, snippet, snippets, html, custom, page, dynamic, editor, quicktag
+Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.2
+Stable tag: 1.3
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -13,6 +13,8 @@ Store snippets of HTML code or reoccurring text that you often use in your posts
 This admin plugin stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button.
 
 For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
+
+See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/other_notes/) for what's new.
 
 Some features:
 
@@ -44,12 +46,17 @@ Meditation.
 
 == Changelog ==
 
-= 1.2 =
+= Version 1.3 - 2 Apr 2009 =
+ * Fixed a problem with the regular expressions that prohibited variables consisting of just a single number to work.
+ * Updated the Help info in the admin page to take less space.
+ * Included a check so the plugin only runs in WP 2.7 or newer.
+
+= Version 1.2 - 1 Apr 2009 =
  * Added support for Quicktags so the snippets can be made available in the HTML editor as well.
  
-= 1.1 =
+= Version 1.1 - 24 Mar 2009 =
  * Included Swedish translation.
  * Added TextDomain functionality for I18n.
 
-= 1.0 =
+= Version 1.0 - 23 Mar 2009 =
  * Initial Release
