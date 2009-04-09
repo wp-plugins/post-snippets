@@ -1,10 +1,10 @@
 === Post Snippets ===
 Contributors: artstorm
-Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/
+Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintware
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.3
+Stable tag: 1.3.5
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -46,6 +46,10 @@ Meditation.
 
 == Changelog ==
 
+= Version 1.3.5 - 9 Apr 2009 =
+ * Fixed so the TinyMCE window adds a scrollbar if there is more variables for a snippet than fits in the window.
+ * Fixed a bug that snippets didn't get inserted when using the visual editor in fullscreen mode.
+ 
 = Version 1.3 - 2 Apr 2009 =
  * Fixed a problem with the regular expressions that prohibited variables consisting of just a single number to work.
  * Updated the Help info in the admin page to take less space.
