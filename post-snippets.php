@@ -59,6 +59,7 @@ class postSnippets {
 	function init_hooks() {
 		add_action('admin_menu', array(&$this,'wp_admin'));
 		add_action('admin_footer', array(&$this,'quicktags'));
+		$this->create_shortcodes();
 	}
 	
 	/**
@@ -68,6 +69,40 @@ class postSnippets {
 	*/
 	function version_warning() {
 		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 2.7 or later!', 'post-snippets').'</strong></p></div>';
+	}
+
+
+	/**
+	* Create the functions for shortcodes dynamically and register them
+	*
+	*/
+	function create_shortcodes() {
+		$snippets = get_option($this->plugin_options);
+		if (!empty($snippets)) {
+			for ($i=0; $i < count($snippets); $i++) {
+				if ($snippets[$i]['shortcode'] == true) {
+					$vars = explode(",",$snippets[$i]['vars']);
+					$vars_str = '';
+					for ($j=0; $j < count($vars); $j++) {
+						$vars_str = $vars_str . '"'.$vars[$j].'" => "",';
+						
+					}
+					add_shortcode($snippets[$i]['title'], create_function('$atts', 
+								'$shortcode_symbols = array('.$vars_str.');
+								extract(shortcode_atts($shortcode_symbols, $atts));
+								
+								$newArr = compact( array_keys($shortcode_symbols) );
+								
+								$snippet = "'.$snippets[$i]["snippet"].'";
+	
+								foreach ($newArr as $key => $val) {
+									$snippet = str_replace("{".$key."}", $val, $snippet);
+								}
+	
+								return "{$snippet}";') );
+				}
+			}
+		}
 	}
 
 	/**
@@ -88,38 +123,39 @@ class postSnippets {
 								var postSnippetsNr, postSnippetsButton;
 						';
 								for ($i = 0; $i < count($snippets); $i++) {
-
-									// Make it js safe
-									$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
-									$var_arr = explode(",",$snippets[$i]['vars']);
-									$theVariables = "";
-									if (!empty($var_arr[0])) {
-										for ($j = 0; $j < count($var_arr); $j++) {
-											$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
-											if ( $j < (count($var_arr) -1) )
-												$theVariables = $theVariables . ", ";
+									if ($snippets[$i]['quicktag']) {
+										// Make it js safe
+										$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+										$var_arr = explode(",",$snippets[$i]['vars']);
+										$theVariables = "";
+										if (!empty($var_arr[0])) {
+											for ($j = 0; $j < count($var_arr); $j++) {
+												$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
+												if ( $j < (count($var_arr) -1) )
+													$theVariables = $theVariables . ", ";
+												
+											}
+										}
+			
+										echo '
+											postSnippetsNr = edButtons.length;
+											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.$snippets[$i]['snippet'].'\',  \'\',       \'\', -1);
+											var postSnippetsButton = postSnippetsToolbar.lastChild;
 											
-										}
-									}
-		
-									echo '
-										postSnippetsNr = edButtons.length;
-										edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.$snippets[$i]['snippet'].'\',  \'\',       \'\', -1);
-										var postSnippetsButton = postSnippetsToolbar.lastChild;
-										
-										while (postSnippetsButton.nodeType != 1) {
-											postSnippetsButton = postSnippetsButton.previousSibling;
-										}
-										
-										postSnippetsButton = postSnippetsButton.cloneNode(true);
-										postSnippetsToolbar.appendChild(postSnippetsButton);
-										postSnippetsButton.value = \'' . $snippets[$i]['title'] . '\';
-										postSnippetsButton.title = postSnippetsNr;
-										var variables' . $i .' = new Array('.$theVariables.');
-										postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, \''.$theSnippet.'\', variables' . $i .', parseInt(this.title));}
-										postSnippetsButton.id = "ed_ps' . $i .'";
-									';
-								}
+											while (postSnippetsButton.nodeType != 1) {
+												postSnippetsButton = postSnippetsButton.previousSibling;
+											}
+											
+											postSnippetsButton = postSnippetsButton.cloneNode(true);
+											postSnippetsToolbar.appendChild(postSnippetsButton);
+											postSnippetsButton.value = \'' . $snippets[$i]['title'] . '\';
+											postSnippetsButton.title = postSnippetsNr;
+											var variables' . $i .' = new Array('.$theVariables.');
+											postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, \''.$theSnippet.'\', variables' . $i .', parseInt(this.title));}
+											postSnippetsButton.id = "ed_ps' . $i .'";
+										';
+									} // End if
+								} // Next
 						echo '
 							}
 							function edInsertSnippet(myField,theSnippet,theVariables) {
@@ -174,6 +210,8 @@ class postSnippets {
 			array_push($snippets, array (
 			    'title' => "Untitled",
 			    'vars' => "",
+			    'shortcode' => false,
+			    'quicktag' => false,
 			    'snippet' => ""));
 			update_option($this->plugin_options, $snippets);
 			$this->admin_message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
@@ -186,6 +224,8 @@ class postSnippets {
 				for ($i=0; $i < count($snippets); $i++) {
 					$snippets[$i]['title'] = trim($_POST[$i.'_title']);
 					$snippets[$i]['vars'] = trim($_POST[$i.'_vars']);
+					$snippets[$i]['shortcode'] = $_POST[$i.'_shortcode'] == true ? true : false;
+					$snippets[$i]['quicktag'] = $_POST[$i.'_quicktag'] == true ? true : false;
 					$snippets[$i]['snippet'] = trim(stripslashes($_POST[$i.'_snippet']));
 				}
 				update_option($this->plugin_options, $snippets);
@@ -230,6 +270,8 @@ class postSnippets {
             <th scope="col" style="width: 180px;"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col" style="width: 180px;"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
+            <th scope="col" style="width: 16px;"><?php _e( 'SC', 'post-snippets' ) ?></th>
+            <th scope="col" style="width: 16px;"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
         </thead>
     
@@ -239,6 +281,8 @@ class postSnippets {
             <th scope="col"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'SC', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
         </tfoot>
     
@@ -252,6 +296,8 @@ class postSnippets {
 			<td class='row-title'><input type='text' name='<?= $i ?>_title' value='<?= $snippets[$i]['title'] ?>' /></td>
 			<td class='name'><input type='text' name='<?= $i ?>_vars' value='<?= $snippets[$i]['vars'] ?>' /></td>
 			<td class='desc'><textarea name="<?= $i ?>_snippet" class="large-text" rows="3"><?= $snippets[$i]['snippet'] ?></textarea></td>
+			<td class='name'><input type='checkbox' name='<?= $i ?>_shortcode' value='true'<? if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /></td>
+			<td class='name'><input type='checkbox' name='<?= $i ?>_quicktag' value='true'<? if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /></td>
 			</tr>
 		<?php
 			}
