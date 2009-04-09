@@ -55,14 +55,16 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 	
 		
 		if(window.tinyMCE) {
-			window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, insertString);
+			//window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, insertString);
+			tinyMCEPopup.execCommand("mceBeginUndoLevel");
+			tinyMCEPopup.execCommand('mceInsertContent', false, insertString);
+			tinyMCEPopup.execCommand("mceEndUndoLevel");
 			//Peforms a clean up of the current editor HTML. 
 			//tinyMCEPopup.editor.execCommand('mceCleanup');
 			//Repaints the editor. Sometimes the browser has graphic glitches. 
 			tinyMCEPopup.editor.execCommand('mceRepaint');
 			tinyMCEPopup.close();
 		}
-		
 		return;
 	}
 	</script>
@@ -82,7 +84,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		</ul>
 	</div>
 	
-	<div class="panel_wrapper">
+	<div class="panel_wrapper" style="overflow:auto;">
     <?php
 	$snippets = get_option($postSnippets->plugin_options);
 	for ($i = 0; $i < count($snippets); $i++) { ?>
