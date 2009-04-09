@@ -22,8 +22,21 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		tinyMCEPopup.resizeToInnerSize();
 	}
 	
+	function createSnippet(theSnippet) {
+	}
+	
+	function createShortcode(shortcodeTag, shortcodeAtts) {
+		theSnippet = "[" + shortcodeTag;
+		for (x in shortcodeAtts)
+		{
+			theSnippet += ' ' + shortcodeAtts[x] + '="{' + shortcodeAtts[x] + '}"';
+		}		
+		theSnippet += "]";
+		return theSnippet;
+	}
+
 	function insertSnippet() {
-		
+
 		var insertString;
 
 		<?php
@@ -42,7 +55,23 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		?>
 
 		if (panel<?= $i ?>.className.indexOf('current') != -1) {
+			<?php
+			if ($snippets[$i]['shortcode']) { 
+				$var_arr = explode(",",$snippets[$i]['vars']);
+				$theVariables = "";
+				if (!empty($var_arr[0])) {
+					for ($j = 0; $j < count($var_arr); $j++) {
+						$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
+						if ( $j < (count($var_arr) -1) )
+							$theVariables = $theVariables . ", ";
+						
+					}
+				} 
+			echo "var variables" . $i ." = new Array(".$theVariables.");";	?>
+			insertString = createShortcode("<?= $snippets[$i]['title']; ?>", variables<?= $i; ?>);
+			<?php }else{ ?>
 			insertString = "<?= $theString; ?>";
+			<?php } ?>
 			<?php
 			$var_arr = explode(",",$snippets[$i]['vars']);
 			if (!empty($var_arr[0])) {
