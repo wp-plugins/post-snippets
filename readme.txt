@@ -4,13 +4,13 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.3.5
+Stable tag: 1.4
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
 == Description ==
 
-This admin plugin stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button.
+This admin plugin stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button. The snippet can be inserted as defined, or as a shortcode to keep flexibility for updating the snippet.
 
 For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
@@ -19,6 +19,7 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/other_note
 Some features:
 
 * **Insert** All defined snippets is inserted from a button directly in the post editor.
+* **Shortcodes** You can use this plugin to create your own shortcodes.
 * **Buttons** The snippets are available in the viusal editor with a TinyMCE button and in the HTML editor with quicktag buttons.
 * **Admin** Easy to use administration panel where you can add, edit and remove snippets.
 * **Variables** Each snippet can have as many custom variables as you like, which can be used on insert.
@@ -46,6 +47,10 @@ Meditation.
 
 == Changelog ==
 
+= Version 1.4 - 10 Apr 2009 =
+ * Added a checkbox for Shortcodes (SC) in the admin panel. When checking this one a dynamic shortcode will be generated and inserted instead of the snippet, which allows snippets to be updated later on for all posts it's been inserted into when using this option.
+ * Added a checkbox for Quicktags (QT) in the admin panel, so Quicktags are optional. Speeds up loading of the post editor if you don't need the quicktag support, and only use the visual editor. Defaults to off.
+ 
 = Version 1.3.5 - 9 Apr 2009 =
  * Fixed so the TinyMCE window adds a scrollbar if there is more variables for a snippet than fits in the window.
  * Fixed a bug that snippets didn't get inserted when using the visual editor in fullscreen mode.
