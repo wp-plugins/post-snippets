@@ -136,7 +136,13 @@ class postSnippets {
 												
 											}
 										}
-			
+
+										if ($snippets[$i]['shortcode']) { 
+											echo "var variables" . $i ." = new Array(".$theVariables.");";
+											echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
+										}else{
+											echo "var insertString" . $i ." = '" .$theSnippet. "';";
+										}
 										echo '
 											postSnippetsNr = edButtons.length;
 											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.$snippets[$i]['snippet'].'\',  \'\',       \'\', -1);
@@ -151,13 +157,23 @@ class postSnippets {
 											postSnippetsButton.value = \'' . $snippets[$i]['title'] . '\';
 											postSnippetsButton.title = postSnippetsNr;
 											var variables' . $i .' = new Array('.$theVariables.');
-											postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, \''.$theSnippet.'\', variables' . $i .', parseInt(this.title));}
+											postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, insertString' . $i .', variables' . $i .', parseInt(this.title));}
 											postSnippetsButton.id = "ed_ps' . $i .'";
 										';
 									} // End if
 								} // Next
 						echo '
 							}
+							function createShortcode(shortcodeTag, shortcodeAtts) {
+								theSnippet = \'[\' + shortcodeTag;
+								for (x in shortcodeAtts)
+								{
+									theSnippet += \' \' + shortcodeAtts[x] + \'="{\' + shortcodeAtts[x] + \'}"\';
+								}		
+								theSnippet += \']\';
+								return theSnippet;
+							}
+							
 							function edInsertSnippet(myField,theSnippet,theVariables) {
 								var myValue;
 								var insertString;
