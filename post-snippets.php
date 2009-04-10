@@ -308,12 +308,12 @@ class postSnippets {
 		if (!empty($snippets)) {
 			for ($i=0; $i < count($snippets); $i++) { ?>
 			<tr class='recent'>
-			<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?= $i ?>' /></th>
-			<td class='row-title'><input type='text' name='<?= $i ?>_title' value='<?= $snippets[$i]['title'] ?>' /></td>
-			<td class='name'><input type='text' name='<?= $i ?>_vars' value='<?= $snippets[$i]['vars'] ?>' /></td>
-			<td class='desc'><textarea name="<?= $i ?>_snippet" class="large-text" rows="3"><?= $snippets[$i]['snippet'] ?></textarea></td>
-			<td class='name'><input type='checkbox' name='<?= $i ?>_shortcode' value='true'<? if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /></td>
-			<td class='name'><input type='checkbox' name='<?= $i ?>_quicktag' value='true'<? if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /></td>
+			<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<? echo $i; ?>' /></th>
+			<td class='row-title'><input type='text' name='<? echo $i; ?>_title' value='<? echo $snippets[$i]['title']; ?>' /></td>
+			<td class='name'><input type='text' name='<? echo $i; ?>_vars' value='<? echo $snippets[$i]['vars']; ?>' /></td>
+			<td class='desc'><textarea name="<? echo $i; ?>_snippet" class="large-text" rows="3"><? echo $snippets[$i]['snippet']; ?></textarea></td>
+			<td class='name'><input type='checkbox' name='<? echo $i; ?>_shortcode' value='true'<? if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /></td>
+			<td class='name'><input type='checkbox' name='<? echo $i; ?>_quicktag' value='true'<? if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /></td>
 			</tr>
 		<?php
 			}
