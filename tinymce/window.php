@@ -42,7 +42,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		<?php
 		$snippets = get_option($postSnippets->plugin_options);
 		for ($i = 0; $i < count($snippets); $i++) { ?>
-		var panel<?= $i ?> = document.getElementById('ps_panel<?= $i ?>');
+		var panel<? echo $i; ?> = document.getElementById('ps_panel<? echo $i; ?>');
 		<?php }	?>
 
 		var rss = document.getElementById('ps_panel0');
@@ -54,7 +54,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 			$theString = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])))
 		?>
 
-		if (panel<?= $i ?>.className.indexOf('current') != -1) {
+		if (panel<? echo $i; ?>.className.indexOf('current') != -1) {
 			<?php
 			if ($snippets[$i]['shortcode']) { 
 				$var_arr = explode(",",$snippets[$i]['vars']);
@@ -68,16 +68,16 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 					}
 				} 
 			echo "var variables" . $i ." = new Array(".$theVariables.");";	?>
-			insertString = createShortcode("<?= $snippets[$i]['title']; ?>", variables<?= $i; ?>);
+			insertString = createShortcode("<? echo $snippets[$i]['title']; ?>", variables<? echo $i; ?>);
 			<?php }else{ ?>
-			insertString = "<?= $theString; ?>";
+			insertString = "<? echo $theString; ?>";
 			<?php } ?>
 			<?php
 			$var_arr = explode(",",$snippets[$i]['vars']);
 			if (!empty($var_arr[0])) {
 				for ($j = 0; $j < count($var_arr); $j++) { ?>
-					var var_<?= $i ?>_<?= $j ?> = document.getElementById('var_<?= $i ?>_<?= $j ?>').value;
-					insertString = insertString.replace(/\{<?= $var_arr[$j] ?>\}/g, var_<?= $i ?>_<?= $j ?>);
+					var var_<? echo $i; ?>_<? echo $j; ?> = document.getElementById('var_<? echo $i; ?>_<? echo $j; ?>').value;
+					insertString = insertString.replace(/\{<? echo $var_arr[$j]; ?>\}/g, var_<? echo $i; ?>_<? echo $j; ?>);
 			<?php } } ?>
 		}
 		<?php }	?>
@@ -108,7 +108,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		<?php
 		$snippets = get_option($postSnippets->plugin_options);
 		for ($i = 0; $i < count($snippets); $i++) { ?>
-			<li id="ps_tab<?= $i ?>"<?php if ($i == 0) {?> class="current"><?php } ?><span><a href="javascript:mcTabs.displayTab('ps_tab<?= $i ?>','ps_panel<?= $i ?>');" onmousedown="return false;"><?php echo $snippets[$i]['title']; ?></a></span></li>
+			<li id="ps_tab<? echo $i; ?>"<?php if ($i == 0) {?> class="current"><?php } ?><span><a href="javascript:mcTabs.displayTab('ps_tab<? echo $i; ?>','ps_panel<? echo $i; ?>');" onmousedown="return false;"><?php echo $snippets[$i]['title']; ?></a></span></li>
 		<?php }	?>
 		</ul>
 	</div>
@@ -117,7 +117,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
     <?php
 	$snippets = get_option($postSnippets->plugin_options);
 	for ($i = 0; $i < count($snippets); $i++) { ?>
-        <div id="ps_panel<?= $i ?>" class="panel<?php if ($i == 0) {?> current<?php } ?>">
+        <div id="ps_panel<? echo $i; ?>" class="panel<?php if ($i == 0) {?> current<?php } ?>">
         <br />
         <table border="0" cellpadding="4" cellspacing="0">
 		<?php
@@ -125,8 +125,8 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		if (!empty($var_arr[0])) {
 			for ($j = 0; $j < count($var_arr); $j++) { ?>
 			 <tr>
-				<td nowrap="nowrap"><label for="var_<?= $i ?>_<?= $j ?>"><?php echo($var_arr[$j]);?>:</label></td>
-				<td><input type="text" id="var_<?= $i ?>_<?= $j ?>" name="var_<?= $i ?>_<?= $j ?>" style="width: 190px" />
+				<td nowrap="nowrap"><label for="var_<? echo $i; ?>_<? echo $j; ?>"><?php echo($var_arr[$j]);?>:</label></td>
+				<td><input type="text" id="var_<? echo $i; ?>_<? echo $j; ?>" name="var_<? echo $i; ?>_<? echo $j; ?>" style="width: 190px" />
 				</td>
 			  </tr>
         <?php } } ?>
