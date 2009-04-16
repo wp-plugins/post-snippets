@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.2
+Version: 1.4.3
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -93,13 +93,13 @@ class postSnippets {
 								
 								$newArr = compact( array_keys($shortcode_symbols) );
 								
-								$snippet = "'.$snippets[$i]["snippet"].'";
+								$snippet = "'. addslashes($snippets[$i]["snippet"]) .'";
 	
 								foreach ($newArr as $key => $val) {
 									$snippet = str_replace("{".$key."}", $val, $snippet);
 								}
 	
-								return "{$snippet}";') );
+								return stripslashes($snippet);') );
 				}
 			}
 		}
@@ -141,11 +141,11 @@ class postSnippets {
 											echo "var variables" . $i ." = new Array(".$theVariables.");";
 											echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
 										}else{
-											echo "var insertString" . $i ." = '" .$theSnippet. "';";
+											echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
 										}
 										echo '
 											postSnippetsNr = edButtons.length;
-											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.$snippets[$i]['snippet'].'\',  \'\',       \'\', -1);
+											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.addslashes($snippets[$i]['snippet']).'\',  \'\',       \'\', -1);
 											var postSnippetsButton = postSnippetsToolbar.lastChild;
 											
 											while (postSnippetsButton.nodeType != 1) {
@@ -162,15 +162,16 @@ class postSnippets {
 										';
 									} // End if
 								} // Next
-						echo '
+//						echo '
+echo <<<JAVASCRIPT
 							}
 							function createShortcode(shortcodeTag, shortcodeAtts) {
-								theSnippet = \'[\' + shortcodeTag;
+								theSnippet = '[' + shortcodeTag;
 								for (x in shortcodeAtts)
 								{
-									theSnippet += \' \' + shortcodeAtts[x] + \'="{\' + shortcodeAtts[x] + \'}"\';
+									theSnippet += ' ' + shortcodeAtts[x] + '="{' + shortcodeAtts[x] + '}"';
 								}		
-								theSnippet += \']\';
+								theSnippet += ']';
 								return theSnippet;
 							}
 							
@@ -181,19 +182,19 @@ class postSnippets {
 								for (x in theVariables)
 								{
 									myValue = prompt(theVariables[x]);
-									var searchfor = \'{\' + theVariables[x] + \'}\';
-									var re = new RegExp(searchfor, \'g\');
+									var searchfor = '{' + theVariables[x] + '}';
+									var re = new RegExp(searchfor, 'g');
 									insertString = insertString.replace(re, myValue);
 									
 								}
 								theSnippet = insertString;
 								if (theSnippet) {
-									edInsertContent(myField, theSnippet);
+									edInsertContent( myField, theSnippet );
 								}
-							}							
+							}
 							//-->
 						</script>
-						';
+JAVASCRIPT;
 				}
 				break;
 			}
