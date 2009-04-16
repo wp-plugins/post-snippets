@@ -4,7 +4,7 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -47,8 +47,12 @@ Meditation.
 
 == Changelog ==
 
+= Version 1.4.3 - 16 Apr 2009 =
+ * Fixed an escaping problem with the recently implemented shortcode function, that could cause problems on certain strings.
+ * Fixed an escaping problem with the quicktag javascript, that could cause problems on certain strings.
+
 = Version 1.4.2 - 11 Apr 2009 =
- * Fixed some additional syntax for servers where the short_open_tag configuration setting disabled.
+ * Fixed some additional syntax for servers where the short_open_tag configuration setting is disabled.
 
 = Version 1.4.1 - 10 Apr 2009 =
  * Removed all short syntax commands and replaced them with the full versions so the plugin also works on servers with the short_open_tag configuration setting disabled.
