@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.3
+Version: 1.4.4
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -145,7 +145,7 @@ class postSnippets {
 										}
 										echo '
 											postSnippetsNr = edButtons.length;
-											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    \''.addslashes($snippets[$i]['snippet']).'\',  \'\',       \'\', -1);
+											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    insertString'. $i .',  \'\',       \'\', -1);
 											var postSnippetsButton = postSnippetsToolbar.lastChild;
 											
 											while (postSnippetsButton.nodeType != 1) {
@@ -327,7 +327,7 @@ JAVASCRIPT;
 	</form>
 
     <div id="poststuff" class="ui-sortable">
-        <div class="postbox closed">
+        <div class="postbox">
             <h3><?php _e( 'Help', 'post-snippets' ); ?></h3>
             <div class="inside">
 				<p><?php _e( '<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.', 'post-snippets' ); ?></p>
@@ -339,6 +339,8 @@ JAVASCRIPT;
 				<p><?php _e( '<strong>SC</strong><br/>Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert.', 'post-snippets' ); ?></p>
 
 				<p><?php _e( '<strong>QT</strong><br/>Enables the snippet to be available as a quicktag in the HTML editor.', 'post-snippets' ); ?></p>
+                
+                <p><?php _e( '<strong>About Post Snippets</strong><br/>Visit my <a href="http://coding.cglounge.com/wordpress-plugins/post-snippets/">Post Snippets</a> page for additional information.', 'post-snippets' ); ?></p>
             </div>
         </div>
     </div>
