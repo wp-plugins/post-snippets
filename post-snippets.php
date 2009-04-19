@@ -287,8 +287,8 @@ JAVASCRIPT;
             <th scope="col" style="width: 180px;"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col" style="width: 180px;"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
-            <th scope="col" style="width: 16px;"><?php _e( 'SC', 'post-snippets' ) ?></th>
-            <th scope="col" style="width: 16px;"><?php _e( 'QT', 'post-snippets' ) ?></th>
+            <th scope="col" style="width: 20px;"><?php _e( 'SC', 'post-snippets' ) ?></th>
+            <th scope="col" style="width: 20px;"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
         </thead>
     
