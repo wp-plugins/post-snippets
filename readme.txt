@@ -47,6 +47,9 @@ Meditation.
 
 == Changelog ==
 
+= Version 1.4.6 - xx Apr 2009 =
+ * Added additional proofing for the variables string.
+
 = Version 1.4.5 - 24 Apr 2009 =
  * Fixed a problem in the admin options that didn't allow a form with a textarea to be used as a snippet.
  * Widened the columns for SC and QT slightly in the options panel so they should look a bit better on the mac.
