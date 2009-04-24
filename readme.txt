@@ -49,7 +49,7 @@ Meditation.
 
 = Version 1.4.5 - 24 Apr 2009 =
  * Fixed a problem in the admin options that didn't allow a form with a textarea to be used as a snippet.
- * Widened the columns for SC and QT sligtly in the options panel so they should look a bit better on the mac.
+ * Widened the columns for SC and QT slightly in the options panel so they should look a bit better on the mac.
 
 = Version 1.4.4 - 19 Apr 2009 =
  * Minor fix with quicktags and certain snippets that was left out in the last update.
