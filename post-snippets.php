@@ -241,8 +241,8 @@ JAVASCRIPT;
 				for ($i=0; $i < count($snippets); $i++) {
 					$snippets[$i]['title'] = trim($_POST[$i.'_title']);
 					$snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
-					$snippets[$i]['shortcode'] = $_POST[$i.'_shortcode'] == true ? true : false;
-					$snippets[$i]['quicktag'] = $_POST[$i.'_quicktag'] == true ? true : false;
+					$snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
+					$snippets[$i]['quicktag'] = isset($_POST[$i.'_quicktag']) ? true : false;
 					$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
 				}
 				update_option($this->plugin_options, $snippets);
