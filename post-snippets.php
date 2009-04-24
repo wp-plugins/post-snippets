@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.5
+Version: 1.4.6
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -240,7 +240,7 @@ JAVASCRIPT;
 			if (!empty($snippets)) {
 				for ($i=0; $i < count($snippets); $i++) {
 					$snippets[$i]['title'] = trim($_POST[$i.'_title']);
-					$snippets[$i]['vars'] = trim($_POST[$i.'_vars']);
+					$snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
 					$snippets[$i]['shortcode'] = $_POST[$i.'_shortcode'] == true ? true : false;
 					$snippets[$i]['quicktag'] = $_POST[$i.'_quicktag'] == true ? true : false;
 					$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
