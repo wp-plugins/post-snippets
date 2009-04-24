@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.4 --> http://codex.wordpress.org/TinyMCE_Custom_Buttons <-- Inför v1.4.5 - Läs detta igen, och se om du kan snygga till tinymce implementationen mer.
+Version: 1.4.5
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -243,7 +243,7 @@ JAVASCRIPT;
 					$snippets[$i]['vars'] = trim($_POST[$i.'_vars']);
 					$snippets[$i]['shortcode'] = $_POST[$i.'_shortcode'] == true ? true : false;
 					$snippets[$i]['quicktag'] = $_POST[$i.'_quicktag'] == true ? true : false;
-					$snippets[$i]['snippet'] = trim(stripslashes($_POST[$i.'_snippet']));
+					$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
 				}
 				update_option($this->plugin_options, $snippets);
 				$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
@@ -312,7 +312,7 @@ JAVASCRIPT;
 			<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?php echo $i; ?>' /></th>
 			<td class='row-title'><input type='text' name='<?php echo $i; ?>_title' value='<?php echo $snippets[$i]['title']; ?>' /></td>
 			<td class='name'><input type='text' name='<?php echo $i; ?>_vars' value='<?php echo $snippets[$i]['vars']; ?>' /></td>
-			<td class='desc'><textarea name="<?php echo $i; ?>_snippet" class="large-text" rows="3"><?php echo $snippets[$i]['snippet']; ?></textarea></td>
+			<td class='desc'><textarea name="<?php echo $i; ?>_snippet" class="large-text" rows="3"><?php echo htmlspecialchars($snippets[$i]['snippet'], ENT_NOQUOTES); ?></textarea></td>
 			<td class='name'><input type='checkbox' name='<?php echo $i; ?>_shortcode' value='true'<?php if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /></td>
 			<td class='name'><input type='checkbox' name='<?php echo $i; ?>_quicktag' value='true'<?php if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /></td>
 			</tr>
