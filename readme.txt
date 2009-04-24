@@ -48,6 +48,7 @@ Meditation.
 == Changelog ==
 
 = Version 1.4.6 - xx Apr 2009 =
+ * Updated the save code to get rid of the PHP Notice messages, if using logging.
  * Added additional proofing for the variables string.
 
 = Version 1.4.5 - 24 Apr 2009 =
