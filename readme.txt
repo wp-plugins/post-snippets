@@ -4,7 +4,7 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -46,6 +46,10 @@ Meditation.
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.4.5 - 24 Apr 2009 =
+ * Fixed a problem in the admin options that didn't allow a form with a textarea to be used as a snippet.
+ * Widened the columns for SC and QT sligtly in the options panel so they should look a bit better on the mac.
 
 = Version 1.4.4 - 19 Apr 2009 =
  * Minor fix with quicktags and certain snippets that was left out in the last update.
