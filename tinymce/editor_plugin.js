@@ -2,9 +2,9 @@
 
 (function() {
 	// Load plugin specific language pack
-	tinymce.PluginManager.requireLangPack('postSnippets');
+	tinymce.PluginManager.requireLangPack('post_snippets');
 	
-	tinymce.create('tinymce.plugins.postSnippets', {
+	tinymce.create('tinymce.plugins.post_snippets', {
 		/**
 		 * Initializes the plugin, this will be executed after the plugin has been created.
 		 * This call is done before the editor instance has finished it's initialization so use the onInit event
@@ -16,11 +16,11 @@
 		init : function(ed, url) {
 			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
 
-			ed.addCommand('mcepostSnippets', function() {
+			ed.addCommand('mcepost_snippets', function() {
 				ed.windowManager.open({
 					file : url + '/window.php',
-					width : 360 + ed.getLang('postSnippets.delta_width', 0),
-					height : 210 + ed.getLang('postSnippets.delta_height', 0),
+					width : 360 + ed.getLang('post_snippets.delta_width', 0),
+					height : 210 + ed.getLang('post_snippets.delta_height', 0),
 					inline : 1
 				}, {
 					plugin_url : url // Plugin absolute URL
@@ -28,15 +28,10 @@
 			});
 
 			// Register example button
-			ed.addButton('postSnippets', {
-				title : 'postSnippets.desc',
-				cmd : 'mcepostSnippets',
+			ed.addButton('post_snippets', {
+				title : 'post_snippets.desc',
+				cmd : 'mcepost_snippets',
 				image : url + '/post-snippets.gif'
-			});
-
-			// Add a node change handler, selects the button in the UI when a image is selected
-			ed.onNodeChange.add(function(ed, cm, n) {
-				cm.setActive('postSnippets', n.nodeName == 'IMG');
 			});
 		},
 
@@ -48,7 +43,7 @@
 		 */
 		getInfo : function() {
 			return {
-					longname  : 'postSnippets',
+					longname  : 'post_snippets',
 					author 	  : 'Johan Steen',
 					authorurl : 'http://coding.cglounge.com/',
 					infourl   : 'http://coding.cglounge.com/',
@@ -58,7 +53,7 @@
 	});
 
 	// Register plugin
-	tinymce.PluginManager.add('postSnippets', tinymce.plugins.postSnippets);
+	tinymce.PluginManager.add('post_snippets', tinymce.plugins.post_snippets);
 })();
 
 

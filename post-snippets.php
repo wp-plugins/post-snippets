@@ -25,18 +25,18 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class postSnippets {
+class post_snippets {
 	var $plugin_options = "post_snippets_options";
 
 	/**
 	* Constructor
 	*
 	*/
-	function postSnippets()
+	function post_snippets()
 	{
 		// define URL
-		define('postSnippets_ABSPATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' );
-		define('postSnippets_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
+		define('post_snippets_ABSPATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' );
+		define('post_snippets_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
 
 		// Define the domain for translations
 		load_plugin_textdomain(	'post-snippets', false, dirname(plugin_basename(__FILE__)) . '/languages/');
@@ -362,5 +362,5 @@ JAVASCRIPT;
 	}
 }
 
-add_action( 'plugins_loaded', create_function( '', 'global $postSnippets; $postSnippets = new postSnippets();' ) );
+add_action( 'plugins_loaded', create_function( '', 'global $post_snippets; $post_snippets = new post_snippets();' ) );
 ?>

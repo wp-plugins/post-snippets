@@ -3,21 +3,21 @@
 * Class that adds a TinyMCE button to the Post editor
 *
 */
-class add_postSnippets_button {
-	var $pluginname = "postSnippets";
+class add_post_snippets_button {
+	var $pluginname = "post_snippets";
 	
 	/**
 	* Constructor
 	*/
-	function add_postSnippets_button()  {
+	function add_post_snippets_button()  {
 		// Modify the version when tinyMCE plugins are changed.
 		add_filter('tiny_mce_version', array (&$this, 'change_tinymce_version') );
 		
 		// init process for button control
-		add_action('init', array (&$this, 'addbuttons') );
+		add_action('init', array (&$this, 'add_buttons') );
 	}
 
-	function addbuttons() {
+	function add_buttons() {
 		// Don't bother doing this stuff if the current user lacks permissions
 		if ( !current_user_can('edit_posts') && !current_user_can('edit_pages') ) return;
 		
@@ -37,7 +37,7 @@ class add_postSnippets_button {
 	
 	// Load the TinyMCE plugin : editor_plugin.js (wp2.5)
 	function add_tinymce_plugin($plugin_array) {    
-		$plugin_array[$this->pluginname] =  postSnippets_URLPATH.'tinymce/editor_plugin.js';
+		$plugin_array[$this->pluginname] =  post_snippets_URLPATH.'tinymce/editor_plugin.js';
 		return $plugin_array;
 	}
 	
@@ -46,5 +46,5 @@ class add_postSnippets_button {
 	}
 }
 
-$tinymce_button = new add_postSnippets_button();
+$tinymce_button = new add_post_snippets_button();
 ?>

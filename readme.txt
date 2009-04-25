@@ -48,7 +48,9 @@ Meditation.
 == Changelog ==
 
 = Version 1.4.6 - xx Apr 2009 =
- * Updated the save code to get rid of the PHP Notice messages, if using logging.
+ * Updated all code to follow the WordPress Coding Standards for consistency, if someone wants to modify my code.
+ * Removed the nodechangehandler from the TinyMCE js, as it didn't fill any purpose.
+ * Updated the save code to get rid of the PHP Notice messages, if using error logging on the server.
  * Added additional proofing for the variables string.
 
 = Version 1.4.5 - 24 Apr 2009 =

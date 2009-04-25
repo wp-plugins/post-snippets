@@ -40,7 +40,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		var insertString;
 
 		<?php
-		$snippets = get_option($postSnippets->plugin_options);
+		$snippets = get_option($post_snippets->plugin_options);
 		for ($i = 0; $i < count($snippets); $i++) { ?>
 		var panel<?php echo $i; ?> = document.getElementById('ps_panel<?php echo $i; ?>');
 		<?php }	?>
@@ -48,7 +48,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		var rss = document.getElementById('ps_panel0');
 		
 		<?php
-		$snippets = get_option($postSnippets->plugin_options);
+		$snippets = get_option($post_snippets->plugin_options);
 		for ($i = 0; $i < count($snippets); $i++) {
 			// Make it js safe
 			$theString = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])))
@@ -101,12 +101,12 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 </head>
 <body id="link" onload="tinyMCEPopup.executeOnLoad('init();');document.body.style.display='';" style="display: none">
 <!-- <form onsubmit="insertLink();return false;" action="#"> -->
-	<form name="postSnippets" action="#">
+	<form name="post_snippets" action="#">
 
 	<div class="tabs">
 		<ul>
 		<?php
-		$snippets = get_option($postSnippets->plugin_options);
+		$snippets = get_option($post_snippets->plugin_options);
 		for ($i = 0; $i < count($snippets); $i++) { ?>
 			<li id="ps_tab<?php echo $i; ?>"<?php if ($i == 0) {?> class="current"><?php } ?><span><a href="javascript:mcTabs.displayTab('ps_tab<?php echo $i; ?>','ps_panel<?php echo $i; ?>');" onmousedown="return false;"><?php echo $snippets[$i]['title']; ?></a></span></li>
 		<?php }	?>
@@ -115,7 +115,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 	
 	<div class="panel_wrapper" style="overflow:auto;">
     <?php
-	$snippets = get_option($postSnippets->plugin_options);
+	$snippets = get_option($post_snippets->plugin_options);
 	for ($i = 0; $i < count($snippets); $i++) { ?>
         <div id="ps_panel<?php echo $i; ?>" class="panel<?php if ($i == 0) {?> current<?php } ?>">
         <br />
