@@ -4,7 +4,7 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.4.5
+Stable tag: 1.4.6
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -47,10 +47,10 @@ Meditation.
 
 == Changelog ==
 
-= Version 1.4.6 - xx Apr 2009 =
+= Version 1.4.6 - 25 Apr 2009 =
  * Updated all code to follow the WordPress Coding Standards for consistency, if someone wants to modify my code.
  * Removed the nodechangehandler from the TinyMCE js, as it didn't fill any purpose.
- * Updated the save code to get rid of the PHP Notice messages, if using error logging on the server.
+ * Updated the save code to remove the PHP Notice messages, if using error logging on the server.
  * Added additional proofing for the variables string.
 
 = Version 1.4.5 - 24 Apr 2009 =
