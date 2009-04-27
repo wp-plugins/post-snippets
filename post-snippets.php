@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.6
+Version: 1.4.7
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -243,7 +243,17 @@ JAVASCRIPT;
 					$snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
 					$snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
 					$snippets[$i]['quicktag'] = isset($_POST[$i.'_quicktag']) ? true : false;
-					$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+					/*	Check if the plugin runs on PHP below version 5.1.0
+						Because of a bug in WP 2.7.x in includes/compat.php the htmlspecialchars_decode
+						don't revert back to a PHP 4.x compatible version. So this is a workaround to make
+						the plugin work correctly on PHP versions below 5.1.
+						This problem is fixed in WP 2.8.
+					*/
+					if (version_compare(PHP_VERSION, '5.1.0', '<')) {
+						$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+					} else {
+						$snippets[$i]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+					}
 				}
 				update_option($this->plugin_options, $snippets);
 				$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
@@ -279,7 +289,7 @@ JAVASCRIPT;
         </div>
     </div>
     <div class="clear"></div>
-    
+
     <table class="widefat fixed" cellspacing="0">
         <thead>
         <tr>
