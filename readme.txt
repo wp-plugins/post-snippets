@@ -4,7 +4,7 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -46,6 +46,9 @@ Meditation.
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.4.7 - 27 Apr 2009 =
+ * Added a workaround for a bug in WordPress 2.7.x includes/compat.php that prevented the plugin to work correctly on webservers running with PHP below version 5.1.0 together with WP 2.7.x. This bug is patched in WordPress 2.8.
 
 = Version 1.4.6 - 25 Apr 2009 =
  * Updated all code to follow the WordPress Coding Standards for consistency, if someone wants to modify my code.
