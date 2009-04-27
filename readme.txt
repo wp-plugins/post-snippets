@@ -48,7 +48,7 @@ Meditation.
 == Changelog ==
 
 = Version 1.4.7 - 27 Apr 2009 =
- * Added a workaround for a bug in WordPress 2.7.x includes/compat.php that prevented the plugin to work correctly on webservers running with PHP below version 5.1.0 together with WP 2.7.x. This bug is patched in WordPress 2.8.
+ * Added a workaround for a bug in WordPress 2.7.x wp-includes/compat.php that prevented the plugin to work correctly on webservers running with PHP below version 5.1.0 together with WP 2.7.x. This bug is patched in WordPress 2.8.
 
 = Version 1.4.6 - 25 Apr 2009 =
  * Updated all code to follow the WordPress Coding Standards for consistency, if someone wants to modify my code.
