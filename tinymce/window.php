@@ -1,8 +1,15 @@
 <?php
-// look up for the path
-require_once( dirname( dirname(__FILE__) ) .'/post-snippets-config.php');
+/* Finding the path to the wp-admin folder */
+$iswin = preg_match('/:\\\/', dirname(__file__));
+$slash = ($iswin) ? "\\" : "/";
 
-global $wpdb;
+$wp_path = preg_split('/(?=((\\\|\/)wp-content)).*/', dirname(__file__));
+$wp_path = (isset($wp_path[0]) && $wp_path[0] != "") ? $wp_path[0] : $_SERVER["DOCUMENT_ROOT"];
+
+/** Load WordPress Administration Bootstrap */
+require_once($wp_path . $slash . 'wp-load.php');
+require_once($wp_path . $slash . 'wp-admin' . $slash . 'admin.php');
+
 
 // check for rights
 if ( !is_user_logged_in() || !current_user_can('edit_posts') ) 
@@ -51,7 +58,8 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 		$snippets = get_option($post_snippets->plugin_options);
 		for ($i = 0; $i < count($snippets); $i++) {
 			// Make it js safe
-			$theString = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])))
+			$theString = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', str_replace('<', '\x3C', str_replace('>', '\x3E', $snippets[$i]['snippet'])))));
+			//    \x3C and \x3E
 		?>
 
 		if (panel<?php echo $i; ?>.className.indexOf('current') != -1) {
