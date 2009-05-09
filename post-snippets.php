@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.7
+Version: 1.4.8
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
@@ -126,6 +126,7 @@ class post_snippets {
 									if ($snippets[$i]['quicktag']) {
 										// Make it js safe
 										$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+										//$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E', $theSnippet));
 										$var_arr = explode(",",$snippets[$i]['vars']);
 										$theVariables = "";
 										if (!empty($var_arr[0])) {
@@ -141,7 +142,8 @@ class post_snippets {
 											echo "var variables" . $i ." = new Array(".$theVariables.");";
 											echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
 										}else{
-											echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
+											//echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
+											echo "var insertString" . $i ." = '" . str_replace('<', '\x3C', str_replace('>', '\x3E',  addslashes(stripslashes($theSnippet)) )). "';";
 										}
 										echo '
 											postSnippetsNr = edButtons.length;
@@ -187,6 +189,7 @@ echo <<<JAVASCRIPT
 									insertString = insertString.replace(re, myValue);
 									
 								}
+								//theSnippet = str_replace('\x3C', '<', str_replace('\x3E', '>', insertString));
 								theSnippet = insertString;
 								if (theSnippet) {
 									edInsertContent( myField, theSnippet );
