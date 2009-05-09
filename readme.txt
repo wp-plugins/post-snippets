@@ -4,7 +4,7 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.7.1
-Stable tag: 1.4.7
+Stable tag: 1.4.8
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -28,10 +28,17 @@ Some features:
 
 == Installation ==
 
+**Install**
+
 1. Upload the 'post-snippets' folder  to the '/wp-content/plugins/' directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to Settings -> Post Snippets and start entering your snippets.
 
+**Uninstall**
+
+1. Deactivate PayPal Donations in the ‘Plugins’ menu in Wordpress.
+2. Select PayPal Donations in the ‘Recently Active Plugins’ section and select ‘Delete’ from the ‘Bulk Actions’ drop down menu.
+3. This will delete all the plugin files from the server as well as erasing all options the plugin has stored in the database.
 
 == Frequently Asked Questions ==
 
@@ -47,6 +54,10 @@ Meditation.
 
 == Changelog ==
 
+= Version 1.4.8 - 9 May 2009 =
+ * Changed the handling of the TinyMCE button as some server configurations had problems finding the correct path.
+ * Fixed a problem that didn't let a snippet contain a </script> tag.
+ 
 = Version 1.4.7 - 27 Apr 2009 =
  * Added a workaround for a bug in WordPress 2.7.x wp-includes/compat.php that prevented the plugin to work correctly on webservers running with PHP below version 5.1.0 together with WP 2.7.x. This bug is patched in WordPress 2.8.
 
