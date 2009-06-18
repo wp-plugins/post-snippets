@@ -36,8 +36,8 @@ Some features:
 
 **Uninstall**
 
-1. Deactivate PayPal Donations in the ‘Plugins’ menu in Wordpress.
-2. Select PayPal Donations in the ‘Recently Active Plugins’ section and select ‘Delete’ from the ‘Bulk Actions’ drop down menu.
+1. Deactivate Post Snippets in the 'Plugins' menu in Wordpress.
+2. Select Post Snippets in the 'Recently Active Plugins' section and select 'Delete' from the 'Bulk Actions' drop down menu.
 3. This will delete all the plugin files from the server as well as erasing all options the plugin has stored in the database.
 
 == Frequently Asked Questions ==
