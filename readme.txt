@@ -28,13 +28,13 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 == Installation ==
 
-**Install**
+= Install =
 
 1. Upload the 'post-snippets' folder  to the '/wp-content/plugins/' directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 3. Go to Settings -> Post Snippets and start entering your snippets.
 
-**Uninstall**
+= Uninstall =
 
 1. Deactivate Post Snippets in the 'Plugins' menu in Wordpress.
 2. Select Post Snippets in the 'Recently Active Plugins' section and select 'Delete' from the 'Bulk Actions' drop down menu.
