@@ -3,7 +3,7 @@ Contributors: artstorm
 Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintware
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
-Tested up to: 2.7.1
+Tested up to: 2.8.3
 Stable tag: 1.4.8
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
@@ -52,6 +52,9 @@ Please visit [Post Snippets' Comments](http://coding.cglounge.com/wordpress-plug
 
 == Changelog ==
 
+= Version 1.4.9 - 10 Aug 2009 =
+ * Included Russian translation by [FatCow](http://www.fatcow.com/).
+ 
 = Version 1.4.8 - 9 May 2009 =
  * Changed the handling of the TinyMCE button as some server configurations had problems finding the correct path.
  * Fixed a problem that didn't let a snippet contain a </script> tag.
