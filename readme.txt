@@ -4,7 +4,7 @@ Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintwar
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.8.3
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -14,7 +14,7 @@ This admin plugin stores snippets of HTML code or reoccurring text that you ofte
 
 For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
-See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new.
+See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://coding.cglounge.com/wordpress-plugins/post-snippets/#translations).
 
 = Features =
 
