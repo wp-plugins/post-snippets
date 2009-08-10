@@ -14,7 +14,7 @@ This admin plugin stores snippets of HTML code or reoccurring text that you ofte
 
 For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
-See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new.
+See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://coding.cglounge.com/wordpress-plugins/post-snippets/#translations).
 
 = Features =
 
