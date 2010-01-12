@@ -3,12 +3,12 @@
 Plugin Name: Post Snippets
 Plugin URI: http://coding.cglounge.com/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.4.9.1
+Version: 1.5
 Author: Johan Steen
 Author URI: http://coding.cglounge.com/
 Text Domain: post-snippets 
 
-Copyright 2009  Johan Steen  (email : artstorm [at] gmail [dot] com)
+Copyright 2009-2010  Johan Steen  (email : artstorm [at] gmail [dot] com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -58,7 +58,8 @@ class post_snippets {
 	*/
 	function init_hooks() {
 		add_action('admin_menu', array(&$this,'wp_admin'));
-		add_action('admin_footer', array(&$this,'quicktags'));
+		add_action('admin_head', array(&$this,'quicktags'));
+//		add_action('admin_footer', array(&$this,'quicktags'));
 		$this->create_shortcodes();
 	}
 	
@@ -110,63 +111,92 @@ class post_snippets {
 	*
 	*/
 	function quicktags() {
-		$quicktag_pages = array( 'post.php', 'post-new.php', 'page-new.php', 'page.php', 'comment.php' );
-		for($i = 0; $i < count($quicktag_pages); $i++) {
-			if( strpos($_SERVER['REQUEST_URI'], $quicktag_pages[$i]) ) {
-
-				$snippets = get_option($this->plugin_options);
-				if (!empty($snippets)) {
-					echo '
-						<script type="text/javascript">
-							<!--
-							if (postSnippetsToolbar = document.getElementById("ed_toolbar")) {
-								var postSnippetsNr, postSnippetsButton;
-						';
-								for ($i = 0; $i < count($snippets); $i++) {
-									if ($snippets[$i]['quicktag']) {
-										// Make it js safe
-										$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
-										//$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E', $theSnippet));
-										$var_arr = explode(",",$snippets[$i]['vars']);
-										$theVariables = "";
-										if (!empty($var_arr[0])) {
-											for ($j = 0; $j < count($var_arr); $j++) {
-												$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
-												if ( $j < (count($var_arr) -1) )
-													$theVariables = $theVariables . ", ";
-												
-											}
-										}
-
-										if ($snippets[$i]['shortcode']) { 
-											echo "var variables" . $i ." = new Array(".$theVariables.");";
-											echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
-										}else{
-											//echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
-											echo "var insertString" . $i ." = '" . str_replace('<', '\x3C', str_replace('>', '\x3E',  addslashes(stripslashes($theSnippet)) )). "';";
-										}
-										echo '
-											postSnippetsNr = edButtons.length;
-											edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    insertString'. $i .',  \'\',       \'\', -1);
-											var postSnippetsButton = postSnippetsToolbar.lastChild;
-											
-											while (postSnippetsButton.nodeType != 1) {
-												postSnippetsButton = postSnippetsButton.previousSibling;
-											}
-											
-											postSnippetsButton = postSnippetsButton.cloneNode(true);
-											postSnippetsToolbar.appendChild(postSnippetsButton);
-											postSnippetsButton.value = \'' . $snippets[$i]['title'] . '\';
-											postSnippetsButton.title = postSnippetsNr;
-											var variables' . $i .' = new Array('.$theVariables.');
-											postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, insertString' . $i .', variables' . $i .', parseInt(this.title));}
-											postSnippetsButton.id = "ed_ps' . $i .'";
-										';
-									} // End if
-								} // Next
-//						echo '
-echo <<<JAVASCRIPT
+		$snippets = get_option($this->plugin_options);
+		if (!empty($snippets)) { ?>
+			<script type="text/javascript">
+				if(typeof(edButtons)!='undefined') {
+					var postSnippetsNr, postSnippetsButton; <?php
+					for ($i = 0; $i < count($snippets); $i++) {
+						if ($snippets[$i]['quicktag']) {
+							// Make it js safe
+							$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+							//$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E', $theSnippet));
+							$var_arr = explode(",",$snippets[$i]['vars']);
+							$theVariables = "";
+							if (!empty($var_arr[0])) {
+								for ($j = 0; $j < count($var_arr); $j++) {
+									$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
+									if ( $j < (count($var_arr) -1) )
+										$theVariables = $theVariables . ", ";
+								}
 							}
+
+							if ($snippets[$i]['shortcode']) { 
+								echo "var variables" . $i ." = new Array(".$theVariables.");";
+								echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
+							}else{
+								//echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
+								echo "var insertString" . $i ." = '" . str_replace('<', '\x3C', str_replace('>', '\x3E',  addslashes(stripslashes($theSnippet)) )). "';";
+							}
+
+							echo '
+								postSnippetsNr = edButtons.length;
+								edButtons[postSnippetsNr] = new edButton(\'ed_psnip'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    insertString'. $i .',  \'\',       \'\', -1);
+								
+							';
+/*							postSnippetsNr = edButtons.length;
+							edButtons[postSnippetsNr] = new edButton(\'ed_ps'. $i . '\',    \'' . $snippets[$i]['title'] . '\',    insertString'. $i .',  \'\',       \'\', -1);
+							var postSnippetsButton = postSnippetsToolbar.lastChild;
+							
+							while (postSnippetsButton.nodeType != 1) {
+								postSnippetsButton = postSnippetsButton.previousSibling;
+							}
+							
+							postSnippetsButton = postSnippetsButton.cloneNode(true);
+							postSnippetsToolbar.appendChild(postSnippetsButton);
+							postSnippetsButton.value = \'' . $snippets[$i]['title'] . '\';
+							postSnippetsButton.title = postSnippetsNr;
+							var variables' . $i .' = new Array('.$theVariables.');
+							postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, insertString' . $i .', variables' . $i .', parseInt(this.title));}
+							postSnippetsButton.id = "ed_ps' . $i .'"; */
+						} // end if
+					} //next ?>
+				};
+				window.onload = ps_quicktags;
+				function ps_quicktags() { <?php
+					for ($i = 0; $i < count($snippets); $i++) {
+						if ($snippets[$i]['quicktag']) { 
+							// Make it js safe
+							$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+							//$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E', $theSnippet));
+							$var_arr = explode(",",$snippets[$i]['vars']);
+							$theVariables = "";
+							if (!empty($var_arr[0])) {
+								for ($j = 0; $j < count($var_arr); $j++) {
+									$theVariables = $theVariables . "'" . $var_arr[$j] . "'";
+									if ( $j < (count($var_arr) -1) )
+										$theVariables = $theVariables . ", ";
+								}
+							}
+							if ($snippets[$i]['shortcode']) { 
+								echo "var variables" . $i ." = new Array(".$theVariables.");";
+								echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
+							}else{
+								//echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
+								echo "var insertString" . $i ." = '" . str_replace('<', '\x3C', str_replace('>', '\x3E',  addslashes(stripslashes($theSnippet)) )). "';";
+							}
+					?>
+					var postSnippetsButton = document.getElementById('ed_psnip<?php echo $i; ?>');
+					var variables<?php echo $i; ?> = new Array(<?php echo $theVariables; ?>);
+					postSnippetsButton.onclick = function () {edInsertSnippet(edCanvas, insertString<?php echo $i; ?>, variables<?php echo $i; ?>, parseInt(this.title));}
+					<?php
+						} // end if
+					} // next ?>
+				}
+
+
+<?php
+echo <<<JAVASCRIPT
 							function createShortcode(shortcodeTag, shortcodeAtts) {
 								theSnippet = '[' + shortcodeTag;
 								for (x in shortcodeAtts)
@@ -198,11 +228,9 @@ echo <<<JAVASCRIPT
 							//-->
 						</script>
 JAVASCRIPT;
-				}
-				break;
-			}
 		}
 	}
+
 
 	/**
 	* The Admin Page and all it's functions
