@@ -1,6 +1,6 @@
 === Post Snippets ===
 Contributors: artstorm
-Donate link: http://coding.cglounge.com/wordpress-plugins/post-snippets/#pintware
+Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#pintware
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 2.9.2
@@ -12,9 +12,9 @@ Store snippets of HTML code or reoccurring text that you often use in your posts
 
 This admin plugin stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button. The snippet can be inserted as defined, or as a shortcode to keep flexibility for updating the snippet.
 
-For complete usage instructions see: [Post Snippets](http://coding.cglounge.com/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
+For complete usage instructions see: [Post Snippets](http://wpstorm.net/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
-See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://coding.cglounge.com/wordpress-plugins/post-snippets/#translations).
+See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
 
 = Features =
 
@@ -42,7 +42,7 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 == Frequently Asked Questions ==
 
-Please visit [Post Snippets' Comments](http://coding.cglounge.com/wordpress-plugins/post-snippets/#comments) for questions and answers.
+Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post-snippets/#comments) for questions and answers.
 
 == Screenshots ==
 
