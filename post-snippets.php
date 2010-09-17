@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.5.1
+Version: 1.5.2
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -120,7 +120,8 @@ class post_snippets {
 					for ($i = 0; $i < count($snippets); $i++) {
 						if ($snippets[$i]['quicktag']) {
 							// Make it js safe
-							$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+							$theSnippet = $snippets[$i]['snippet'];
+							$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $theSnippet)));
 							//$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E', $theSnippet));
 							$var_arr = explode(",",$snippets[$i]['vars']);
 							$theVariables = "";
@@ -168,7 +169,8 @@ class post_snippets {
 					for ($i = 0; $i < count($snippets); $i++) {
 						if ($snippets[$i]['quicktag']) { 
 							// Make it js safe
-							$theSnippet = str_replace('"','\"',str_replace(Chr(13), '', str_replace(Chr(10), '', $snippets[$i]['snippet'])));
+							$theSnippet = $snippets[$i]['snippet'];
+							$theSnippet = str_replace('"','\"',str_replace(chr(13), '', str_replace(chr(10), '%%LF%%', $theSnippet)));
 							//$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E', $theSnippet));
 							$var_arr = explode(",",$snippets[$i]['vars']);
 							$theVariables = "";
@@ -184,7 +186,9 @@ class post_snippets {
 								echo "var insertString" . $i ." = createShortcode('".$snippets[$i]['title']."', variables".$i.");";
 							}else{
 								//echo "var insertString" . $i ." = '" . addslashes(stripslashes($theSnippet)). "';";
-								echo "var insertString" . $i ." = '" . str_replace('<', '\x3C', str_replace('>', '\x3E',  addslashes(stripslashes($theSnippet)) )). "';";
+								$theSnippet = str_replace('<', '\x3C', str_replace('>', '\x3E',  addslashes(stripslashes($theSnippet)) ));
+								$theSnippet = str_replace('%%LF%%', '\n', $theSnippet);
+								echo "var insertString" . $i ." = '" . $theSnippet . "';";
 							}
 					?>
 					var postSnippetsButton = document.getElementById('ed_psnip<?php echo $i; ?>');
@@ -239,7 +243,7 @@ JAVASCRIPT;
 	*/
 	function wp_admin()	{
 		if (function_exists('add_options_page')) {
-			add_options_page( 'Post Snippets Options', 'Post Snippets', 10, __FILE__, array(&$this, 'options_page') );
+			add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', __FILE__, array(&$this, 'options_page') );
 		}
 	}
 

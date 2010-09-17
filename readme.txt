@@ -3,8 +3,8 @@ Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#pintware
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
-Tested up to: 2.9.2
-Stable tag: 1.5.1
+Tested up to: 3.0.1
+Stable tag: 1.5.2
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -51,6 +51,10 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.5.2 - 17 Sep 2010 =
+ * The plugin now keeps linefeed formatting when inserting a snippet directly with a quicktag in the HTML editor. 
+ * Updated the code to not generate warnings when running WordPress in debug mode.
 
 = Version 1.5.1 - 12 Mar 2010 =
  * Fixed ampersands when used in a shortcode, so they are XHTML valid.
