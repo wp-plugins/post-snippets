@@ -1,6 +1,5 @@
 === Post Snippets ===
 Contributors: artstorm
-Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#pintware
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 3.0.1
