@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
 Tested up to: 3.0.1
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -52,6 +52,9 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 
 == Changelog ==
 
+= Version 1.5.4 - 26 Jan 2011 =
+ * Included Turkish translation by [Ersan Özdil](http://www.tml.web.tr/).
+ 
 = Version 1.5.3 - 19 Sep 2010 =
  * Included Spanish translation by [Melvis E. Leon Lopez](http://www.soludata.net/site/).
 
