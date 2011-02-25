@@ -43,11 +43,11 @@ class post_snippets {
 
 		// Check installed Wordpress version.
 		global $wp_version;
-		if ( version_compare($wp_version, '2.7', '>=') ) {
+		if ( version_compare($wp_version, '2.7', '<') ) {
+			add_action( 'admin_notices', array(&$this, 'version_warning') ); 
+		} else {
 			include_once (dirname (__FILE__)."/tinymce/tinymce.php");
 			$this->init_hooks();
-		} else {
-			$this->version_warning();
 		}
 	}
 
@@ -57,11 +57,123 @@ class post_snippets {
 	* @returns	Nothing
 	*/
 	function init_hooks() {
-		add_action('admin_menu', array(&$this,'wp_admin'));
+		add_filter( 'plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2 );
+		add_action( 'admin_menu', array(&$this,'wp_admin') );
 		add_action('admin_head', array(&$this,'quicktags'));
 //		add_action('admin_footer', array(&$this,'quicktags'));
+
+
 		$this->create_shortcodes();
+
+add_action( 'edit_form_advanced', array(&$this,'manchumahara_quicktags'));
+//add_action( 'edit_page_form',');
+// admin_enqueuy_script??
+wp_enqueue_script( 'jquery-ui-dialog' );
+		add_action('admin_head', array(&$this,'dialog'));
+		add_action('admin_footer', array(&$this,'fot'));
+
+
+
+		}
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		function dialog() {
+?>
+	<script>
+jQuery(document).ready(function($){
+	$(function() {
+		$( "#dialog" ).dialog({
+			autoOpen: false
+		});
+	});
+});
+
+	</script>
+<?
+}
+
+function fot() {
+echo "\n<!-- Post Snippets -->\n";
+?>
+<div id="dialog" title="Basic dialog">
+	<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+<?
+}
+
+/*
+See wp-includes/js/quicktags.dev.js
+*/	
+function manchumahara_quicktags()
+{
+/*
+ed.addCommand('mcepost_snippets', function() {
+				ed.windowManager.open({
+					file : url + '/window.php',
+					width : 360 + ed.getLang('post_snippets.delta_width', 0),
+					height : 210 + ed.getLang('post_snippets.delta_height', 0),
+					inline : 1
+				}, {
+					plugin_url : url // Plugin absolute URL
+				});
+			});
+*/
+
+ 
+    ?>
+    <script type="text/javascript" charset="utf-8">
+    // <![CDATA[
+        //edButton(id, display, tagStart, tagEnd, access, open)
+        edbuttonlength = edButtons.length;
+        edbuttonlength_t = edbuttonlength;
+        //alert(edButtons);
+        edButtons[edbuttonlength++] = new edButton('ed_itemname','Item Name','<span class="itemleft">','</span>');
+        edButtons[edbuttonlength++] = new edButton('ed_itemprice','Item Price','<span class="itemprice">','</span>');
+        edButtons[edbuttonlength++] = new edButton('ed_postsnippets','Post Snippets','<span class="itemcaption">','</span>');
+            //alert(edButtons[edButtons.length]);
+               (function(){
+ 
+              if (typeof jQuery === 'undefined') {
+                     return;
+              }
+              jQuery(document).ready(function(){
+                     jQuery("#ed_toolbar").append('<br/><input type="button" value="Item Name" id="ed_itemname" class="ed_button" onclick="edInsertTag(edCanvas, edbuttonlength_t);" title="Item Name" />');
+                     jQuery("#ed_toolbar").append('<input type="button" value="Item Price" id="ed_itemprice" class="ed_button" onclick="edInsertTag(edCanvas, edbuttonlength_t+1);" title="Item Price" />');
+                     jQuery("#ed_toolbar").append('<input type="button" value="Post Snippets" id="ed_postsnippets" class="ed_button" onclick="edInsertTag(edCanvas, edbuttonlength_t+2);" title="Post Snippets" />');
+              });
+       }());
+    // ]]>
+    </script>
+    <?php
+ 
+}
+
+
+	/**
+	* Quick link to the Post Snippets Settings page from the Plugins page.
+	*
+	* @returns	Array with all the plugin's action links
+	*/
+	function plugin_action_links( $links, $file ) {
+		$links[] = '<a href="options-general.php?page=post-snippets/post-snippets.php">'.__('Settings', 'post-snippets').'</a>';
+		return $links;
 	}
+
 	
 	/**
 	* Displays a warning when installed in an old Wordpress Version
@@ -69,10 +181,10 @@ class post_snippets {
 	* @returns	Nothing
 	*/
 	function version_warning() {
-		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 2.7 or later!', 'post-snippets').'</strong></p></div>';
+		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 2.7 or higher.', 'post-snippets').'</strong></p></div>';
 	}
 
-
+	
 	/**
 	* Create the functions for shortcodes dynamically and register them
 	*
