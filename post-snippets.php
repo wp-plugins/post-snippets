@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.5.4
+Version: 1.7
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -409,4 +409,34 @@ JAVASCRIPT;
 }
 
 add_action( 'plugins_loaded', create_function( '', 'global $post_snippets; $post_snippets = new post_snippets();' ) );
+
+
+/**
+ * Allow snippets to be retrieved directly from PHP
+ *
+ * @since		Post Snippets 1.6
+ *
+ * @param		string		$snippet_name		The name of the snippet to retrieve
+ * @param		string		$snippet_vars		The variables to pass to the snippet, formatted as a query string.
+ * @returns		string							The Snippet
+ */
+function get_post_snippet( $snippet_name, $snippet_vars ) {
+	global $post_snippets;
+	$snippets = get_option($post_snippets -> plugin_options);
+	for ($i = 0; $i < count($snippets); $i++) {
+		if ($snippets[$i]['title'] == $snippet_name) {
+			parse_str( htmlspecialchars_decode($snippet_vars), $snippet_output );
+			$snippet = $snippets[$i]['snippet'];
+			$var_arr = explode(",",$snippets[$i]['vars']);
+
+			if ( !empty($var_arr[0]) ) {
+				for ($j = 0; $j < count($var_arr); $j++) {
+					$snippet = str_replace("{".$var_arr[$j]."}", $snippet_output[$var_arr[$j]], $snippet);
+				}
+			}
+		}
+	}
+	return $snippet;
+}
+
 ?>
