@@ -170,7 +170,9 @@ ed.addCommand('mcepost_snippets', function() {
 	* @returns	Array with all the plugin's action links
 	*/
 	function plugin_action_links( $links, $file ) {
-		$links[] = '<a href="options-general.php?page=post-snippets/post-snippets.php">'.__('Settings', 'post-snippets').'</a>';
+		if ( $file == plugin_basename( dirname(__FILE__).'/post-snippets.php' ) ) {
+			$links[] = '<a href="options-general.php?page=post-snippets/post-snippets.php">'.__('Settings', 'post-snippets').'</a>';
+		 }
 		return $links;
 	}
 
