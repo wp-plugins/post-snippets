@@ -52,6 +52,12 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 
 == Changelog ==
 
+= Version 1.7 - 26 Feb 2011 =
+ * Complete rewrite of the QuickTags insert functionality. It now uses jQuery UI to display a similar tabbed window as the TinyMCE button does. There is now one 'Post Snippets' button in the HTML editor instead of a separate button for each snippet. As the QuickTags function is completely rewritten, and this is the initial release of the new method, please report if you encounter any problems with it.
+ * Fixed QuickTags compability with WordPress 3.1.
+ * Added a link to the Post Snippets Settings directly from the entry on the 'Plugins List' page.
+ * Added get_post_snippet() function to retrieve snippets directly from PHP.
+
 = Version 1.5.4 - 26 Jan 2011 =
  * Included Turkish translation by [Ersan Özdil](http://www.tml.web.tr/).
  
