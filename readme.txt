@@ -52,6 +52,9 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 
 == Changelog ==
 
+= Version 1.7.XXX - XX Feb 2011 =
+ * Updated the Spanish translation by [Melvis E. Leon Lopez](http://www.soludata.net/site/).
+
 = Version 1.7.1 - 26 Feb 2011 =
  * Added styling to the Tabs in the Quicktag jQuery dialog window to make them more "tab-like".
  * Added the possibility to use a description for each snippet to display for the user when opening the Quicktag jQuery dialog window. Snippets without description and variables, has a default information message.
