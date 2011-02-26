@@ -69,7 +69,6 @@ class post_snippets {
 
 		$this->create_shortcodes();
 
-
 		# Adds the JS and HTML code in the header and footer for the jQuery insert UI dialog in the editor
 		add_action( 'admin_init', array(&$this,'enqueue_assets') );
 		add_action( 'admin_head', array(&$this,'jquery_ui_dialog') );
@@ -245,6 +244,7 @@ function edOpenPostSnippets(myField) {
 				<div id="post-snippets-tabs">
 					<ul>
 						<?php
+						# Create a tab for each available snippet
 						$snippets = get_option($this->plugin_options);
 						for ($i = 0; $i < count($snippets); $i++) { ?>
 							<li><a href="#ps-tabs-<?php echo $i; ?>"><?php echo $snippets[$i]['title']; ?></a></li>
@@ -252,33 +252,39 @@ function edOpenPostSnippets(myField) {
 					</ul>
 
 					<?php
+					# Create a panel with form fields for each available snippet
 					for ($i = 0; $i < count($snippets); $i++) { ?>
 						<div id="ps-tabs-<?php echo $i; ?>">
-							<h4><?php echo $snippets[$i]['title']; ?></h4>
-							<!--<p>Snippet Description</p>-->
+							<?php
+							// Print a snippet description is available
+							if ( isset($snippets[$i]['description']) )
+								echo "<p>" . $snippets[$i]['description'] . "</p>\n";
 
-							
-		<?php
-        $var_arr = explode(",",$snippets[$i]['vars']);
-		if (!empty($var_arr[0])) {
-			for ($j = 0; $j < count($var_arr); $j++) { ?>
-			 <label for="var_<?php echo $i; ?>_<?php echo $j; ?>"><?php echo($var_arr[$j]);?>:</label>
-			<input type="text" id="var_<?php echo $i; ?>_<?php echo $j; ?>" name="var_<?php echo $i; ?>_<?php echo $j; ?>" style="width: 190px" />
-			<br/>
-
-        <?php } } ?>
-
-		
-						</div>
-					<?php }	?>					
-				</div>
-
-			</div>
-		</div>
+							// Get all variables defined for the snippet and output them as input fields
+							$var_arr = explode(",",$snippets[$i]['vars']);
+							if (!empty($var_arr[0])) {
+								for ($j = 0; $j < count($var_arr); $j++) { ?>
+									<label for="var_<?php echo $i; ?>_<?php echo $j; ?>"><?php echo($var_arr[$j]);?>:</label>
+									<input type="text" id="var_<?php echo $i; ?>_<?php echo $j; ?>" name="var_<?php echo $i; ?>_<?php echo $j; ?>" style="width: 190px" />
+									<br/>
+							<?php
+								}
+							} else {
+								// If no variables and no description available, output a text to inform the user that it's an insert snippet only
+								if ( empty($snippets[$i]['description']) )
+									echo "<p>" . __('This snippet is insert only, no variables defined.', 'post-snippets') . "</p>";
+							}
+							?>
+						</div><!-- #ps-tabs-## -->
+					<?php
+					}
+					?>					
+				</div><!-- #post-snippets-tabs -->
+			</div><!-- #post-snippets-dialog -->
+		</div><!-- .hidden -->
 		<?
 		echo "\n<!-- END: Post Snippets UI Dialog -->\n";
 	}
-
 
 	/**
 	 * Adds a QuickTag button to the HTML editor

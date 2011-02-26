@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 1.7
+Stable tag: 1.7.1
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -52,7 +52,9 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 
 == Changelog ==
 
-= Version 1.7.1 - XX Feb 2011 =
+= Version 1.7.1 - 26 Feb 2011 =
+ * Added styling to the Tabs in the Quicktag jQuery dialog window to make them more "tab-like".
+ * Added the possibility to use a description for each snippet to display for the user when opening the Quicktag jQuery dialog window. Snippets without description and variables, has a default information message.
  * Moved the help text from below the snippets to the contextual help dropdown menu at the top of the settings page.
  * **Changed the required version of WordPress to 3.0**.
  * Request by proximity2008: A snippet without anything entered in the snippet field will not be registered as a shortcode.
