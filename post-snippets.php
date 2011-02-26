@@ -57,111 +57,28 @@ class post_snippets {
 	* @returns	Nothing
 	*/
 	function init_hooks() {
+		# Settings link on plugins list
 		add_filter( 'plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2 );
+		# Options Page
 		add_action( 'admin_menu', array(&$this,'wp_admin') );
-		add_action('admin_head', array(&$this,'quicktags'));
-//		add_action('admin_footer', array(&$this,'quicktags'));
 
+		// This old methos is no longer used, DELETE when the new method is tried by users.
+		// Add Quicktags to header (used to be in footer!)
+		// add_action('admin_head', array(&$this,'quicktags'));
+		// add_action('admin_footer', array(&$this,'quicktags'));
 
 		$this->create_shortcodes();
 
-add_action( 'edit_form_advanced', array(&$this,'manchumahara_quicktags'));
-//add_action( 'edit_page_form',');
-// admin_enqueuy_script??
-wp_enqueue_script( 'jquery-ui-dialog' );
-		add_action('admin_head', array(&$this,'dialog'));
-		add_action('admin_footer', array(&$this,'fot'));
-
-
-
-		}
-
-
+		# Adds the JS and HTML code in the header and footer for the jQuery insert UI dialog in the editor
+		add_action( 'admin_init', array(&$this,'enqueue_scripts') );
+		add_action( 'admin_head', array(&$this,'jquery_ui_dialog_style') );
+		add_action( 'admin_head', array(&$this,'jquery_ui_dialog') );
+		add_action( 'admin_footer', array(&$this,'insert_ui_dialog') );
 		
-		
-		
-		
-		
-		
-		
-		
-
-		
-		
-		
-		
-		
-		
-		function dialog() {
-?>
-	<script>
-jQuery(document).ready(function($){
-	$(function() {
-		$( "#dialog" ).dialog({
-			autoOpen: false
-		});
-	});
-});
-
-	</script>
-<?
-}
-
-function fot() {
-echo "\n<!-- Post Snippets -->\n";
-?>
-<div id="dialog" title="Basic dialog">
-	<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
-<?
-}
-
-/*
-See wp-includes/js/quicktags.dev.js
-*/	
-function manchumahara_quicktags()
-{
-/*
-ed.addCommand('mcepost_snippets', function() {
-				ed.windowManager.open({
-					file : url + '/window.php',
-					width : 360 + ed.getLang('post_snippets.delta_width', 0),
-					height : 210 + ed.getLang('post_snippets.delta_height', 0),
-					inline : 1
-				}, {
-					plugin_url : url // Plugin absolute URL
-				});
-			});
-*/
-
- 
-    ?>
-    <script type="text/javascript" charset="utf-8">
-    // <![CDATA[
-        //edButton(id, display, tagStart, tagEnd, access, open)
-        edbuttonlength = edButtons.length;
-        edbuttonlength_t = edbuttonlength;
-        //alert(edButtons);
-        edButtons[edbuttonlength++] = new edButton('ed_itemname','Item Name','<span class="itemleft">','</span>');
-        edButtons[edbuttonlength++] = new edButton('ed_itemprice','Item Price','<span class="itemprice">','</span>');
-        edButtons[edbuttonlength++] = new edButton('ed_postsnippets','Post Snippets','<span class="itemcaption">','</span>');
-            //alert(edButtons[edButtons.length]);
-               (function(){
- 
-              if (typeof jQuery === 'undefined') {
-                     return;
-              }
-              jQuery(document).ready(function(){
-                     jQuery("#ed_toolbar").append('<br/><input type="button" value="Item Name" id="ed_itemname" class="ed_button" onclick="edInsertTag(edCanvas, edbuttonlength_t);" title="Item Name" />');
-                     jQuery("#ed_toolbar").append('<input type="button" value="Item Price" id="ed_itemprice" class="ed_button" onclick="edInsertTag(edCanvas, edbuttonlength_t+1);" title="Item Price" />');
-                     jQuery("#ed_toolbar").append('<input type="button" value="Post Snippets" id="ed_postsnippets" class="ed_button" onclick="edInsertTag(edCanvas, edbuttonlength_t+2);" title="Post Snippets" />');
-              });
-       }());
-    // ]]>
-    </script>
-    <?php
- 
-}
+		# Add Editor QuickTag button
+		add_action( 'edit_form_advanced', array(&$this,'add_quicktag_button'));
+		add_action( 'edit_page_form', array(&$this,'add_quicktag_button'));
+	}
 
 
 	/**
@@ -176,7 +93,6 @@ ed.addCommand('mcepost_snippets', function() {
 		return $links;
 	}
 
-	
 	/**
 	* Displays a warning when installed in an old Wordpress Version
 	*
@@ -185,8 +101,251 @@ ed.addCommand('mcepost_snippets', function() {
 	function version_warning() {
 		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 2.7 or higher.', 'post-snippets').'</strong></p></div>';
 	}
+		
+	/**
+	 * Enqueues the necessary scripts for the insert dialogue
+	 *
+	 * @since		Post Snippets 1.7
+	 *
+	 * @returns		Nothing
+	 */
+	function enqueue_scripts() {
+		wp_enqueue_script( 'jquery-ui-dialog' );
+		wp_enqueue_script( 'jquery-ui-tabs' );
+	}
 
+
+	/**
+	 * CSS Styling for the jQuert Dialog
+	 *
+	 * @since		Post Snippets 1.7
+	 *
+	 * @returns		Nothing
+	 */
+	function jquery_ui_dialog_style() {
+	?>
+	<style type="text/css">
+	#post-snippets-tabs {
+		padding: 15px 15px 3px;
+		background-color: #f1f1f1;
+		border-bottom: 1px solid #dfdfdf;
+	}
+	#post-snippets-tabs li {
+		display: inline;
+	}
+	#post-snippets-tabs a.current {
+		background-color: #fff;
+		border-color: #dfdfdf;
+		border-bottom-color: #fff;
+		color: #d54e21;
+	}
+	#post-snippets-tabs a {
+		color: #2583AD;
+		padding: 6px;
+		border-width: 1px 1px 0;
+		border-style: solid solid none;
+		border-color: #f1f1f1;
+		text-decoration: none;
+	}
+	#post-snippets-tabs a:hover {
+		color: #d54e21;
+	}
+	</style>
+	<?php
+	}
 	
+	/**
+	 * jQuery control for the dialog and Javascript needed to insert snippets into the editor
+	 *
+	 * @since		Post Snippets 1.7
+	 *
+	 * @returns		Nothing
+	 */
+	function jquery_ui_dialog() {
+		echo "\n<!-- START: Post Snippets jQuery UI and related functions -->\n";
+		echo "<script>\n";
+		
+		# Prepare the snippets and shortcodes into javascript variables
+		# so they can be inserted into the editor, and get the variables replaced
+		# with user defined strings.
+		$snippets = get_option($this->plugin_options);
+		for ($i = 0; $i < count($snippets); $i++) {
+			if ($snippets[$i]['shortcode']) {
+				# Build a long string of the variables, ie: varname1={varname1} varname2={varname2}
+				# so {varnameX} can be replaced at runtime.
+				$var_arr = explode(",",$snippets[$i]['vars']);
+				$variables = '';
+				if (!empty($var_arr[0])) {
+					for ($j = 0; $j < count($var_arr); $j++) {
+						$variables .= ' ' . $var_arr[$j] . '="{' . $var_arr[$j] . '}"';
+					}
+				}
+				$shortcode = $snippets[$i]['title'] . $variables;
+				echo "var postsnippet_{$i} = '[" . $shortcode . "]';\n";
+			} else {
+				$theSnippet = $snippets[$i]['snippet'];
+				$theSnippet = str_replace('"','\"',str_replace(chr(13), '', str_replace(chr(10), '%%LF%%', $theSnippet)));
+				echo "var postsnippet_{$i} = \"" . $theSnippet . "\";\n";
+				//echo "var postsnippet_{$i} = '" . esc_js( $snippets[$i]['snippet'] ) . "';\n";
+			}
+		}
+		?>
+		
+		jQuery(document).ready(function($){
+			<?php
+			# Create js variables for all form fields
+			for ($i = 0; $i < count($snippets); $i++) {
+				$var_arr = explode(",",$snippets[$i]['vars']);
+				if (!empty($var_arr[0])) {
+					for ($j = 0; $j < count($var_arr); $j++) {
+						$varname = "var_" . $i . "_" . $j;
+						echo "var {$varname} = $( \"#{$varname}\" );\n";
+					}
+				}
+			}
+			?>
+			
+			var $tabs = $("#post-snippets-tabs").tabs();
+			
+			$(function() {
+				$( "#post-snippets-dialog" ).dialog({
+					autoOpen: false,
+					modal: true,
+					dialogClass: 'wp-dialog',
+					buttons: {
+						Cancel: function() {
+							$( this ).dialog( "close" );
+						},
+						"Insert": function() {
+							$( this ).dialog( "close" );
+							var selected = $tabs.tabs('option', 'selected');
+							<?php
+							for ($i = 0; $i < count($snippets); $i++) {
+							?>
+								if (selected == <?php echo $i; ?>) {
+									insert_snippet = postsnippet_<?php echo $i; ?>;
+									<?php
+									$var_arr = explode(",",$snippets[$i]['vars']);
+									if (!empty($var_arr[0])) {
+										for ($j = 0; $j < count($var_arr); $j++) {
+											$varname = "var_" . $i . "_" . $j; ?>
+											insert_snippet = insert_snippet.replace(/\{<?php echo $var_arr[$j]; ?>\}/g, <?php echo $varname; ?>.val());
+									<?php
+											echo "\n";
+										}
+									}
+									?>
+								}
+							<?php
+							}
+							?>
+							edInsertContent(muppCanv, insert_snippet);
+						}
+					},
+					width: 500,
+				});
+			});
+		});
+
+
+var muppCanv;
+
+
+function edOpenPostSnippets(myField) {
+		muppCanv = myField;
+		jQuery( "#post-snippets-dialog" ).dialog( "open" );
+};
+
+
+<?php
+		echo "</script>\n";
+		echo "\n<!-- END: Post Snippets jQuery UI and related functions -->\n";
+	}
+
+
+
+	/**
+	 * jQuery Insert Dialog for the editor
+	 *
+	 * @since		Post Snippets 1.7
+	 *
+	 * @returns		Nothing
+	 */
+	function insert_ui_dialog() {
+		echo "\n<!-- START: Post Snippets UI Dialog -->\n";
+		?>
+		<div class="hidden">
+			<div id="post-snippets-dialog" title="Post Snippets">
+
+				<div id="post-snippets-tabs">
+					<ul>
+						<?php
+						$snippets = get_option($this->plugin_options);
+						for ($i = 0; $i < count($snippets); $i++) { ?>
+							<li><a href="#ps-tabs-<?php echo $i; ?>"><?php echo $snippets[$i]['title']; ?></a></li>
+						<?php }	?>					
+					</ul>
+
+					<?php
+					for ($i = 0; $i < count($snippets); $i++) { ?>
+						<div id="ps-tabs-<?php echo $i; ?>">
+							<h4><?php echo $snippets[$i]['title']; ?></h4>
+							<!--<p>Snippet Description</p>-->
+
+							
+		<?php
+        $var_arr = explode(",",$snippets[$i]['vars']);
+		if (!empty($var_arr[0])) {
+			for ($j = 0; $j < count($var_arr); $j++) { ?>
+			 <label for="var_<?php echo $i; ?>_<?php echo $j; ?>"><?php echo($var_arr[$j]);?>:</label>
+			<input type="text" id="var_<?php echo $i; ?>_<?php echo $j; ?>" name="var_<?php echo $i; ?>_<?php echo $j; ?>" style="width: 190px" />
+			<br/>
+
+        <?php } } ?>
+
+		
+						</div>
+					<?php }	?>					
+				</div>
+
+			</div>
+		</div>
+		<?
+		echo "\n<!-- END: Post Snippets UI Dialog -->\n";
+	}
+
+
+	/**
+	 * Adds a QuickTag button to the HTML editor
+	 *
+	 * @see			wp-includes/js/quicktags.dev.js
+	 * @since		Post Snippets 1.7
+	 *
+	 * @returns		Nothing
+	 */
+	function add_quicktag_button() {
+		echo "\n<!-- START: Post Snippets QuickTag button -->\n";
+		?>
+		<script type="text/javascript" charset="utf-8">
+		// <![CDATA[
+			//edButton(id, display, tagStart, tagEnd, access, open)
+			edbuttonlength = edButtons.length;
+			edButtons[edbuttonlength++] = new edButton('ed_postsnippets', 'Post Snippets', '', '', '', -1);
+		   (function(){
+				  if (typeof jQuery === 'undefined') {
+						 return;
+				  }
+				  jQuery(document).ready(function(){
+						 jQuery("#ed_toolbar").append('<input type="button" value="Post Snippets" id="ed_postsnippets" class="ed_button" onclick="edOpenPostSnippets(edCanvas);" title="Post Snippets" />');
+				  });
+			}());
+		// ]]>
+		</script>
+		<?php
+		echo "\n<!-- END: Post Snippets QuickTag button -->\n";
+	}
+
+
 	/**
 	* Create the functions for shortcodes dynamically and register them
 	*
@@ -224,6 +383,7 @@ ed.addCommand('mcepost_snippets', function() {
 	/**
 	* Handling of QuickTags in the HTML editor
 	*
+	* DELETE THIS PART WHEN THE NEW QUICKTAGS FUNCTION HAVE BEEN TRIED BY USERS.
 	*/
 	function quicktags() {
 		$snippets = get_option($this->plugin_options);
