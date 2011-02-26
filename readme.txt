@@ -3,7 +3,7 @@ Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 2.7
-Tested up to: 3.0.1
+Tested up to: 3.1
 Stable tag: 1.7
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
