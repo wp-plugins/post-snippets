@@ -11,20 +11,30 @@
 #post-snippets-tabs li {
 	display: inline;
 }
-#post-snippets-tabs a.current {
+#post-snippets-tabs li {
+	color: #2583AD;
+	padding: 6px 6px 6px 6px;
+	border-width: 1px 1px 0;
+	border-style: solid solid none;
+	border-color: #f1f1f1;
+}
+#post-snippets-tabs li.ui-tabs-selected {
 	background-color: #fff;
 	border-color: #dfdfdf;
 	border-bottom-color: #fff;
 	color: #d54e21;
 }
+#post-snippets-tabs li.ui-state-hover {
+	color: #d54e21;
+}
 #post-snippets-tabs a {
-	color: #2583AD;
-	padding: 6px;
-	border-width: 1px 1px 0;
-	border-style: solid solid none;
-	border-color: #f1f1f1;
 	text-decoration: none;
 }
-#post-snippets-tabs a:hover {
-	color: #d54e21;
+#post-snippets-tabs .ui-tabs-panel {
+	margin: 5px 0 0 0;
+	padding: 5px 20px 10px;
+	background-color: #fff;
+	border-left: 1px solid #dfdfdf;
+	border-bottom: 1px solid #dfdfdf;
+	border: 1px solid #dfdfdf;
 }
