@@ -518,9 +518,8 @@ JAVASCRIPT;
 	*
 	*/
 	function wp_admin()	{
-		if (function_exists('add_options_page')) {
-			add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', __FILE__, array(&$this, 'options_page') );
-		}
+		add_action( 'contextual_help', array(&$this,'add_help_text'), 10, 3 );
+		add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', __FILE__, array(&$this, 'options_page') );
 	}
 
 	function admin_message($message) {
@@ -530,6 +529,38 @@ JAVASCRIPT;
 			<?php	
 		}
 	}
+
+	/**
+	 * Display contextual help in the help drop down menu at the options page.
+	 *
+	 * @since		Post Snippets 1.7.1
+	 *
+	 * @returns		string			The Contextual Help
+	 */
+	function add_help_text($contextual_help, $screen_id, $screen) {
+		//$contextual_help .= var_dump($screen); // use this to help determine $screen->id
+		if ( $screen->id == 'settings_page_post-snippets/post-snippets' ) {
+			$contextual_help =
+			'<p><strong>' . __('Title', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('Give the snippet a title that helps you identify it in the post editor. If you make it into a shortcode, this is the name of the shortcode as well.', 'post-snippets') . '</p>' .
+
+			'<p><strong>' . __('Variables', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name', 'post-snippets') . '</p>' .
+
+
+
+			'<p><strong>' . __('Snippet', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets') . '</p>' .
+
+			'<p><strong>' . __('SC', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert.', 'post-snippets') . '</p>' .
+
+			'<p><strong>' . __('For more information:', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('Visit my <a href="http://wpstorm.net/wordpress-plugins/post-snippets/">Post Snippets</a> page for additional information.', 'post-snippets') . '</p>';
+		}
+		return $contextual_help;
+	}
+
 
 	function options_page() {
 		// Add a new Snippet		
@@ -598,6 +629,7 @@ JAVASCRIPT;
         <div class="alignleft actions">
             <input type="submit" name="add-snippet" value="<?php _e( 'Add New Snippet', 'post-snippets' ) ?>" class="button-secondary" />
             <input type="submit" name="delete-selected" value="<?php _e( 'Delete Selected', 'post-snippets' ) ?>" class="button-secondary" />
+			<span class="description">(Use the help dropdown button above for additional information.)</span>
         </div>
     </div>
     <div class="clear"></div>
@@ -647,38 +679,6 @@ JAVASCRIPT;
 	<div class="submit">
 		<input type="submit" name="update-post-snippets" value="<?php _e( 'Update Snippets', 'post-snippets' ) ?>"  class="button-primary" /></div>
 	</form>
-
-    <div id="poststuff" class="ui-sortable">
-        <div class="postbox">
-            <h3><?php _e( 'Help', 'post-snippets' ); ?></h3>
-            <div class="inside">
-				<p><?php _e( '<strong>Title</strong><br/>Give the snippet a title that helps you identify it in the post editor.', 'post-snippets' ); ?></p>
-							
-				<p><?php _e( '<strong>Variables</strong><br/>A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name', 'post-snippets' ); ?></p>
-
-				<p><?php _e( '<strong>Snippet</strong><br/>This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets' ); ?></p>
-
-				<p><?php _e( '<strong>SC</strong><br/>Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert.', 'post-snippets' ); ?></p>
-
-				<p><?php _e( '<strong>QT</strong><br/>Enables the snippet to be available as a quicktag in the HTML editor.', 'post-snippets' ); ?></p>
-                
-                <p><?php _e( '<strong>About Post Snippets</strong><br/>Visit my <a href="http://coding.cglounge.com/wordpress-plugins/post-snippets/">Post Snippets</a> page for additional information.', 'post-snippets' ); ?></p>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-    <!--
-	<?php global $wp_version; ?>
-    <?php if ( version_compare( $wp_version, '2.6.999', '<' ) ) { ?>
-    jQuery('.postbox h3').prepend('<a class="togbox">+</a> ');
-    <?php } ?>
-    jQuery('.postbox h3').click( function() { jQuery(jQuery(this).parent().get(0)).toggleClass('closed'); } );
-    jQuery('.postbox.close-me').each(function(){
-        jQuery(this).addClass("closed");
-    });
-    //-->
-    </script>        
 </div>
 <?php
 	}

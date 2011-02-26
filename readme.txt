@@ -2,7 +2,7 @@
 Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
-Requires at least: 2.7
+Requires at least: 3.0
 Tested up to: 3.1
 Stable tag: 1.7
 
@@ -53,6 +53,8 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 == Changelog ==
 
 = Version 1.7.1 - XX Feb 2011 =
+ * Moved the help text from below the snippets to the contextual help dropdown menu at the top of the settings page.
+ * **Changed the required version of WordPress to 3.0**.
  * Request by proximity2008: A snippet without anything entered in the snippet field will not be registered as a shortcode.
 
 = Version 1.7 - 26 Feb 2011 =
