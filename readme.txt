@@ -52,6 +52,9 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 
 == Changelog ==
 
+= Version 1.7.1 - XX Feb 2011 =
+ * Request by proximity2008: A snippet without anything entered in the snippet field will not be registered as a shortcode.
+
 = Version 1.7 - 26 Feb 2011 =
  * Complete rewrite of the QuickTags insert functionality. It now uses jQuery UI to display a similar tabbed window as the TinyMCE button does. There is now one 'Post Snippets' button in the HTML editor instead of a separate button for each snippet. As the QuickTags function is completely rewritten, and this is the initial release of the new method, please report if you encounter any problems with it.
  * Fixed QuickTags compability with WordPress 3.1.
