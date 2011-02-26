@@ -547,13 +547,14 @@ JAVASCRIPT;
 			'<p><strong>' . __('Variables', 'post-snippets') . '</strong></p>' .
 			'<p>' . __('A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name', 'post-snippets') . '</p>' .
 
-
-
 			'<p><strong>' . __('Snippet', 'post-snippets') . '</strong></p>' .
 			'<p>' . __('This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets') . '</p>' .
 
 			'<p><strong>' . __('SC', 'post-snippets') . '</strong></p>' .
 			'<p>' . __('Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert.', 'post-snippets') . '</p>' .
+
+			'<p><strong>' . __('Advanced', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('The snippets can be retrieved directly from PHP, in a theme for instance, with the get_post_snippet() function. Visit the Post Snippets link under more information for instructions.', 'post-snippets') . '</p>' .
 
 			'<p><strong>' . __('For more information:', 'post-snippets') . '</strong></p>' .
 			'<p>' . __('Visit my <a href="http://wpstorm.net/wordpress-plugins/post-snippets/">Post Snippets</a> page for additional information.', 'post-snippets') . '</p>';
