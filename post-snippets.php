@@ -69,9 +69,9 @@ class post_snippets {
 
 		$this->create_shortcodes();
 
+
 		# Adds the JS and HTML code in the header and footer for the jQuery insert UI dialog in the editor
-		add_action( 'admin_init', array(&$this,'enqueue_scripts') );
-		add_action( 'admin_head', array(&$this,'jquery_ui_dialog_style') );
+		add_action( 'admin_init', array(&$this,'enqueue_assets') );
 		add_action( 'admin_head', array(&$this,'jquery_ui_dialog') );
 		add_action( 'admin_footer', array(&$this,'insert_ui_dialog') );
 		
@@ -103,55 +103,20 @@ class post_snippets {
 	}
 		
 	/**
-	 * Enqueues the necessary scripts for the insert dialogue
+	 * Enqueues the necessary scripts and styles for the plugins
 	 *
 	 * @since		Post Snippets 1.7
 	 *
 	 * @returns		Nothing
 	 */
-	function enqueue_scripts() {
+	function enqueue_assets() {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-	}
 
-
-	/**
-	 * CSS Styling for the jQuert Dialog
-	 *
-	 * @since		Post Snippets 1.7
-	 *
-	 * @returns		Nothing
-	 */
-	function jquery_ui_dialog_style() {
-	?>
-	<style type="text/css">
-	#post-snippets-tabs {
-		padding: 15px 15px 3px;
-		background-color: #f1f1f1;
-		border-bottom: 1px solid #dfdfdf;
-	}
-	#post-snippets-tabs li {
-		display: inline;
-	}
-	#post-snippets-tabs a.current {
-		background-color: #fff;
-		border-color: #dfdfdf;
-		border-bottom-color: #fff;
-		color: #d54e21;
-	}
-	#post-snippets-tabs a {
-		color: #2583AD;
-		padding: 6px;
-		border-width: 1px 1px 0;
-		border-style: solid solid none;
-		border-color: #f1f1f1;
-		text-decoration: none;
-	}
-	#post-snippets-tabs a:hover {
-		color: #d54e21;
-	}
-	</style>
-	<?php
+		# Adds the CSS stylesheet for the jQuery UI dialog
+		$style_url = plugins_url( '/assets/post-snippets.css', __FILE__);
+		wp_register_style('post-snippets-css', $style_url);
+		wp_enqueue_style( 'post-snippets-css');
 	}
 	
 	/**
@@ -630,7 +595,7 @@ JAVASCRIPT;
         <div class="alignleft actions">
             <input type="submit" name="add-snippet" value="<?php _e( 'Add New Snippet', 'post-snippets' ) ?>" class="button-secondary" />
             <input type="submit" name="delete-selected" value="<?php _e( 'Delete Selected', 'post-snippets' ) ?>" class="button-secondary" />
-			<span class="description">(Use the help dropdown button above for additional information.)</span>
+			<span class="description"><?php _e( '(Use the help dropdown button above for additional information.)', 'post-snippets' ); ?></span>
         </div>
     </div>
     <div class="clear"></div>

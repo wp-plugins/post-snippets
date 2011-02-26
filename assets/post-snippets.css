@@ -1,0 +1,30 @@
+/**
+ * Styling for the jQuery UI dialog used by Post Snippets 
+ *
+ * @since		Post Snippets 1.7.1
+ */
+#post-snippets-tabs {
+	padding: 15px 15px 3px;
+	background-color: #f1f1f1;
+	border-bottom: 1px solid #dfdfdf;
+}
+#post-snippets-tabs li {
+	display: inline;
+}
+#post-snippets-tabs a.current {
+	background-color: #fff;
+	border-color: #dfdfdf;
+	border-bottom-color: #fff;
+	color: #d54e21;
+}
+#post-snippets-tabs a {
+	color: #2583AD;
+	padding: 6px;
+	border-width: 1px 1px 0;
+	border-style: solid solid none;
+	border-color: #f1f1f1;
+	text-decoration: none;
+}
+#post-snippets-tabs a:hover {
+	color: #d54e21;
+}
