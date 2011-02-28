@@ -4,13 +4,17 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
 == Description ==
 
 This admin plugin stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button. The snippet can be inserted as defined, or as a shortcode to keep flexibility for updating the snippet.
+
+Related Links:
+
+* [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests")
 
 For complete usage instructions see: [Post Snippets](http://wpstorm.net/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
@@ -42,7 +46,7 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 == Frequently Asked Questions ==
 
-Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post-snippets/#comments) for questions and answers.
+Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests") for questions, answers, support and feature requests.
 
 == Screenshots ==
 
@@ -52,7 +56,8 @@ Please visit [Post Snippets' Comments](http://wpstorm.net/wordpress-plugins/post
 
 == Changelog ==
 
-= Version 1.7.XXX - XX Feb 2011 =
+= Version 1.7.2 - 28 Feb 2011 =
+ * Specified text/javascript for the UI dialog script.
  * Updated the Spanish translation by [Melvis E. Leon Lopez](http://www.soludata.net/site/).
 
 = Version 1.7.1 - 26 Feb 2011 =
