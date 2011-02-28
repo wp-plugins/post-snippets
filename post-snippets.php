@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.7.1
+Version: 1.7.2
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -75,8 +75,8 @@ class post_snippets {
 		add_action( 'admin_footer', array(&$this,'insert_ui_dialog') );
 		
 		# Add Editor QuickTag button
-		add_action( 'edit_form_advanced', array(&$this,'add_quicktag_button'));
-		add_action( 'edit_page_form', array(&$this,'add_quicktag_button'));
+		add_action( 'edit_form_advanced', array(&$this,'add_quicktag_button') );
+		add_action( 'edit_page_form', array(&$this,'add_quicktag_button') );
 	}
 
 
@@ -127,7 +127,7 @@ class post_snippets {
 	 */
 	function jquery_ui_dialog() {
 		echo "\n<!-- START: Post Snippets jQuery UI and related functions -->\n";
-		echo "<script>\n";
+		echo "<script type='text/javascript'>\n";
 		
 		# Prepare the snippets and shortcodes into javascript variables
 		# so they can be inserted into the editor, and get the variables replaced
@@ -448,6 +448,7 @@ function edOpenPostSnippets(myField) {
 
 
 <?php
+/*
 echo <<<JAVASCRIPT
 							function createShortcode(shortcodeTag, shortcodeAtts) {
 								theSnippet = '[' + shortcodeTag;
@@ -480,6 +481,7 @@ echo <<<JAVASCRIPT
 							//-->
 						</script>
 JAVASCRIPT;
+*/
 		}
 	}
 
