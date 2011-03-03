@@ -93,7 +93,7 @@ class post_snippets {
 	* @returns	Nothing
 	*/
 	function version_warning() {
-		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 2.7 or higher.', 'post-snippets').'</strong></p></div>';
+		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 3.0 or higher.', 'post-snippets').'</strong></p></div>';
 	}
 		
 	/**
@@ -106,11 +106,12 @@ class post_snippets {
 	function enqueue_assets() {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-tabs' );
+		wp_enqueue_style( 'wp-jquery-ui-dialog');
 
 		# Adds the CSS stylesheet for the jQuery UI dialog
 		$style_url = plugins_url( '/assets/post-snippets.css', __FILE__);
-		wp_register_style('post-snippets-css', $style_url);
-		wp_enqueue_style( 'post-snippets-css');
+		wp_register_style('post-snippets', $style_url);
+		wp_enqueue_style( 'post-snippets');
 	}
 	
 	/**
