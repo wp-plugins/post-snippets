@@ -57,7 +57,7 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 
 = Version 1.7.3 - 3 Mar 2011 =
  * Added a text area field in the settings panel to enter an optional description for each snippet. This decription is displayed for the editor writing a post in the jQuery Post Snippet dialog.
- * Fixed the syling of the quicktag jQuery window when the user have disable the visual editor completely.
+ * Fixed the syling of the quicktag jQuery window when the user have disabled the visual editor completely.
  * Fixed problem with line formatting in the new quicktag snippets.
  * Fixed a problem with JavaScript snippets breaking the admin page.
  * Various small bugfixes.
