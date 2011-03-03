@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -14,9 +14,8 @@ This admin plugin stores snippets of HTML code or reoccurring text that you ofte
 
 Related Links:
 
+* [Documentation](http://wpstorm.net/wordpress-plugins/post-snippets/ "Complete usage instructions")
 * [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests")
-
-For complete usage instructions see: [Post Snippets](http://wpstorm.net/wordpress-plugins/post-snippets/ "Complete Usage Instructions for Post Snippets") 
 
 See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
 
@@ -55,6 +54,13 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.7.3 - 3 Mar 2011 =
+ * Added a text area field in the settings panel to enter an optional description for each snippet. This decription is displayed for the editor writing a post in the jQuery Post Snippet dialog.
+ * Fixed the syling of the quicktag jQuery window when the user have disable the visual editor completely.
+ * Fixed problem with line formatting in the new quicktag snippets.
+ * Fixed a problem with JavaScript snippets breaking the admin page.
+ * Various small bugfixes.
 
 = Version 1.7.2 - 28 Feb 2011 =
  * Specified text/javascript for the UI dialog script.
