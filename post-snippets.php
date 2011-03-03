@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.7.2
+Version: 1.7.3
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -258,7 +258,7 @@ function edOpenPostSnippets(myField) {
 							<?php
 							// Print a snippet description is available
 							if ( isset($snippets[$i]['description']) )
-								echo "<p>" . $snippets[$i]['description'] . "</p>\n";
+								echo '<p class="howto">' . $snippets[$i]['description'] . "</p>\n";
 
 							// Get all variables defined for the snippet and output them as input fields
 							$var_arr = explode(",",$snippets[$i]['vars']);
@@ -272,7 +272,7 @@ function edOpenPostSnippets(myField) {
 							} else {
 								// If no variables and no description available, output a text to inform the user that it's an insert snippet only
 								if ( empty($snippets[$i]['description']) )
-									echo "<p>" . __('This snippet is insert only, no variables defined.', 'post-snippets') . "</p>";
+									echo '<p class="howto">' . __('This snippet is insert only, no variables defined.', 'post-snippets') . "</p>";
 							}
 							?>
 						</div><!-- #ps-tabs-## -->
@@ -544,6 +544,7 @@ JAVASCRIPT;
 			array_push($snippets, array (
 			    'title' => "Untitled",
 			    'vars' => "",
+			    'description' => "",
 			    'shortcode' => false,
 			    'quicktag' => false,
 			    'snippet' => ""));
@@ -558,6 +559,7 @@ JAVASCRIPT;
 				for ($i=0; $i < count($snippets); $i++) {
 					$snippets[$i]['title'] = trim($_POST[$i.'_title']);
 					$snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
+					$snippets[$i]['description'] = esc_html( $_POST[$i.'_description'] );
 					$snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
 					$snippets[$i]['quicktag'] = isset($_POST[$i.'_quicktag']) ? true : false;
 					/*	Check if the plugin runs on PHP below version 5.1.0
@@ -615,6 +617,7 @@ JAVASCRIPT;
             <th scope="col" style="width: 180px;"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col" style="width: 180px;"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'Description', 'post-snippets' ) ?></th>
             <th scope="col" style="width: 20px;"><?php _e( 'SC', 'post-snippets' ) ?></th>
             <th scope="col" style="width: 20px;"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
@@ -626,6 +629,7 @@ JAVASCRIPT;
             <th scope="col"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
+            <th scope="col"><?php _e( 'Description', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'SC', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
@@ -641,6 +645,7 @@ JAVASCRIPT;
 			<td class='row-title'><input type='text' name='<?php echo $i; ?>_title' value='<?php echo $snippets[$i]['title']; ?>' /></td>
 			<td class='name'><input type='text' name='<?php echo $i; ?>_vars' value='<?php echo $snippets[$i]['vars']; ?>' /></td>
 			<td class='desc'><textarea name="<?php echo $i; ?>_snippet" class="large-text" rows="3"><?php echo htmlspecialchars($snippets[$i]['snippet'], ENT_NOQUOTES); ?></textarea></td>
+			<td class='desc'><textarea name="<?php echo $i; ?>_description" class="large-text" rows="3"><?php if (isset( $snippets[$i]['description'] ) ) echo htmlspecialchars($snippets[$i]['description'], ENT_NOQUOTES); ?></textarea></td>
 			<td class='name'><input type='checkbox' name='<?php echo $i; ?>_shortcode' value='true'<?php if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /></td>
 			<td class='name'><input type='checkbox' name='<?php echo $i; ?>_quicktag' value='true'<?php if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /></td>
 			</tr>
