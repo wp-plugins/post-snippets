@@ -147,10 +147,16 @@ class post_snippets {
 				$shortcode = $snippets[$i]['title'] . $variables;
 				echo "var postsnippet_{$i} = '[" . $shortcode . "]';\n";
 			} else {
-				$theSnippet = $snippets[$i]['snippet'];
-				$theSnippet = str_replace('"','\"',str_replace(chr(13), '', str_replace(chr(10), '%%LF%%', $theSnippet)));
-				echo "var postsnippet_{$i} = \"" . $theSnippet . "\";\n";
-				//echo "var postsnippet_{$i} = '" . esc_js( $snippets[$i]['snippet'] ) . "';\n";
+				$snippet = $snippets[$i]['snippet'];
+				# Fixes for potential collisions:
+				/* Replace <> with char codes, otherwise </script> in a snippet will break it */ 
+				$snippet = str_replace( '<', '\x3C', str_replace( '>', '\x3E', $snippet ) );
+				/* Escape " with \" */
+				$snippet = str_replace( '"', '\"', $snippet );
+				/* Remove CR and replace LF with \n to keep formatting */
+				$snippet = str_replace( chr(13), '', str_replace( chr(10), '\n', $snippet ) );
+				# Print out the variable containing the snippet
+				echo "var postsnippet_{$i} = \"" . $snippet . "\";\n";
 			}
 		}
 		?>
@@ -229,7 +235,7 @@ function edOpenPostSnippets(myField) {
 
 
 	/**
-	 * jQuery Insert Dialog for the editor
+	 * Insert Snippet jQuery UI dialog HTML for the post editor
 	 *
 	 * @since		Post Snippets 1.7
 	 *
@@ -282,7 +288,7 @@ function edOpenPostSnippets(myField) {
 				</div><!-- #post-snippets-tabs -->
 			</div><!-- #post-snippets-dialog -->
 		</div><!-- .hidden -->
-		<?
+		<?php
 		echo "\n<!-- END: Post Snippets UI Dialog -->\n";
 	}
 
