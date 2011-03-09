@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.7.3
+Version: 1.7.5
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -420,6 +420,7 @@ function edOpenPostSnippets(myField) {
 			    'description' => "",
 			    'shortcode' => false,
 			    'quicktag' => false,
+			    'php' => false,
 			    'snippet' => ""));
 			update_option($this->plugin_options, $snippets);
 			$this->admin_message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
@@ -435,6 +436,7 @@ function edOpenPostSnippets(myField) {
 					$snippets[$i]['description'] = esc_html( $_POST[$i.'_description'] );
 					$snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
 					$snippets[$i]['quicktag'] = isset($_POST[$i.'_quicktag']) ? true : false;
+					$snippets[$i]['php'] = isset($_POST[$i.'_php']) ? true : false;
 					/*	Check if the plugin runs on PHP below version 5.1.0
 						Because of a bug in WP 2.7.x in includes/compat.php the htmlspecialchars_decode
 						don't revert back to a PHP 4.x compatible version. So this is a workaround to make
@@ -467,6 +469,76 @@ function edOpenPostSnippets(myField) {
 				$this->admin_message( __( 'Selected snippets have been deleted.', 'post-snippets' ) );
 			}
 		}
+
+		// Export Snippets
+		$export = '<h3>' . __( 'Import/Export', 'post-snippets' ) . '</h3>';
+		$export .= '<strong>' . __( 'Export', 'post-snippets' ) . '</strong><br/>';
+		$export .= '<form method="post">';
+		$export .= '<p>'.__( 'Export your snippets for backup or to import them on another site.', 'post-snippets' ).'</p>';
+		$export .= '<input type="submit" class="button" name="postsnippets_export" value="'.__( 'Export Snippets', 'post-snippets' ).'"/>';
+		$export .= '</form>';
+		
+		if ( isset($_POST['postsnippets_export']) ) {
+			$url = $this->export_snippets();
+			if ($url) {
+				$export .= '<script type="text/javascript">
+					document.location = \''.$url.'\';
+				</script>';
+			} else {
+				$export .= 'Error: '.$url;
+			}
+		}
+
+
+		// Import Snippets
+		$import = '<br/><br/><strong>'.__( 'Import', 'post-snippets' ).'</strong><br/>';
+		if ( !isset($_FILES['postsnippets_import_file']) || empty($_FILES['postsnippets_import_file']) ) {
+			$import .= '<p>'.__( 'Import snippets from a post-snippets-export.zip file. Importing overwrites any existing snippets.', 'post-snippets' ).'</p>';
+			$import .= '<form method="post" enctype="multipart/form-data">';
+			$import .= '<input type="file" name="postsnippets_import_file"/>';
+			$import .= '<input type="hidden" name="action" value="wp_handle_upload"/>';
+			$import .= '<input type="submit" class="button" value="'.__( 'Import Snippets', 'post-snippets' ).'"/>';
+			$import .= '</form>';
+		} else {
+			$file = wp_handle_upload($_FILES['postsnippets_import_file']);
+			
+			if ( isset( $file['file'] ) && !is_wp_error($file) ) {
+				require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
+				$zip = new PclZip( $file['file'] );
+				$dir = wp_upload_dir();
+				$upload_dir = $dir['basedir'] . '/';
+				$unzipped = $zip->extract( $p_path = $upload_dir );
+//				var_dump ($unzipped);
+				if ( $unzipped[0]['stored_filename'] == 'post-snippets-export.cfg' ) {
+//						$options = parse_ini_file( WPSEO_UPLOAD_DIR.'import/settings.ini', true );
+//						$options = parse_ini_file( WP_CONTENT_DIR.'/settings.ini', true );
+//    if ( !$options = fopen( $unzipped[0]['filename'], 'rb' ) )
+//       die();
+//  fclose($options);
+$options = file_get_contents( $upload_dir.'post-snippets-export.cfg' );
+
+			update_option($this->plugin_options, unserialize($options));
+			$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
+
+//						var_dump( $options);
+//						foreach ($options as $name => $optgroup) {
+//							if ($name != 'wpseo_taxonomy_meta') {
+//								update_option($name, $optgroup);
+//							} else {
+//								update_option($name, json_decode( urldecode( $optgroup['wpseo_taxonomy_meta'] ), true ) );
+//							}
+//						}
+					$import .= '<p><strong>'.__( 'Snippets successfully imported.').'</strong></p>';
+				} else {
+					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Unzipping failed.').'</strong></p>';
+				}
+			} else {
+				if ( is_wp_error($file) )
+					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.$file['error'].'</strong></p>';
+				else
+					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Upload failed.').'</strong></p>';
+			}
+		}
 ?>
 <div class=wrap>
     <h2>Post Snippets</h2>
@@ -490,9 +562,6 @@ function edOpenPostSnippets(myField) {
             <th scope="col" style="width: 180px;"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col" style="width: 180px;"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
-            <th scope="col"><?php _e( 'Description', 'post-snippets' ) ?></th>
-            <th scope="col" style="width: 20px;"><?php _e( 'SC', 'post-snippets' ) ?></th>
-            <th scope="col" style="width: 20px;"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
         </thead>
     
@@ -502,9 +571,6 @@ function edOpenPostSnippets(myField) {
             <th scope="col"><?php _e( 'Title', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Variables', 'post-snippets' ) ?></th>
             <th scope="col"><?php _e( 'Snippet', 'post-snippets' ) ?></th>
-            <th scope="col"><?php _e( 'Description', 'post-snippets' ) ?></th>
-            <th scope="col"><?php _e( 'SC', 'post-snippets' ) ?></th>
-            <th scope="col"><?php _e( 'QT', 'post-snippets' ) ?></th>
         </tr>
         </tfoot>
     
@@ -515,12 +581,20 @@ function edOpenPostSnippets(myField) {
 			for ($i=0; $i < count($snippets); $i++) { ?>
 			<tr class='recent'>
 			<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?php echo $i; ?>' /></th>
-			<td class='row-title'><input type='text' name='<?php echo $i; ?>_title' value='<?php echo $snippets[$i]['title']; ?>' /></td>
-			<td class='name'><input type='text' name='<?php echo $i; ?>_vars' value='<?php echo $snippets[$i]['vars']; ?>' /></td>
-			<td class='desc'><textarea name="<?php echo $i; ?>_snippet" class="large-text" rows="3"><?php echo htmlspecialchars($snippets[$i]['snippet'], ENT_NOQUOTES); ?></textarea></td>
-			<td class='desc'><textarea name="<?php echo $i; ?>_description" class="large-text" rows="3"><?php if (isset( $snippets[$i]['description'] ) ) echo htmlspecialchars($snippets[$i]['description'], ENT_NOQUOTES); ?></textarea></td>
-			<td class='name'><input type='checkbox' name='<?php echo $i; ?>_shortcode' value='true'<?php if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /></td>
-			<td class='name'><input type='checkbox' name='<?php echo $i; ?>_quicktag' value='true'<?php if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /></td>
+			<td class='row-title'>
+			<input type='text' name='<?php echo $i; ?>_title' value='<?php echo $snippets[$i]['title']; ?>' />
+			</td>
+			<td class='name'>
+			<input type='text' name='<?php echo $i; ?>_vars' value='<?php echo $snippets[$i]['vars']; ?>' /><br/>
+			<input type='checkbox' name='<?php echo $i; ?>_shortcode' value='true'<?php if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /> <?php _e( 'Shortcode', 'post-snippets' ) ?><br/>
+			<input type='checkbox' name='<?php echo $i; ?>_quicktag' value='true'<?php if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /> <?php _e( 'Quicktag', 'post-snippets' ) ?><br/>
+			<!-- <input type='checkbox' name='< ?php echo $i; ? >_php' value='true'< ?php if ($snippets[$i]['php'] == true) { echo " checked"; }? > /> < ?php _e( 'PHP Code', 'post-snippets' ) ? ><br/> -->
+			</td>
+			<td class='desc'>
+			<textarea name="<?php echo $i; ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippets[$i]['snippet'], ENT_NOQUOTES); ?></textarea>
+			<?php _e( 'Description', 'post-snippets' ) ?>:
+			<input type='text' style='width: 100%;' name='<?php echo $i; ?>_description' value='<?php if (isset( $snippets[$i]['description'] ) ) echo htmlspecialchars($snippets[$i]['description'], ENT_NOQUOTES); ?>' /><br/>
+			</td>
 			</tr>
 		<?php
 			}
@@ -533,9 +607,41 @@ function edOpenPostSnippets(myField) {
 	</form>
 </div>
 <?php
+		echo $export;
+		echo $import;
+	}
+
+	/**
+	 * Create a zipped filed containing all Post Snippets, for export.
+	 *
+	 * @since		Post Snippets 1.8
+	 *
+	 * @returns		string			URL to the exported snippets
+	 */
+	function export_snippets() {
+		$snippets = serialize(get_option($this->plugin_options));
+		$dir = wp_upload_dir();
+		$upload_dir = $dir['basedir'] . '/';
+		$upload_url = $dir['baseurl'] . '/';
+		
+		if ( !$handle = fopen( $upload_dir.'post-snippets-export.cfg', 'w' ) )
+			die();
+	
+		if ( !fwrite($handle, $snippets) ) 
+			die();
+
+	    fclose($handle);
+
+		require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
+	
+		chdir($upload_dir);
+		$zip = new PclZip('./post-snippets-export.zip');
+		if ($zip->create('./post-snippets-export.cfg') == 0)
+			return false;
+		
+		return $upload_url.'post-snippets-export.zip'; 
 	}
 }
-
 add_action( 'plugins_loaded', create_function( '', 'global $post_snippets; $post_snippets = new post_snippets();' ) );
 
 
