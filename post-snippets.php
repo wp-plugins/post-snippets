@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.7.5
+Version: 1.7.5.1
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -491,6 +491,7 @@ function edOpenPostSnippets(myField) {
 
 
 		// Import Snippets
+		// @uses wp_handle_upload() in wp-admin/includes/file.php
 		$import = '<br/><br/><strong>'.__( 'Import', 'post-snippets' ).'</strong><br/>';
 		if ( !isset($_FILES['postsnippets_import_file']) || empty($_FILES['postsnippets_import_file']) ) {
 			$import .= '<p>'.__( 'Import snippets from a post-snippets-export.zip file. Importing overwrites any existing snippets.', 'post-snippets' ).'</p>';
@@ -500,8 +501,12 @@ function edOpenPostSnippets(myField) {
 			$import .= '<input type="submit" class="button" value="'.__( 'Import Snippets', 'post-snippets' ).'"/>';
 			$import .= '</form>';
 		} else {
-			$file = wp_handle_upload($_FILES['postsnippets_import_file']);
+			$file = wp_handle_upload( $_FILES['postsnippets_import_file'] );
 			
+//			var_dump($file);
+			
+			// På denna failar det
+			// array(1) { ["error"]=> string(60) "Sorry, this file type is not permitted for security reasons." } 
 			if ( isset( $file['file'] ) && !is_wp_error($file) ) {
 				require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
 				$zip = new PclZip( $file['file'] );
@@ -510,30 +515,21 @@ function edOpenPostSnippets(myField) {
 				$unzipped = $zip->extract( $p_path = $upload_dir );
 //				var_dump ($unzipped);
 				if ( $unzipped[0]['stored_filename'] == 'post-snippets-export.cfg' ) {
-//						$options = parse_ini_file( WPSEO_UPLOAD_DIR.'import/settings.ini', true );
 //						$options = parse_ini_file( WP_CONTENT_DIR.'/settings.ini', true );
 //    if ( !$options = fopen( $unzipped[0]['filename'], 'rb' ) )
 //       die();
 //  fclose($options);
-$options = file_get_contents( $upload_dir.'post-snippets-export.cfg' );
+					$options = file_get_contents( $upload_dir.'post-snippets-export.cfg' );
 
-			update_option($this->plugin_options, unserialize($options));
-			$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
+					update_option($this->plugin_options, unserialize($options));
+					$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
 
-//						var_dump( $options);
-//						foreach ($options as $name => $optgroup) {
-//							if ($name != 'wpseo_taxonomy_meta') {
-//								update_option($name, $optgroup);
-//							} else {
-//								update_option($name, json_decode( urldecode( $optgroup['wpseo_taxonomy_meta'] ), true ) );
-//							}
-//						}
 					$import .= '<p><strong>'.__( 'Snippets successfully imported.').'</strong></p>';
 				} else {
 					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Unzipping failed.').'</strong></p>';
 				}
 			} else {
-				if ( is_wp_error($file) )
+				if ( $file['error'] )
 					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.$file['error'].'</strong></p>';
 				else
 					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Upload failed.').'</strong></p>';
