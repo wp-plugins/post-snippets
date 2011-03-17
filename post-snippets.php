@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.7.5.1
+Version: 1.7.5.2
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -481,14 +481,24 @@ function edOpenPostSnippets(myField) {
 		if ( isset($_POST['postsnippets_export']) ) {
 			$url = $this->export_snippets();
 			if ($url) {
+/*
 				$export .= '<script type="text/javascript">
 					document.location = \''.$url.'\';
 				</script>';
+*/
+				define('PSURL', $url);
+				function psnippets_footer() {
+								$export .= '<script type="text/javascript">
+									document.location = \''.PSURL.'\';
+								</script>';
+								  echo $export;
+				}
+				add_action('admin_footer', 'psnippets_footer', 10000);
+
 			} else {
 				$export .= 'Error: '.$url;
 			}
 		}
-
 
 		// Import Snippets
 		// @uses wp_handle_upload() in wp-admin/includes/file.php
@@ -529,7 +539,7 @@ function edOpenPostSnippets(myField) {
 					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Unzipping failed.').'</strong></p>';
 				}
 			} else {
-				if ( $file['error'] )
+				if ( $file['error'] || is_wp_error( $file ) )
 					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.$file['error'].'</strong></p>';
 				else
 					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Upload failed.').'</strong></p>';
