@@ -45,6 +45,12 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 == Frequently Asked Questions ==
 
+= Why do importing Snippets on a multi site install fail? =
+
+Upload of zip files must be allowed, enable this in Sites Network Admin -> Settings -> Upload Settings -> Upload file types.
+
+= Where can I get support? =
+
 Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests") for questions, answers, support and feature requests.
 
 == Screenshots ==
