@@ -3,8 +3,8 @@ Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
-Tested up to: 3.1
-Stable tag: 1.7.3
+Tested up to: 3.1.3
+Stable tag: 1.8
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -61,8 +61,10 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 
 == Changelog ==
 
-= Version 1.8 - 9 Mar 2011 =
- * Optimized the layout of the Snippet settings screen.
+= Version 1.8 - 30 May 2011 =
+ * Fixed an escaping problem with the snippet description.
+ * Added Import / Export functionality.
+ * Snippets used as shortcodes can now nest other shortcodes in them.
 
 = Version 1.7.3 - 3 Mar 2011 =
  * Added a text area field in the settings panel to enter an optional description for each snippet. This decription is displayed for the editor writing a post in the jQuery Post Snippet dialog.
