@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.7.5.2
+Version: 1.8
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -29,11 +29,10 @@ class post_snippets {
 	var $plugin_options = "post_snippets_options";
 
 	/**
-	* Constructor
-	*
-	*/
-	function post_snippets()
-	{
+	 * Constructor
+	 *
+	 */
+	function post_snippets() {
 		// define URL
 		define('post_snippets_ABSPATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' );
 		define('post_snippets_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
@@ -52,10 +51,10 @@ class post_snippets {
 	}
 
 	/**
-	* Initializes the hooks for the plugin
-	*
-	* @returns	Nothing
-	*/
+	 * Initializes the hooks for the plugin
+	 *
+	 * @returns	Nothing
+	 */
 	function init_hooks() {
 		# Settings link on plugins list
 		add_filter( 'plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2 );
@@ -76,10 +75,10 @@ class post_snippets {
 
 
 	/**
-	* Quick link to the Post Snippets Settings page from the Plugins page.
-	*
-	* @returns	Array with all the plugin's action links
-	*/
+	 * Quick link to the Post Snippets Settings page from the Plugins page.
+	 *
+	 * @returns	Array with all the plugin's action links
+	 */
 	function plugin_action_links( $links, $file ) {
 		if ( $file == plugin_basename( dirname(__FILE__).'/post-snippets.php' ) ) {
 			$links[] = '<a href="options-general.php?page=post-snippets/post-snippets.php">'.__('Settings', 'post-snippets').'</a>';
@@ -88,10 +87,10 @@ class post_snippets {
 	}
 
 	/**
-	* Displays a warning when installed in an old Wordpress Version
-	*
-	* @returns	Nothing
-	*/
+	 * Displays a warning when installed in an old Wordpress Version
+	 *
+	 * @returns	Nothing
+	 */
 	function version_warning() {
 		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 3.0 or higher.', 'post-snippets').'</strong></p></div>';
 	}
@@ -320,9 +319,9 @@ function edOpenPostSnippets(myField) {
 
 
 	/**
-	* Create the functions for shortcodes dynamically and register them
-	*
-	*/
+	 * Create the functions for shortcodes dynamically and register them
+	 *
+	 */
 	function create_shortcodes() {
 		$snippets = get_option($this->plugin_options);
 		if (!empty($snippets)) {
@@ -349,7 +348,7 @@ function edOpenPostSnippets(myField) {
 									$snippet = str_replace("{".$key."}", $val, $snippet);
 								}
 	
-								return stripslashes($snippet);') );
+								return do_shortcode(stripslashes($snippet));') );
 				}
 			}
 		}
@@ -357,9 +356,9 @@ function edOpenPostSnippets(myField) {
 
 
 	/**
-	* The Admin Page and all it's functions
-	*
-	*/
+	 * The Admin Page and all it's functions
+	 *
+	 */
 	function wp_admin()	{
 		add_action( 'contextual_help', array(&$this,'add_help_text'), 10, 3 );
 		add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', __FILE__, array(&$this, 'options_page') );
@@ -433,7 +432,6 @@ function edOpenPostSnippets(myField) {
 				for ($i=0; $i < count($snippets); $i++) {
 					$snippets[$i]['title'] = trim($_POST[$i.'_title']);
 					$snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
-					$snippets[$i]['description'] = esc_html( $_POST[$i.'_description'] );
 					$snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
 					$snippets[$i]['quicktag'] = isset($_POST[$i.'_quicktag']) ? true : false;
 					$snippets[$i]['php'] = isset($_POST[$i.'_php']) ? true : false;
@@ -445,8 +443,10 @@ function edOpenPostSnippets(myField) {
 					*/
 					if (version_compare(PHP_VERSION, '5.1.0', '<')) {
 						$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+						$snippets[$i]['description'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
 					} else {
 						$snippets[$i]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+						$snippets[$i]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
 					}
 				}
 				update_option($this->plugin_options, $snippets);
@@ -469,82 +469,9 @@ function edOpenPostSnippets(myField) {
 				$this->admin_message( __( 'Selected snippets have been deleted.', 'post-snippets' ) );
 			}
 		}
-
-		// Export Snippets
-		$export = '<h3>' . __( 'Import/Export', 'post-snippets' ) . '</h3>';
-		$export .= '<strong>' . __( 'Export', 'post-snippets' ) . '</strong><br/>';
-		$export .= '<form method="post">';
-		$export .= '<p>'.__( 'Export your snippets for backup or to import them on another site.', 'post-snippets' ).'</p>';
-		$export .= '<input type="submit" class="button" name="postsnippets_export" value="'.__( 'Export Snippets', 'post-snippets' ).'"/>';
-		$export .= '</form>';
 		
-		if ( isset($_POST['postsnippets_export']) ) {
-			$url = $this->export_snippets();
-			if ($url) {
-/*
-				$export .= '<script type="text/javascript">
-					document.location = \''.$url.'\';
-				</script>';
-*/
-				define('PSURL', $url);
-				function psnippets_footer() {
-								$export .= '<script type="text/javascript">
-									document.location = \''.PSURL.'\';
-								</script>';
-								  echo $export;
-				}
-				add_action('admin_footer', 'psnippets_footer', 10000);
-
-			} else {
-				$export .= 'Error: '.$url;
-			}
-		}
-
-		// Import Snippets
-		// @uses wp_handle_upload() in wp-admin/includes/file.php
-		$import = '<br/><br/><strong>'.__( 'Import', 'post-snippets' ).'</strong><br/>';
-		if ( !isset($_FILES['postsnippets_import_file']) || empty($_FILES['postsnippets_import_file']) ) {
-			$import .= '<p>'.__( 'Import snippets from a post-snippets-export.zip file. Importing overwrites any existing snippets.', 'post-snippets' ).'</p>';
-			$import .= '<form method="post" enctype="multipart/form-data">';
-			$import .= '<input type="file" name="postsnippets_import_file"/>';
-			$import .= '<input type="hidden" name="action" value="wp_handle_upload"/>';
-			$import .= '<input type="submit" class="button" value="'.__( 'Import Snippets', 'post-snippets' ).'"/>';
-			$import .= '</form>';
-		} else {
-			$file = wp_handle_upload( $_FILES['postsnippets_import_file'] );
-			
-//			var_dump($file);
-			
-			// På denna failar det
-			// array(1) { ["error"]=> string(60) "Sorry, this file type is not permitted for security reasons." } 
-			if ( isset( $file['file'] ) && !is_wp_error($file) ) {
-				require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
-				$zip = new PclZip( $file['file'] );
-				$dir = wp_upload_dir();
-				$upload_dir = $dir['basedir'] . '/';
-				$unzipped = $zip->extract( $p_path = $upload_dir );
-//				var_dump ($unzipped);
-				if ( $unzipped[0]['stored_filename'] == 'post-snippets-export.cfg' ) {
-//						$options = parse_ini_file( WP_CONTENT_DIR.'/settings.ini', true );
-//    if ( !$options = fopen( $unzipped[0]['filename'], 'rb' ) )
-//       die();
-//  fclose($options);
-					$options = file_get_contents( $upload_dir.'post-snippets-export.cfg' );
-
-					update_option($this->plugin_options, unserialize($options));
-					$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
-
-					$import .= '<p><strong>'.__( 'Snippets successfully imported.').'</strong></p>';
-				} else {
-					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Unzipping failed.').'</strong></p>';
-				}
-			} else {
-				if ( $file['error'] || is_wp_error( $file ) )
-					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.$file['error'].'</strong></p>';
-				else
-					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Upload failed.').'</strong></p>';
-			}
-		}
+		// Handle import of snippets (Run before the option page is outputted, in case any snippets have been imported, so they are displayed).
+		$import = $this->import_snippets();
 ?>
 <div class=wrap>
     <h2>Post Snippets</h2>
@@ -599,7 +526,7 @@ function edOpenPostSnippets(myField) {
 			<td class='desc'>
 			<textarea name="<?php echo $i; ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippets[$i]['snippet'], ENT_NOQUOTES); ?></textarea>
 			<?php _e( 'Description', 'post-snippets' ) ?>:
-			<input type='text' style='width: 100%;' name='<?php echo $i; ?>_description' value='<?php if (isset( $snippets[$i]['description'] ) ) echo htmlspecialchars($snippets[$i]['description'], ENT_NOQUOTES); ?>' /><br/>
+			<input type='text' style='width: 100%;' name='<?php echo $i; ?>_description' value='<?php if (isset( $snippets[$i]['description'] ) ) echo esc_html($snippets[$i]['description']); ?>' /><br/>
 			</td>
 			</tr>
 		<?php
@@ -612,9 +539,51 @@ function edOpenPostSnippets(myField) {
 		<input type="submit" name="update-post-snippets" value="<?php _e( 'Update Snippets', 'post-snippets' ) ?>"  class="button-primary" /></div>
 	</form>
 </div>
+
+	<h3><?php _e( 'Import/Export', 'post-snippets' ); ?></h3>
+	<strong><?php _e( 'Export', 'post-snippets' ); ?></strong><br/>
+	<form method="post">
+		<p><?php _e( 'Export your snippets for backup or to import them on another site.', 'post-snippets' ); ?></p>
+		<input type="submit" class="button" name="postsnippets_export" value="<?php _e( 'Export Snippets', 'post-snippets');?>"/>
+	</form>
 <?php
-		echo $export;
+		$this->export_snippets();
 		echo $import;
+	}
+
+
+	/**
+	 * Check if an export file shall be created, or if a download url should be pushed to the footer.
+	 * Also checks for old export files laying around and deletes them (for security).
+	 *
+	 * @since		Post Snippets 1.8
+	 *
+	 * @returns		string			URL to the exported snippets
+	 */
+	function export_snippets() {
+		if ( isset($_POST['postsnippets_export']) ) {
+			$url = $this->create_export_file();
+			if ($url) {
+				define('PSURL', $url);
+				function psnippets_footer() {
+					$export .= '<script type="text/javascript">
+									document.location = \''.PSURL.'\';
+								</script>';
+					echo $export;
+				}
+				add_action('admin_footer', 'psnippets_footer', 10000);
+
+			} else {
+				$export .= 'Error: '.$url;
+			}
+		} else {
+			// Check if there is any old export files to delete
+			$dir = wp_upload_dir();
+			$upload_dir = $dir['basedir'] . '/';
+			chdir($upload_dir);
+			if (file_exists ( './post-snippets-export.zip' ) )
+				unlink('./post-snippets-export.zip');
+		}
 	}
 
 	/**
@@ -624,29 +593,89 @@ function edOpenPostSnippets(myField) {
 	 *
 	 * @returns		string			URL to the exported snippets
 	 */
-	function export_snippets() {
+	function create_export_file() {
 		$snippets = serialize(get_option($this->plugin_options));
 		$dir = wp_upload_dir();
 		$upload_dir = $dir['basedir'] . '/';
 		$upload_url = $dir['baseurl'] . '/';
 		
+		// Open a file stream and write the serialized options to it.
 		if ( !$handle = fopen( $upload_dir.'post-snippets-export.cfg', 'w' ) )
 			die();
-	
 		if ( !fwrite($handle, $snippets) ) 
 			die();
-
 	    fclose($handle);
 
+		// Create a zip archive
 		require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
-	
 		chdir($upload_dir);
 		$zip = new PclZip('./post-snippets-export.zip');
-		if ($zip->create('./post-snippets-export.cfg') == 0)
+		$zipped = $zip->create('./post-snippets-export.cfg');
+
+		// Delete the snippet file
+		unlink('./post-snippets-export.cfg');
+
+		if (!$zipped)
 			return false;
 		
 		return $upload_url.'post-snippets-export.zip'; 
 	}
+	
+	/**
+	 * Handles uploading of post snippets archive and import the snippets.
+	 *
+	 * @uses 		wp_handle_upload() in wp-admin/includes/file.php
+	 * @since		Post Snippets 1.8
+	 *
+ 	 * @returns		string			HTML to handle the import
+	 */
+	function import_snippets() {
+		$import = '<br/><br/><strong>'.__( 'Import', 'post-snippets' ).'</strong><br/>';
+		if ( !isset($_FILES['postsnippets_import_file']) || empty($_FILES['postsnippets_import_file']) ) {
+			$import .= '<p>'.__( 'Import snippets from a post-snippets-export.zip file. Importing overwrites any existing snippets.', 'post-snippets' ).'</p>';
+			$import .= '<form method="post" enctype="multipart/form-data">';
+			$import .= '<input type="file" name="postsnippets_import_file"/>';
+			$import .= '<input type="hidden" name="action" value="wp_handle_upload"/>';
+			$import .= '<input type="submit" class="button" value="'.__( 'Import Snippets', 'post-snippets' ).'"/>';
+			$import .= '</form>';
+		} else {
+			$file = wp_handle_upload( $_FILES['postsnippets_import_file'] );
+			
+			if ( isset( $file['file'] ) && !is_wp_error($file) ) {
+				require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
+				$zip = new PclZip( $file['file'] );
+				$dir = wp_upload_dir();
+				$upload_dir = $dir['basedir'] . '/';
+				chdir($upload_dir);
+				$unzipped = $zip->extract();
+
+				if ( $unzipped[0]['stored_filename'] == 'post-snippets-export.cfg' && $unzipped[0]['status'] == 'ok') {
+					// Delete the uploaded archive
+					unlink($file['file']);
+
+					$options = file_get_contents( $upload_dir.'post-snippets-export.cfg' );		// Returns false on failure, else the contents
+					if ($options)
+						update_option($this->plugin_options, unserialize($options));
+
+					// Delete the snippet file
+					unlink('./post-snippets-export.cfg');
+
+					$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
+
+					$import .= '<p><strong>'.__( 'Snippets successfully imported.').'</strong></p>';
+				} else {
+					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Unzipping failed.').'</strong></p>';
+				}
+			} else {
+				if ( $file['error'] || is_wp_error( $file ) )
+					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.$file['error'].'</strong></p>';
+				else
+					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Upload failed.').'</strong></p>';
+			}
+		}
+		return $import;
+	}
+	
 }
 add_action( 'plugins_loaded', create_function( '', 'global $post_snippets; $post_snippets = new post_snippets();' ) );
 
