@@ -23,9 +23,10 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 * **Insert** All defined snippets is inserted from a button directly in the post editor.
 * **Shortcodes** You can use this plugin to create your own shortcodes.
-* **Buttons** The snippets are available in the viusal editor with a TinyMCE button and in the HTML editor with quicktag buttons.
+* **Buttons** The snippets are available in the viusal editor with a TinyMCE button and in the HTML editor with a quicktag button.
 * **Admin** Easy to use administration panel where you can add, edit and remove snippets.
 * **Variables** Each snippet can have as many custom variables as you like, which can be used on insert.
+* **Import/Export** Snippets can be imported and exported between sites.
 * **Uninstall** If you delete the plugin from your plugins panel it cleans up all data it has created in the Wordpress database. 
 
 
