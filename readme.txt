@@ -50,6 +50,10 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 Upload of zip files must be allowed, enable this in Sites Network Admin -> Settings -> Upload Settings -> Upload file types.
 
+= How can I use the content in an enclosed shortcode? =
+
+If the shortcode is enclosed with content in a post. Example: [shortcode]Some text[/shortcode] the text within will be availble in a variable named content. So in your snippet use {content} to display it. Don't use content in the variable field, it's automatically assigned. Example: Hello {content}. 
+
 = Where can I get support? =
 
 Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests") for questions, answers, support and feature requests.
