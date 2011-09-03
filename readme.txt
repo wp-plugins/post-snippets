@@ -63,6 +63,8 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 == Changelog ==
 
 = Version 1.8.2 - 3 Sep 2011 =
+ * Added support for using enclosed shortcodes with the snippets. Use the variable {content} in your snippets to retrieve the enclosed content.
+ * Updated the dropdown help text.
  * Included Lithuanian translation by [Nata Strazda](http://www.webhostinghub.com/).
 
 = Version 1.8.1 - 11 Jul 2011 =

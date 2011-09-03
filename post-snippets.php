@@ -399,8 +399,8 @@ function edOpenPostSnippets(myField) {
 			'<p><strong>' . __('Description', 'post-snippets') . '</strong></p>' .
 			'<p>' . __('An optional description for the Snippet. If entered it will be displayed in the snippets popup window in the post editor.', 'post-snippets') . '</p>' .
 
-			'<p><strong>' . __('SC', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert.', 'post-snippets') . '</p>' .
+			'<p><strong>' . __('Shortcode', 'post-snippets') . '</strong></p>' .
+			'<p>' . __('Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert. If you enclose the shortcode in your posts, you can access the enclosed content by using the variable {content} in your snippet. The content variable is reserved, so don\'t use it in the variables field.', 'post-snippets') . '</p>' .
 
 			'<p><strong>' . __('Advanced', 'post-snippets') . '</strong></p>' .
 			'<p>' . __('The snippets can be retrieved directly from PHP, in a theme for instance, with the get_post_snippet() function. Visit the Post Snippets link under more information for instructions.', 'post-snippets') . '</p>' .
