@@ -52,7 +52,7 @@ Upload of zip files must be allowed, enable this in Sites Network Admin -> Setti
 
 = How can I use the content in an enclosed shortcode? =
 
-If the shortcode is enclosed with content in a post. Example: [shortcode]Some text[/shortcode] the text within will be availble in a variable named content. So in your snippet use {content} to display it. Don't use content in the variable field, it's automatically assigned. Example: Hello {content}. 
+If the shortcode is enclosed and contains content between the tags in a post. Example: [shortcode]Some text[/shortcode] the text within will be availble in a variable called content. So in your snippet use {content} to display it. Don't enter 'content' in the variable field, it's automatically assigned.
 
 = Where can I get support? =
 
