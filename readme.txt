@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -17,8 +17,6 @@ Related Links:
 * [Documentation](http://wpstorm.net/wordpress-plugins/post-snippets/ "Complete usage instructions")
 * [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests")
 
-See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
-
 = Features =
 
 * **Insert** All defined snippets is inserted from a button directly in the post editor.
@@ -28,6 +26,8 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 * **Variables** Each snippet can have as many custom variables as you like, which can be used on insert.
 * **Import/Export** Snippets can be imported and exported between sites.
 * **Uninstall** If you delete the plugin from your plugins panel it cleans up all data it has created in the Wordpress database. 
+
+See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
 
 
 == Installation ==
@@ -65,6 +65,9 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.8.3 - 13 Oct 2011 =
+ * Included Hebrew translation by [Sagive](http://www.sagive.co.il/).
 
 = Version 1.8.2 - 3 Sep 2011 =
  * Added support for using enclosed shortcodes with the snippets. Use the variable {content} in your snippets to retrieve the enclosed content.
