@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -65,6 +65,10 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.8.5 - 22 Nov 2011 =
+ * Included German translation by Brian Flores at [InMotion Hosting](http://www.inmotionhosting.com/).
+ * For all translators: Updated the .pot file to include all the latest strings and changes.
 
 = Version 1.8.4 - 10 Nov 2011 =
  * Included Belarusian translation by [Alexander Ovsov](http://webhostinggeeks.com/science/).
