@@ -1,5 +1,5 @@
 # Translation Template for Post Snippets.
-# Copyright (C) 2009 Johan Steen
+# Copyright (C) 2009-2011 Johan Steen
 # This file is distributed under the same license as the PACKAGE package.
 #
 #, fuzzy
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Post Snippets\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/post-snippets\n"
-"POT-Creation-Date: 2009-03-24 09:38+0000\n"
+"POT-Creation-Date: 2011-11-22 12:05:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team:  <artstorm@gmail.com>\n"
@@ -15,111 +15,208 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: post-snippets.php:70
-msgid "Post Snippets requires WordPress version 2.7 or later!"
-msgstr ""
-
-#: post-snippets.php:179
-msgid "A snippet named Untitled has been added."
-msgstr ""
-
-#: post-snippets.php:192
-msgid "Snippets have been updated."
-msgstr ""
-
-#: post-snippets.php:208
-msgid "Selected snippets have been deleted."
-msgstr ""
-
-#: post-snippets.php:220
-msgid "Add New Snippet"
-msgstr ""
-
-#: post-snippets.php:221
-msgid "Delete Selected"
-msgstr ""
-
-#: post-snippets.php:230 post-snippets.php:239
-msgid "Title"
-msgstr ""
-
-#: post-snippets.php:231 post-snippets.php:240
-msgid "Variables"
-msgstr ""
-
-#: post-snippets.php:232 post-snippets.php:241
-msgid "Snippet"
-msgstr ""
-
-#: post-snippets.php:263
-msgid "Update Snippets"
-msgstr ""
-
-#: post-snippets.php:268
-msgid "Help"
-msgstr ""
-
-#: post-snippets.php:270
-msgid ""
-"<strong>Title</strong><br/>Give the snippet a title that helps you identify "
-"it in the post editor."
-msgstr ""
-
-#: post-snippets.php:272
-msgid ""
-"<strong>Variables</strong><br/>A comma separated list of custom variables "
-"you can reference in your snippet.<br/><br/>Example:<br/>url,name"
-msgstr ""
-
-#: post-snippets.php:274
-msgid ""
-"<strong>Snippet</strong><br/>This is the block of text or HTML to insert in "
-"the post when you select the snippet from the insert button in the TinyMCE "
-"panel in the post editor. If you have entered predefined variables you can "
-"reference them from the snippet by enclosing them in {} brackets.<br/><br/"
-">Example:<br/>To reference the variables in the example above, you would "
-"enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This "
-"is the website of &lt;a href=\"{url}\"&gt;{name}&lt;/a&gt;</i><br/>You will "
-"get the option to replace url and name on insert if they are defined as "
-"variables."
-msgstr ""
-
-#: post-snippets.php:281
-msgid "About Post Snippets"
-msgstr ""
-
-#: tinymce/window.php:9
+#: tinymce/window.php:16
 msgid "You are not allowed to be here"
 msgstr ""
 
-#: tinymce/window.php:109
+#: tinymce/window.php:148
 msgid "Cancel"
 msgstr ""
 
-#: tinymce/window.php:113
+#: tinymce/window.php:152
 msgid "Insert"
 msgstr ""
 
-#. Plugin Name of an extension
+#: post-snippets.php:84
+msgid "Settings"
+msgstr ""
+
+#: post-snippets.php:95
+msgid "Post Snippets requires WordPress version 3.0 or higher."
+msgstr ""
+
+#: post-snippets.php:276
+msgid "This snippet is insert only, no variables defined."
+msgstr ""
+
+#: post-snippets.php:390 post-snippets.php:499 post-snippets.php:508
+msgid "Title"
+msgstr ""
+
+#: post-snippets.php:391
+msgid ""
+"Give the snippet a title that helps you identify it in the post editor. If "
+"you make it into a shortcode, this is the name of the shortcode as well."
+msgstr ""
+
+#: post-snippets.php:393 post-snippets.php:500 post-snippets.php:509
+msgid "Variables"
+msgstr ""
+
+#: post-snippets.php:394
+msgid ""
+"A comma separated list of custom variables you can reference in your snippet."
+"<br/><br/>Example:<br/>url,name"
+msgstr ""
+
+#: post-snippets.php:396 post-snippets.php:501 post-snippets.php:510
+msgid "Snippet"
+msgstr ""
+
+#: post-snippets.php:397
+msgid ""
+"This is the block of text or HTML to insert in the post when you select the "
+"snippet from the insert button in the TinyMCE panel in the post editor. If "
+"you have entered predefined variables you can reference them from the "
+"snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference "
+"the variables in the example above, you would enter {url} and {name}.<br/"
+"><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="
+"\"{url}\"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url "
+"and name on insert if they are defined as variables."
+msgstr ""
+
+#: post-snippets.php:399 post-snippets.php:532
+msgid "Description"
+msgstr ""
+
+#: post-snippets.php:400
+msgid ""
+"An optional description for the Snippet. If entered it will be displayed in "
+"the snippets popup window in the post editor."
+msgstr ""
+
+#: post-snippets.php:402 post-snippets.php:526
+msgid "Shortcode"
+msgstr ""
+
+#: post-snippets.php:403
+msgid ""
+"Treats the snippet as a shortcode. The name for the shortcode is the same as "
+"the title of the snippet (spaces not allowed) and will be used on insert. If "
+"you enclose the shortcode in your posts, you can access the enclosed content "
+"by using the variable {content} in your snippet. The content variable is "
+"reserved, so don't use it in the variables field."
+msgstr ""
+
+#: post-snippets.php:405
+msgid "Advanced"
+msgstr ""
+
+#: post-snippets.php:406
+msgid ""
+"The snippets can be retrieved directly from PHP, in a theme for instance, "
+"with the get_post_snippet() function. Visit the Post Snippets link under "
+"more information for instructions."
+msgstr ""
+
+#: post-snippets.php:408
+msgid "For more information:"
+msgstr ""
+
+#: post-snippets.php:409
+msgid ""
+"Visit my <a href=\"http://wpstorm.net/wordpress-plugins/post-snippets/"
+"\">Post Snippets</a> page for additional information."
+msgstr ""
+
+#: post-snippets.php:429
+msgid "A snippet named Untitled has been added."
+msgstr ""
+
+#: post-snippets.php:457 post-snippets.php:667
+msgid "Snippets have been updated."
+msgstr ""
+
+#: post-snippets.php:473
+msgid "Selected snippets have been deleted."
+msgstr ""
+
+#: post-snippets.php:488
+msgid "Add New Snippet"
+msgstr ""
+
+#: post-snippets.php:489
+msgid "Delete Selected"
+msgstr ""
+
+#: post-snippets.php:490
+msgid "(Use the help dropdown button above for additional information.)"
+msgstr ""
+
+#: post-snippets.php:527
+msgid "Quicktag"
+msgstr ""
+
+#: post-snippets.php:543
+msgid "Update Snippets"
+msgstr ""
+
+#: post-snippets.php:547
+msgid "Import/Export"
+msgstr ""
+
+#: post-snippets.php:548
+msgid "Export"
+msgstr ""
+
+#: post-snippets.php:550
+msgid "Export your snippets for backup or to import them on another site."
+msgstr ""
+
+#: post-snippets.php:551
+msgid "Export Snippets"
+msgstr ""
+
+#: post-snippets.php:637
+msgid "Import"
+msgstr ""
+
+#: post-snippets.php:639
+msgid ""
+"Import snippets from a post-snippets-export.zip file. Importing overwrites "
+"any existing snippets."
+msgstr ""
+
+#: post-snippets.php:643
+msgid "Import Snippets"
+msgstr ""
+
+#: post-snippets.php:669
+msgid "Snippets successfully imported."
+msgstr ""
+
+#: post-snippets.php:671 post-snippets.php:675 post-snippets.php:677
+msgid "Snippets could not be imported:"
+msgstr ""
+
+#: post-snippets.php:671
+msgid "Unzipping failed."
+msgstr ""
+
+#: post-snippets.php:677
+msgid "Upload failed."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
 msgid "Post Snippets"
 msgstr ""
 
-#. Plugin URI of an extension
-msgid "http://coding.cglounge.com/wordpress-plugins/post-snippets/"
+#. Plugin URI of the plugin/theme
+msgid "http://wpstorm.net/wordpress-plugins/post-snippets/"
 msgstr ""
 
-#. Description of an extension
+#. Description of the plugin/theme
 msgid ""
 "Stores snippets of HTML code or reoccurring text that you often use in your "
 "posts. You can use predefined variables to replace parts of the snippet on "
-"insert. All snippets are available in the post editor with a TinyMCE button, "
-"Quicktags or Shortcodes."
+"insert. All snippets are available in the post editor with a TinyMCE button "
+"or Quicktags."
 msgstr ""
 
-#. Author of an extension
+#. Author of the plugin/theme
 msgid "Johan Steen"
 msgstr ""
 
-#. Author URI of an extension
-msgid "http://coding.cglounge.com/"
+#. Author URI of the plugin/theme
+msgid "http://wpstorm.net/"
 msgstr ""
