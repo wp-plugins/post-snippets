@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.8.5
+Version: 1.8.6
 Author: Johan Steen
 Author URI: http://wpstorm.net/
 Text Domain: post-snippets 
@@ -69,8 +69,18 @@ class post_snippets {
 		add_action( 'admin_footer', array(&$this,'insert_ui_dialog') );
 		
 		# Add Editor QuickTag button
-		add_action( 'edit_form_advanced', array(&$this,'add_quicktag_button') );
-		add_action( 'edit_page_form', array(&$this,'add_quicktag_button') );
+		// IF WordPress is 3.3 or higher, use the new refactored method to add
+		// the quicktag button.
+		// Start showing a deprecated message from version 1.9 of the plugin for
+		// the old method. And remove it completely when the plugin hits 2.0.
+		global $wp_version;
+		if ( version_compare($wp_version, '3.3', '>=') ) {
+			add_action( 'admin_print_footer_scripts', 
+						array(&$this,'add_quicktag_button'), 100 );
+		} else {
+			add_action( 'edit_form_advanced', array(&$this,'add_quicktag_button_pre33') );
+			add_action( 'edit_page_form', array(&$this,'add_quicktag_button_pre33') );
+		}
 	}
 
 
@@ -220,13 +230,10 @@ function edOpenPostSnippets(myField) {
 		muppCanv = myField;
 		jQuery( "#post-snippets-dialog" ).dialog( "open" );
 };
-
-
 <?php
 		echo "</script>\n";
 		echo "\n<!-- END: Post Snippets jQuery UI and related functions -->\n";
 	}
-
 
 
 	/**
@@ -287,15 +294,41 @@ function edOpenPostSnippets(myField) {
 		echo "\n<!-- END: Post Snippets UI Dialog -->\n";
 	}
 
+
+	/**
+	 * Adds a QuickTag button to the HTML editor.
+	 *
+	 * Compatible with WordPress 3.3 and newer.
+	 *
+	 * @see			wp-includes/js/quicktags.dev.js -> qt.addButton()
+	 * @since		Post Snippets 1.8.6
+	 *
+	 * @returns		Nothing
+	 */
+	public function add_quicktag_button() {
+		echo "\n<!-- START: Add QuickTag button for Post Snippets -->\n";
+		?>
+		<script type="text/javascript" charset="utf-8">
+			QTags.addButton( 'post_snippets_id', 'Post Snippets', qt_post_snippets );
+			function qt_post_snippets() {
+				jQuery( "#post-snippets-dialog" ).dialog( "open" );
+			}
+		</script>
+		<?php
+		echo "\n<!-- END: Add QuickTag button for Post Snippets -->\n";
+	}
+
+
 	/**
 	 * Adds a QuickTag button to the HTML editor
 	 *
 	 * @see			wp-includes/js/quicktags.dev.js
 	 * @since		Post Snippets 1.7
+	 * @deprecated	Since 1.8.6
 	 *
 	 * @returns		Nothing
 	 */
-	function add_quicktag_button() {
+	function add_quicktag_button_pre33() {
 		echo "\n<!-- START: Post Snippets QuickTag button -->\n";
 		?>
 		<script type="text/javascript" charset="utf-8">

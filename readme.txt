@@ -3,8 +3,8 @@ Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 1.8.5
+Tested up to: 3.3
+Stable tag: 1.8.6
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -66,23 +66,30 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 
 == Changelog ==
 
+= Version 1.8.6 - 15 Dec 2011 =
+ * The Post Snippets HTML editor button is updated to be compatible with 
+   WordPress 3.3 refactored QuickTags.
+
 = Version 1.8.5 - 22 Nov 2011 =
- * Included German translation by Brian Flores at [InMotion Hosting](http://www.inmotionhosting.com/).
- * For all translators: Updated the .pot file to include all the latest strings and changes.
+ * Included German translation by Brian Flores.
+ * For all translators: Updated the .pot file to include all the latest strings
+   and changes.
 
 = Version 1.8.4 - 10 Nov 2011 =
- * Included Belarusian translation by [Alexander Ovsov](http://webhostinggeeks.com/science/).
+ * Included Belarusian translation by Alexander Ovsov.
 
 = Version 1.8.3 - 13 Oct 2011 =
- * Included Hebrew translation by [Sagive](http://www.sagive.co.il/).
+ * Included Hebrew translation by Sagive.
 
 = Version 1.8.2 - 3 Sep 2011 =
- * Added support for using enclosed shortcodes with the snippets. Use the variable {content} in your snippets to retrieve the enclosed content.
+ * Added support for using enclosed shortcodes with the snippets. Use the
+   variable {content} in your snippets to retrieve the enclosed content.
  * Updated the dropdown help text.
- * Included Lithuanian translation by [Nata Strazda](http://www.webhostinghub.com/).
+ * Included Lithuanian translation by Nata Strazda.
 
 = Version 1.8.1 - 11 Jul 2011 =
- * Fixed that a PHP warning is thrown when other scripts called the get_post_snippet() function without supplying a second argument.
+ * Fixed that a PHP warning is thrown when other scripts called the
+   get_post_snippet() function without supplying a second argument.
 
 = Version 1.8 - 30 May 2011 =
  * Fixed an escaping problem with the snippet description.
@@ -90,15 +97,18 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
  * Snippets used as shortcodes can now nest other shortcodes in them.
 
 = Version 1.7.3 - 3 Mar 2011 =
- * Added a text area field in the settings panel to enter an optional description for each snippet. This decription is displayed for the editor writing a post in the jQuery Post Snippet dialog.
- * Fixed the styling of the quicktag jQuery window when the user have disabled the visual editor completely.
+ * Added a text area field in the settings panel to enter an optional
+   description for each snippet. This decription is displayed for the editor
+   writing a post in the jQuery Post Snippet dialog.
+ * Fixed the styling of the quicktag jQuery window when the user have disabled
+   the visual editor completely.
  * Fixed problem with line formatting in the new quicktag snippets.
  * Fixed a problem with JavaScript snippets breaking the admin page.
  * Various small bugfixes.
 
 = Version 1.7.2 - 28 Feb 2011 =
  * Specified text/javascript for the UI dialog script.
- * Updated the Spanish translation by [Melvis E. Leon Lopez](http://www.soludata.net/site/).
+ * Updated the Spanish translation by Melvis E. Leon Lopez.
 
 = Version 1.7.1 - 26 Feb 2011 =
  * Added styling to the Tabs in the Quicktag jQuery dialog window to make them more "tab-like".
@@ -114,29 +124,33 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
  * Added get_post_snippet() function to retrieve snippets directly from PHP.
 
 = Version 1.5.4 - 26 Jan 2011 =
- * Included Turkish translation by [Ersan Özdil](http://www.tml.web.tr/).
+ * Included Turkish translation by Ersan Özdil.
  
 = Version 1.5.3 - 19 Sep 2010 =
- * Included Spanish translation by [Melvis E. Leon Lopez](http://www.soludata.net/site/).
+ * Included Spanish translation by Melvis E. Leon Lopez.
 
 = Version 1.5.2 - 17 Sep 2010 =
- * The plugin now keeps linefeed formatting when inserting a snippet directly with a quicktag in the HTML editor. 
- * Updated the code to not generate warnings when running WordPress in debug mode.
+ * The plugin now keeps linefeed formatting when inserting a snippet directly
+   with a quicktag in the HTML editor. 
+ * Updated the code to not generate warnings when running WordPress in debug
+   mode.
 
 = Version 1.5.1 - 12 Mar 2010 =
  * Fixed ampersands when used in a shortcode, so they are XHTML valid.
 
 = Version 1.5 - 12 Jan 2010 =
- * Updated the plugin so it works with WordPress 2.9.x (the quicktags didn't work in 2.9, now fixed.).
+ * Updated the plugin so it works with WordPress 2.9.x (the quicktags didn't
+   work in 2.9, now fixed.).
 
 = Version 1.4.9.1 - 5 Sep 2009 =
- * Included French translation by [Thomas Cailhe (Oyabi)](http://www.oyabi.fr/).
+ * Included French translation by Thomas Cailhe (Oyabi).
 
 = Version 1.4.9 - 10 Aug 2009 =
- * Included Russian translation by [FatCow](http://www.fatcow.com/).
+ * Included Russian translation by FatCow.
  
 = Version 1.4.8 - 9 May 2009 =
- * Changed the handling of the TinyMCE button as some server configurations had problems finding the correct path.
+ * Changed the handling of the TinyMCE button as some server configurations had
+   problems finding the correct path.
  * Fixed a problem that didn't let a snippet contain a </script> tag.
  
 = Version 1.4.7 - 27 Apr 2009 =
