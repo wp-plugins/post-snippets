@@ -17,7 +17,9 @@
 			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
 
 			ed.addCommand('mcepost_snippets', function() {
-				ed.windowManager.open({
+				muppCanv = ed;
+				jQuery( "#post-snippets-dialog" ).dialog( "open" );
+/*				ed.windowManager.open({
 					file : url + '/window.php',
 					width : 360 + ed.getLang('post_snippets.delta_width', 0),
 					height : 210 + ed.getLang('post_snippets.delta_height', 0),
@@ -25,7 +27,7 @@
 				}, {
 					plugin_url : url // Plugin absolute URL
 				});
-			});
+*/			});
 
 			// Register example button
 			ed.addButton('post_snippets', {

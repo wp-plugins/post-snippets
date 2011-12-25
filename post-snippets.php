@@ -45,10 +45,52 @@ class post_snippets {
 		if ( version_compare($wp_version, '2.7', '<') ) {
 			add_action( 'admin_notices', array(&$this, 'version_warning') ); 
 		} else {
-			include_once (dirname (__FILE__)."/tinymce/tinymce.php");
+			$this->tiny_mce();
 			$this->init_hooks();
 		}
 	}
+
+	// -------------------------------------------------------------------------
+
+	function tiny_mce()
+	{
+		// include_once (dirname (__FILE__)."/tinymce/tinymce.php");
+
+		// init process for button control
+		// add_action('init', 'myplugin_addbuttons');
+		add_action('init', array(&$this, 'myplugin_addbuttons') );
+
+	}
+
+
+
+function myplugin_addbuttons() {
+   // Don't bother doing this stuff if the current user lacks permissions
+   if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') )
+     return;
+ 
+   // Add only in Rich Editor mode
+   if ( get_user_option('rich_editing') == 'true') {
+     add_filter("mce_external_plugins", array(&$this, "add_myplugin_tinymce_plugin") );
+     add_filter('mce_buttons', array(&$this, 'register_myplugin_button') );
+   }
+}
+ 
+function register_myplugin_button($buttons) {
+   array_push($buttons, "separator", "post_snippets");
+   return $buttons;
+}
+ 
+// Load the TinyMCE plugin : editor_plugin.js (wp2.5)
+function add_myplugin_tinymce_plugin($plugin_array) {
+   // $plugin_array['myplugin'] = URLPATH.'tinymce/editor_plugin.js';
+   $plugin_array['post_snippets'] = post_snippets_URLPATH.'tinymce/editor_plugin.js';
+   return $plugin_array;
+}
+ 
+
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Initializes the hooks for the plugin
@@ -215,6 +257,8 @@ class post_snippets {
 							}
 							?>
 							edInsertContent(muppCanv, insert_snippet);
+							<!-- muppCanv.setContent('njet'); -->
+							muppCanv.execCommand('mceInsertContent', false, 'gnu');
 						}
 					},
 					width: 500,
