@@ -193,6 +193,7 @@ class post_snippets {
 		// Load the TinyMCE plugin, editor_plugin.js, into the array
 		$plugins[$this->tinymce_plugin_name] = 
 			plugins_url('/tinymce/editor_plugin.js', __FILE__);
+
 		return $plugins;
 	}
 
@@ -292,9 +293,13 @@ class post_snippets {
 							<?php
 							}
 							?>
-							edInsertContent(muppCanv, insert_snippet);
-							<!-- muppCanv.setContent('njet'); -->
-							muppCanv.execCommand('mceInsertContent', false, 'gnu');
+
+							if (caller == 'html') {
+								edInsertContent(muppCanv, insert_snippet);
+							} else {
+								muppCanv.execCommand('mceInsertContent', false, insert_snippet);
+							}
+
 						}
 					},
 					width: 500,
@@ -302,12 +307,13 @@ class post_snippets {
 			});
 		});
 
-
 var muppCanv;
+caller = '';
 
-
+<!-- Deprecated -->
 function edOpenPostSnippets(myField) {
 		muppCanv = myField;
+		caller = 'html';
 		jQuery( "#post-snippets-dialog" ).dialog( "open" );
 };
 <?php
@@ -391,6 +397,7 @@ function edOpenPostSnippets(myField) {
 		<script type="text/javascript" charset="utf-8">
 			QTags.addButton( 'post_snippets_id', 'Post Snippets', qt_post_snippets );
 			function qt_post_snippets() {
+				caller = 'html';
 				jQuery( "#post-snippets-dialog" ).dialog( "open" );
 			}
 		</script>

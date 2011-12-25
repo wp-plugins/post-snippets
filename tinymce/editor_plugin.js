@@ -18,6 +18,7 @@
 
 			ed.addCommand('mcepost_snippets', function() {
 				muppCanv = ed;
+				caller = 'visual';
 				jQuery( "#post-snippets-dialog" ).dialog( "open" );
 /*				ed.windowManager.open({
 					file : url + '/window.php',
@@ -47,9 +48,9 @@
 			return {
 					longname  : 'post_snippets',
 					author 	  : 'Johan Steen',
-					authorurl : 'http://coding.cglounge.com/',
-					infourl   : 'http://coding.cglounge.com/',
-					version   : "1.0"
+					authorurl : 'http://johansteen.se/',
+					infourl   : 'http://wpstorm.net/wordpress-plugins/post-snippets/',
+					version   : "1.1"
 			};
 		}
 	});
