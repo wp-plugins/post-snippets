@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 class post_snippets {
+	private $tinymce_plugin_name = 'post_snippets';
 	var $plugin_options = "post_snippets_options";
 
 	/**
@@ -45,52 +46,9 @@ class post_snippets {
 		if ( version_compare($wp_version, '2.7', '<') ) {
 			add_action( 'admin_notices', array(&$this, 'version_warning') ); 
 		} else {
-			$this->tiny_mce();
 			$this->init_hooks();
 		}
 	}
-
-	// -------------------------------------------------------------------------
-
-	function tiny_mce()
-	{
-		// include_once (dirname (__FILE__)."/tinymce/tinymce.php");
-
-		// init process for button control
-		// add_action('init', 'myplugin_addbuttons');
-		add_action('init', array(&$this, 'myplugin_addbuttons') );
-
-	}
-
-
-
-function myplugin_addbuttons() {
-   // Don't bother doing this stuff if the current user lacks permissions
-   if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') )
-     return;
- 
-   // Add only in Rich Editor mode
-   if ( get_user_option('rich_editing') == 'true') {
-     add_filter("mce_external_plugins", array(&$this, "add_myplugin_tinymce_plugin") );
-     add_filter('mce_buttons', array(&$this, 'register_myplugin_button') );
-   }
-}
- 
-function register_myplugin_button($buttons) {
-   array_push($buttons, "separator", "post_snippets");
-   return $buttons;
-}
- 
-// Load the TinyMCE plugin : editor_plugin.js (wp2.5)
-function add_myplugin_tinymce_plugin($plugin_array) {
-   // $plugin_array['myplugin'] = URLPATH.'tinymce/editor_plugin.js';
-   $plugin_array['post_snippets'] = post_snippets_URLPATH.'tinymce/editor_plugin.js';
-   return $plugin_array;
-}
- 
-
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Initializes the hooks for the plugin
@@ -98,6 +56,10 @@ function add_myplugin_tinymce_plugin($plugin_array) {
 	 * @returns	Nothing
 	 */
 	function init_hooks() {
+
+		// Add TinyMCE button
+		add_action('init', array(&$this, 'add_tinymce_button') );
+
 		# Settings link on plugins list
 		add_filter( 'plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2 );
 		# Options Page
@@ -165,6 +127,80 @@ function add_myplugin_tinymce_plugin($plugin_array) {
 		wp_enqueue_style( 'post-snippets');
 	}
 	
+
+	// -------------------------------------------------------------------------
+	// WordPress Editor Buttons
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Add TinyMCE button.
+	 *
+	 * Adds filters to add custom buttons to the TinyMCE editor (Visual Editor)
+	 * in WordPress.
+	 *
+	 * @since	Post Snippets 1.8.7
+	 */
+	public function add_tinymce_button()
+	{
+		// Don't bother doing this stuff if the current user lacks permissions
+		if ( !current_user_can('edit_posts') &&
+			 !current_user_can('edit_pages') )
+			return;
+
+		// Add only in Rich Editor mode
+		if ( get_user_option('rich_editing') == 'true') {
+			add_filter('mce_external_plugins', 
+						array(&$this, 'register_tinymce_plugin') );
+			add_filter('mce_buttons',
+						array(&$this, 'register_tinymce_button') );
+		}
+	}
+
+	/**
+	 * Register TinyMCE button.
+	 *
+	 * Pushes the custom TinyMCE button into the array of with button names.
+	 * 'separator' or '|' can be pushed to the array as well. See the link
+	 * for all available TinyMCE controls.
+	 *
+	 * @see		wp-includes/class-wp-editor.php
+	 * @link	http://www.tinymce.com/wiki.php/Buttons/controls
+	 * @since	Post Snippets 1.8.7
+	 *
+	 * @param	array	$buttons	Filter supplied array of buttons to modify
+	 * @return	array				The modified array with buttons
+	 */
+	public function register_tinymce_button( $buttons )
+	{
+		array_push( $buttons, 'separator', $this->tinymce_plugin_name );
+		return $buttons;
+	}
+
+	/**
+	 * Register TinyMCE plugin.
+	 *
+	 * Adds the absolute URL for the TinyMCE plugin to the associative array of
+	 * plugins. Array structure: 'plugin_name' => 'plugin_url'
+	 *
+	 * @see		wp-includes/class-wp-editor.php
+	 * @since	Post Snippets 1.8.7
+	 *
+	 * @param	array	$plugins	Filter supplied array of plugins to modify
+	 * @return	array				The modified array with plugins
+	 */
+	public function register_tinymce_plugin( $plugins )
+	{
+		// Load the TinyMCE plugin, editor_plugin.js, into the array
+		$plugins[$this->tinymce_plugin_name] = 
+			plugins_url('/tinymce/editor_plugin.js', __FILE__);
+		return $plugins;
+	}
+
+
+	// -------------------------------------------------------------------------
+
+
+
 	/**
 	 * jQuery control for the dialog and Javascript needed to insert snippets into the editor
 	 *
