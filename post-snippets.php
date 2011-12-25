@@ -34,14 +34,11 @@ class post_snippets {
 	 *
 	 */
 	function post_snippets() {
-		// define URL
-		define('post_snippets_ABSPATH', WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/' );
-		define('post_snippets_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
-
 		// Define the domain for translations
-		load_plugin_textdomain(	'post-snippets', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+		load_plugin_textdomain(	'post-snippets', false, 
+			dirname(plugin_basename(__FILE__)) . '/languages/');
 
-		// Check installed Wordpress version.
+		// Check that at least WordPress 3.0 is installed.
 		global $wp_version;
 		if ( version_compare($wp_version, '2.7', '<') ) {
 			add_action( 'admin_notices', array(&$this, 'version_warning') ); 
