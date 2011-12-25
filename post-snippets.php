@@ -33,10 +33,17 @@ class post_snippets {
 	 * Constructor
 	 *
 	 */
-	function post_snippets() {
+	public function post_snippets() {
 		// Define the domain for translations
 		load_plugin_textdomain(	'post-snippets', false, 
 			dirname(plugin_basename(__FILE__)) . '/languages/');
+
+
+		// Add a warning if PHP is older than 5.2.4 (WP 3.3 requirements)
+		if (version_compare(PHP_VERSION, '5.2.4', '<')) {
+			add_action( 'admin_notices', array(&$this, 'php_warning') ); 
+		}
+
 
 		// Check that at least WordPress 3.0 is installed.
 		global $wp_version;
@@ -96,6 +103,24 @@ class post_snippets {
 		 }
 		return $links;
 	}
+
+
+	/**
+	 * Displays a warning when installed on an old PHP version
+	 *
+	 * @returns	Nothing
+	 */
+	function php_warning() {
+		echo '<div class="updated fade"><p><strong>'.__(
+			'Notice:<br/>
+			When Post Snippets v1.9 will be released, the minimum 
+			required PHP Version will be 5.2.4 to be on par with WordPress 3.3.<br/>Please update your
+			PHP installation before updating Post Snippets to v1.9+, or 
+			contact the plugin author to plead your case.<br/>
+			Your installed PHP version: '.PHP_VERSION
+			, 'post-snippets').'</strong></p></div>';
+	}
+
 
 	/**
 	 * Displays a warning when installed in an old Wordpress Version
