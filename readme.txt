@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 
 Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
 
@@ -71,6 +71,9 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
    Editor to use the same jQuery UI Dialog window that the HTML button have had
    for some time. The consolidation of using the same window and code for the
    different buttons will make Post Snippets easier to maintain and update.
+ * Added an admin notice when running on PHP versions below 5.2.4 to prepare
+   users that future Post Snippets requirements will be on par with WordPress
+   3.3.
 
 = Version 1.8.6 - 15 Dec 2011 =
  * The Post Snippets HTML editor button is updated to be compatible with 
