@@ -66,6 +66,12 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 
 == Changelog ==
 
+= Version 1.8.7 - 25 Dec 2011 =
+ * Updated the TinyMCE plugin for the Post Snippets button in WordPress Visual
+   Editor to use the same jQuery UI Dialog window that the HTML button have had
+   for some time. The consolidation of using the same window and code for the
+   different buttons will make Post Snippets easier to maintain and update.
+
 = Version 1.8.6 - 15 Dec 2011 =
  * The Post Snippets HTML editor button is updated to be compatible with 
    WordPress 3.3 refactored QuickTags.
@@ -111,16 +117,27 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
  * Updated the Spanish translation by Melvis E. Leon Lopez.
 
 = Version 1.7.1 - 26 Feb 2011 =
- * Added styling to the Tabs in the Quicktag jQuery dialog window to make them more "tab-like".
- * Added the possibility to use a description for each snippet to display for the user when opening the Quicktag jQuery dialog window. Snippets without description and variables, has a default information message.
- * Moved the help text from below the snippets to the contextual help dropdown menu at the top of the settings page.
+ * Added styling to the Tabs in the Quicktag jQuery dialog window to make them
+   more "tab-like".
+ * Added the possibility to use a description for each snippet to display for
+   the user when opening the Quicktag jQuery dialog window. Snippets without
+   description and variables, has a default information message.
+ * Moved the help text from below the snippets to the contextual help dropdown
+   menu at the top of the settings page.
  * **Changed the required version of WordPress to 3.0**.
- * Request by proximity2008: A snippet without anything entered in the snippet field will not be registered as a shortcode.
+ * Request by proximity2008: A snippet without anything entered in the snippet
+   field will not be registered as a shortcode.
 
 = Version 1.7 - 26 Feb 2011 =
- * Complete rewrite of the QuickTags insert functionality. It now uses jQuery UI to display a similar tabbed window as the TinyMCE button does. There is now one 'Post Snippets' button in the HTML editor instead of a separate button for each snippet. As the QuickTags function is completely rewritten, and this is the initial release of the new method, please report if you encounter any problems with it.
+ * Complete rewrite of the QuickTags insert functionality. It now uses jQuery UI
+   to display a similar tabbed window as the TinyMCE button does. There is now
+   one 'Post Snippets' button in the HTML editor instead of a separate button
+   for each snippet. As the QuickTags function is completely rewritten, and this
+   is the initial release of the new method, please report if you encounter any
+   problems with it.
  * Fixed QuickTags compability with WordPress 3.1.
- * Added a link to the Post Snippets Settings directly from the entry on the 'Plugins List' page.
+ * Added a link to the Post Snippets Settings directly from the entry on the
+   'Plugins List' page.
  * Added get_post_snippet() function to retrieve snippets directly from PHP.
 
 = Version 1.5.4 - 26 Jan 2011 =
@@ -154,46 +171,68 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
  * Fixed a problem that didn't let a snippet contain a </script> tag.
  
 = Version 1.4.7 - 27 Apr 2009 =
- * Added a workaround for a bug in WordPress 2.7.x wp-includes/compat.php that prevented the plugin to work correctly on webservers running with PHP below version 5.1.0 together with WP 2.7.x. This bug is patched in WordPress 2.8.
+ * Added a workaround for a bug in WordPress 2.7.x wp-includes/compat.php that
+   prevented the plugin to work correctly on webservers running with PHP below
+   version 5.1.0 together with WP 2.7.x. This bug is patched in WordPress 2.8.
 
 = Version 1.4.6 - 25 Apr 2009 =
- * Updated all code to follow the WordPress Coding Standards for consistency, if someone wants to modify my code.
- * Removed the nodechangehandler from the TinyMCE js, as it didn't fill any purpose.
- * Updated the save code to remove the PHP Notice messages, if using error logging on the server.
+ * Updated all code to follow the WordPress Coding Standards for consistency, if
+   someone wants to modify my code.
+ * Removed the nodechangehandler from the TinyMCE js, as it didn't fill any
+   purpose.
+ * Updated the save code to remove the PHP Notice messages, if using error
+   logging on the server.
  * Added additional proofing for the variables string.
 
 = Version 1.4.5 - 24 Apr 2009 =
- * Fixed a problem in the admin options that didn't allow a form with a textarea to be used as a snippet.
- * Widened the columns for SC and QT slightly in the options panel so they should look a bit better on the mac.
+ * Fixed a problem in the admin options that didn't allow a form with a textarea
+   to be used as a snippet.
+ * Widened the columns for SC and QT slightly in the options panel so they
+   should look a bit better on the mac.
 
 = Version 1.4.4 - 19 Apr 2009 =
- * Minor fix with quicktags and certain snippets that was left out in the last update.
+ * Minor fix with quicktags and certain snippets that was left out in the last
+   update.
  
 = Version 1.4.3 - 16 Apr 2009 =
- * Fixed an escaping problem with the recently implemented shortcode function, that could cause problems on certain strings.
- * Fixed an escaping problem with the quicktag javascript, that could cause problems on certain strings.
+ * Fixed an escaping problem with the recently implemented shortcode function,
+   that could cause problems on certain strings.
+ * Fixed an escaping problem with the quicktag javascript, that could cause
+   problems on certain strings.
 
 = Version 1.4.2 - 11 Apr 2009 =
- * Fixed some additional syntax for servers where the short_open_tag configuration setting is disabled.
+ * Fixed some additional syntax for servers where the short_open_tag
+   configuration setting is disabled.
 
 = Version 1.4.1 - 10 Apr 2009 =
- * Removed all short syntax commands and replaced them with the full versions so the plugin also works on servers with the short_open_tag configuration setting disabled.
+ * Removed all short syntax commands and replaced them with the full versions so
+   the plugin also works on servers with the short_open_tag configuration
+   setting disabled.
 
 = Version 1.4 - 10 Apr 2009 =
- * Added a checkbox for Shortcodes (SC) in the admin panel. When checking this one a dynamic shortcode will be generated and inserted instead of the snippet, which allows snippets to be updated later on for all posts it's been inserted into when using this option.
- * Added a checkbox for Quicktags (QT) in the admin panel, so Quicktags are optional. Speeds up loading of the post editor if you don't need the quicktag support, and only use the visual editor. Defaults to off.
+ * Added a checkbox for Shortcodes (SC) in the admin panel. When checking this
+   one a dynamic shortcode will be generated and inserted instead of the
+   snippet, which allows snippets to be updated later on for all posts it's been
+   inserted into when using this option.
+ * Added a checkbox for Quicktags (QT) in the admin panel, so Quicktags are
+   optional. Speeds up loading of the post editor if you don't need the quicktag
+   support, and only use the visual editor. Defaults to off.
  
 = Version 1.3.5 - 9 Apr 2009 =
- * Fixed so the TinyMCE window adds a scrollbar if there is more variables for a snippet than fits in the window.
- * Fixed a bug that snippets didn't get inserted when using the visual editor in fullscreen mode.
+ * Fixed so the TinyMCE window adds a scrollbar if there is more variables for a
+   snippet than fits in the window.
+ * Fixed a bug that snippets didn't get inserted when using the visual editor in
+   fullscreen mode.
  
 = Version 1.3 - 2 Apr 2009 =
- * Fixed a problem with the regular expressions that prohibited variables consisting of just a single number to work.
+ * Fixed a problem with the regular expressions that prohibited variables
+   consisting of just a single number to work.
  * Updated the Help info in the admin page to take less space.
  * Included a check so the plugin only runs in WP 2.7 or newer.
 
 = Version 1.2 - 1 Apr 2009 =
- * Added support for Quicktags so the snippets can be made available in the HTML editor as well.
+ * Added support for Quicktags so the snippets can be made available in the HTML
+   editor as well.
  
 = Version 1.1 - 24 Mar 2009 =
  * Included Swedish translation.
