@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class post_snippets {
+class Post_Snippets {
 	private $tinymce_plugin_name = 'post_snippets';
 	var $plugin_options = "post_snippets_options";
 
@@ -38,20 +38,7 @@ class post_snippets {
 		load_plugin_textdomain(	'post-snippets', false, 
 			dirname(plugin_basename(__FILE__)) . '/languages/');
 
-
-		// Add a warning if PHP is older than 5.2.4 (WP 3.3 requirements)
-		if (version_compare(PHP_VERSION, '5.2.4', '<')) {
-			add_action( 'admin_notices', array(&$this, 'php_warning') ); 
-		}
-
-
-		// Check that at least WordPress 3.0 is installed.
-		global $wp_version;
-		if ( version_compare($wp_version, '2.7', '<') ) {
-			add_action( 'admin_notices', array(&$this, 'version_warning') ); 
-		} else {
-			$this->init_hooks();
-		}
+		$this->init_hooks();
 	}
 
 	/**
@@ -105,32 +92,6 @@ class post_snippets {
 	}
 
 
-	/**
-	 * Displays a warning when installed on an old PHP version
-	 *
-	 * @returns	Nothing
-	 */
-	function php_warning() {
-		echo '<div class="updated fade"><p><strong>'.__(
-			'Notice:<br/>
-			When Post Snippets v1.9 will be released, the minimum 
-			required PHP Version will be 5.2.4 to be on par with WordPress 3.3.<br/>Please update your
-			PHP installation before updating Post Snippets to v1.9+, or 
-			contact the plugin author to plead your case.<br/>
-			Your installed PHP version: '.PHP_VERSION
-			, 'post-snippets').'</strong></p></div>';
-	}
-
-
-	/**
-	 * Displays a warning when installed in an old Wordpress Version
-	 *
-	 * @returns	Nothing
-	 */
-	function version_warning() {
-		echo '<div class="updated fade"><p><strong>'.__('Post Snippets requires WordPress version 3.0 or higher.', 'post-snippets').'</strong></p></div>';
-	}
-		
 	/**
 	 * Enqueues the necessary scripts and styles for the plugins
 	 *
@@ -823,17 +784,117 @@ function edOpenPostSnippets(myField) {
 	}
 	
 }
-add_action( 'plugins_loaded', create_function( '', 'global $post_snippets; $post_snippets = new post_snippets();' ) );
+
+
+// -----------------------------------------------------------------------------
+// Start the plugin
+// -----------------------------------------------------------------------------
+
+
+// Check so the environment is up to date, before initializing the plugin
+$test_post_snippets_host = new Post_Snippets_Host_Environment();
+
+if($test_post_snippets_host->passed) {
+	add_action(
+		'plugins_loaded', 
+		create_function( 
+			'',
+			'global $post_snippets; $post_snippets = new Post_Snippets();'
+		)
+	);
+}
+
+
+/**
+ * Post Snippets Host Environment.
+ *
+ * Checks that the host environment fulfils the requirements of Post Snippets.
+ * This class is designed to work with PHP versions below 5, to make sure it's
+ * always executed.
+ *
+ * - PHP Version 5.2.4 is on par with the requirements for WordPress 3.3.
+ *
+ * @since	Post Snippets 1.8.8
+ */
+class Post_Snippets_Host_Environment
+{
+	// Minimum versions required
+	var $MIN_PHP_VERSION	= '5.2.4';
+	var $MIN_WP_VERSION		= '3.0';
+	var $passed				= true;
+
+	/**
+	 * Constructor.
+	 *
+	 * Checks PHP and WordPress versions. If any check failes, a system notice
+	 * is added and $passed is set to fail, which can be checked before trying
+	 * to create the main class.
+	 */
+	function Post_Snippets_Host_Environment()
+	{
+		// Check if PHP is too old
+		if (version_compare(PHP_VERSION, $this->MIN_PHP_VERSION, '<')) {
+			// Display notice
+			add_action( 'admin_notices', array(&$this, 'php_version_error') );
+		}
+
+		// Check if WordPress is too old
+		global $wp_version;
+		if ( version_compare($wp_version, $this->MIN_WP_VERSION, '<') ) {
+			add_action( 'admin_notices', array(&$this, 'wp_version_error') );
+			$this->passed = false;
+		}
+	}
+
+	/**
+	 * Displays a warning when installed on an old PHP version.
+	 */
+	function php_version_error() {
+		echo '<div class="error"><p><strong>';
+		printf( __(
+			'Notice:<br/>
+			When Post Snippets v1.9 will be released, the minimum 
+			required PHP Version will be %1$s to be on par with WordPress 3.3.
+			<br/>
+			Please update your
+			PHP installation before updating Post Snippets to v1.9+, or 
+			contact the plugin author to plead your case.<br/>
+			Your installed PHP version: %2$s',
+			'post-snippets'),
+			$this->MIN_PHP_VERSION, PHP_VERSION);
+		echo '</strong></p></div>';
+	}
+
+	/**
+	 * Displays a warning when installed in an old Wordpress version.
+	 */
+	function wp_version_error() {
+		echo '<div class="error"><p><strong>';
+		printf( __( 
+			'Error: Post Snippets requires WordPress Version %s or higher.',
+			'post-snippets'),
+			$this->MIN_WP_VERSION );
+		echo '</strong></p></div>';
+	}
+}
+
+
+// -----------------------------------------------------------------------------
+// Helper functions
+// -----------------------------------------------------------------------------
 
 
 /**
  * Allow snippets to be retrieved directly from PHP
  *
- * @since		Post Snippets 1.6
+ * @since	Post Snippets 1.6
  *
- * @param		string		$snippet_name		The name of the snippet to retrieve
- * @param		string		$snippet_vars		The variables to pass to the snippet, formatted as a query string.
- * @returns		string							The Snippet
+ * @param	string		$snippet_name
+ *			The name of the snippet to retrieve
+ * @param	string		$snippet_vars
+ *			The variables to pass to the snippet, formatted as a query string.
+ * @return	string
+ *			The Snippet
  */
 function get_post_snippet( $snippet_name, $snippet_vars = '' ) {
 	global $post_snippets;
@@ -854,4 +915,3 @@ function get_post_snippet( $snippet_name, $snippet_vars = '' ) {
 	return $snippet;
 }
 
-?>
