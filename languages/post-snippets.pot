@@ -7,63 +7,71 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Post Snippets\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/post-snippets\n"
-"POT-Creation-Date: 2011-11-22 12:05:23+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2011-12-28 01:19:09+00:00\n"
+"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team:  <artstorm@gmail.com>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: tinymce/window.php:16
-msgid "You are not allowed to be here"
+#: classes/settings.php:33
+msgid "Add New Snippet"
 msgstr ""
 
-#: tinymce/window.php:148
-msgid "Cancel"
+#: classes/settings.php:34
+msgid "Delete Selected"
 msgstr ""
 
-#: tinymce/window.php:152
-msgid "Insert"
+#: classes/settings.php:35
+msgid "(Use the help dropdown button above for additional information.)"
 msgstr ""
 
-#: post-snippets.php:84
-msgid "Settings"
-msgstr ""
-
-#: post-snippets.php:95
-msgid "Post Snippets requires WordPress version 3.0 or higher."
-msgstr ""
-
-#: post-snippets.php:276
-msgid "This snippet is insert only, no variables defined."
-msgstr ""
-
-#: post-snippets.php:390 post-snippets.php:499 post-snippets.php:508
+#: classes/settings.php:44 classes/settings.php:53 post-snippets.php:493
 msgid "Title"
 msgstr ""
 
-#: post-snippets.php:391
+#: classes/settings.php:45 classes/settings.php:54 post-snippets.php:496
+msgid "Variables"
+msgstr ""
+
+#: classes/settings.php:46 classes/settings.php:55 post-snippets.php:499
+msgid "Snippet"
+msgstr ""
+
+#: classes/settings.php:73 post-snippets.php:505
+msgid "Shortcode"
+msgstr ""
+
+#: classes/settings.php:80 post-snippets.php:502
+msgid "Description"
+msgstr ""
+
+#: classes/settings.php:91
+msgid "Update Snippets"
+msgstr ""
+
+#: post-snippets.php:89
+msgid "Settings"
+msgstr ""
+
+#: post-snippets.php:352
+msgid "This snippet is insert only, no variables defined."
+msgstr ""
+
+#: post-snippets.php:494
 msgid ""
 "Give the snippet a title that helps you identify it in the post editor. If "
 "you make it into a shortcode, this is the name of the shortcode as well."
 msgstr ""
 
-#: post-snippets.php:393 post-snippets.php:500 post-snippets.php:509
-msgid "Variables"
-msgstr ""
-
-#: post-snippets.php:394
+#: post-snippets.php:497
 msgid ""
 "A comma separated list of custom variables you can reference in your snippet."
 "<br/><br/>Example:<br/>url,name"
 msgstr ""
 
-#: post-snippets.php:396 post-snippets.php:501 post-snippets.php:510
-msgid "Snippet"
-msgstr ""
-
-#: post-snippets.php:397
+#: post-snippets.php:500
 msgid ""
 "This is the block of text or HTML to insert in the post when you select the "
 "snippet from the insert button in the TinyMCE panel in the post editor. If "
@@ -75,21 +83,13 @@ msgid ""
 "and name on insert if they are defined as variables."
 msgstr ""
 
-#: post-snippets.php:399 post-snippets.php:532
-msgid "Description"
-msgstr ""
-
-#: post-snippets.php:400
+#: post-snippets.php:503
 msgid ""
 "An optional description for the Snippet. If entered it will be displayed in "
 "the snippets popup window in the post editor."
 msgstr ""
 
-#: post-snippets.php:402 post-snippets.php:526
-msgid "Shortcode"
-msgstr ""
-
-#: post-snippets.php:403
+#: post-snippets.php:506
 msgid ""
 "Treats the snippet as a shortcode. The name for the shortcode is the same as "
 "the title of the snippet (spaces not allowed) and will be used on insert. If "
@@ -98,103 +98,99 @@ msgid ""
 "reserved, so don't use it in the variables field."
 msgstr ""
 
-#: post-snippets.php:405
+#: post-snippets.php:508
 msgid "Advanced"
 msgstr ""
 
-#: post-snippets.php:406
+#: post-snippets.php:509
 msgid ""
 "The snippets can be retrieved directly from PHP, in a theme for instance, "
 "with the get_post_snippet() function. Visit the Post Snippets link under "
 "more information for instructions."
 msgstr ""
 
-#: post-snippets.php:408
+#: post-snippets.php:511
 msgid "For more information:"
 msgstr ""
 
-#: post-snippets.php:409
+#: post-snippets.php:512
 msgid ""
 "Visit my <a href=\"http://wpstorm.net/wordpress-plugins/post-snippets/"
 "\">Post Snippets</a> page for additional information."
 msgstr ""
 
-#: post-snippets.php:429
+#: post-snippets.php:531
 msgid "A snippet named Untitled has been added."
 msgstr ""
 
-#: post-snippets.php:457 post-snippets.php:667
+#: post-snippets.php:558 post-snippets.php:708
 msgid "Snippets have been updated."
 msgstr ""
 
-#: post-snippets.php:473
+#: post-snippets.php:574
 msgid "Selected snippets have been deleted."
 msgstr ""
 
-#: post-snippets.php:488
-msgid "Add New Snippet"
-msgstr ""
-
-#: post-snippets.php:489
-msgid "Delete Selected"
-msgstr ""
-
-#: post-snippets.php:490
-msgid "(Use the help dropdown button above for additional information.)"
-msgstr ""
-
-#: post-snippets.php:527
-msgid "Quicktag"
-msgstr ""
-
-#: post-snippets.php:543
-msgid "Update Snippets"
-msgstr ""
-
-#: post-snippets.php:547
+#: post-snippets.php:588
 msgid "Import/Export"
 msgstr ""
 
-#: post-snippets.php:548
+#: post-snippets.php:589
 msgid "Export"
 msgstr ""
 
-#: post-snippets.php:550
+#: post-snippets.php:591
 msgid "Export your snippets for backup or to import them on another site."
 msgstr ""
 
-#: post-snippets.php:551
+#: post-snippets.php:592
 msgid "Export Snippets"
 msgstr ""
 
-#: post-snippets.php:637
+#: post-snippets.php:678
 msgid "Import"
 msgstr ""
 
-#: post-snippets.php:639
+#: post-snippets.php:680
 msgid ""
 "Import snippets from a post-snippets-export.zip file. Importing overwrites "
 "any existing snippets."
 msgstr ""
 
-#: post-snippets.php:643
+#: post-snippets.php:684
 msgid "Import Snippets"
 msgstr ""
 
-#: post-snippets.php:669
+#: post-snippets.php:710
 msgid "Snippets successfully imported."
 msgstr ""
 
-#: post-snippets.php:671 post-snippets.php:675 post-snippets.php:677
+#: post-snippets.php:712 post-snippets.php:716 post-snippets.php:718
 msgid "Snippets could not be imported:"
 msgstr ""
 
-#: post-snippets.php:671
+#: post-snippets.php:712
 msgid "Unzipping failed."
 msgstr ""
 
-#: post-snippets.php:677
+#: post-snippets.php:718
 msgid "Upload failed."
+msgstr ""
+
+#: post-snippets.php:798
+msgid ""
+"Notice:<br/>\r\n"
+"\t\t\tWhen Post Snippets v1.9 will be released, the minimum \r\n"
+"\t\t\trequired PHP Version will be %1$s to be on par with WordPress 3.3.\r\n"
+"\t\t\t<br/>\r\n"
+"\t\t\tPlease update your\r\n"
+"\t\t\tPHP installation before updating Post Snippets to v1.9+, or \r\n"
+"\t\t\tcontact the plugin author to plead your case.<br/>\r\n"
+"\t\t\tYour installed PHP version: %2$s"
+msgstr ""
+
+#: post-snippets.php:817
+msgid "Error: Post Snippets requires WordPress Version %s or higher."
 msgstr ""
 
 #. Plugin Name of the plugin/theme
@@ -218,5 +214,5 @@ msgid "Johan Steen"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://wpstorm.net/"
+msgid "http://johansteen.se/"
 msgstr ""
