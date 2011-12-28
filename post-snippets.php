@@ -542,19 +542,9 @@ function edOpenPostSnippets(myField) {
 					$new_snippets[$key]['vars'] = str_replace(" ", "", trim($_POST[$key.'_vars']) );
 					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
 					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
-					/*	Check if the plugin runs on PHP below version 5.1.0
-						Because of a bug in WP 2.7.x in includes/compat.php the htmlspecialchars_decode
-						don't revert back to a PHP 4.x compatible version. So this is a workaround to make
-						the plugin work correctly on PHP versions below 5.1.
-						This problem is fixed in WP 2.8.
-					*/
-					if (version_compare(PHP_VERSION, '5.1.0', '<')) {
-						$new_snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
-						$new_snippets[$i]['description'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
-					} else {
-						$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
-						$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);
-					}
+
+					$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
+					$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);
 				}
 				update_option($this->plugin_options, $new_snippets);
 				$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
