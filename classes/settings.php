@@ -61,31 +61,32 @@ class Post_Snippets_Settings
 		// $snippets = get_option($this->plugin_options);
 		$snippets = $this->plugin_options;
 		if (!empty($snippets)) {
-			for ($i=0; $i < count($snippets); $i++) { ?>
+			foreach ($snippets as $key => $snippet) {
+			?>
 			<tr class='recent'>
-			<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?php echo $i; ?>' /></th>
+			<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?php echo $key; ?>' /></th>
 			<td class='row-title'>
-			<input type='text' name='<?php echo $i; ?>_title' value='<?php echo $snippets[$i]['title']; ?>' />
+			<input type='text' name='<?php echo $key; ?>_title' value='<?php echo $snippet['title']; ?>' />
 			</td>
 			<td class='name'>
-			<input type='text' name='<?php echo $i; ?>_vars' value='<?php echo $snippets[$i]['vars']; ?>' /><br/>
+			<input type='text' name='<?php echo $key; ?>_vars' value='<?php echo $snippet['vars']; ?>' /><br/>
 			<?php
-			$this->checkbox(__('Shortcode', 'post-snippets'), $i.'_shortcode',
-							$snippets[$i]['shortcode']);
+			$this->checkbox(__('Shortcode', 'post-snippets'), $key.'_shortcode',
+							$snippet['shortcode']);
 			?>
 			<!-- <input type='checkbox' name='< ?php echo $i; ? >_php' value='true'< ?php if ($snippets[$i]['php'] == true) { echo " checked"; }? > /> < ?php _e( 'PHP Code', 'post-snippets' ) ? ><br/> -->
 			</td>
 			<td class='desc'>
-			<textarea name="<?php echo $i; ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippets[$i]['snippet'], ENT_NOQUOTES); ?></textarea>
+			<textarea name="<?php echo $key; ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippet['snippet'], ENT_NOQUOTES); ?></textarea>
 			<?php _e( 'Description', 'post-snippets' ) ?>:
-			<input type='text' style='width: 100%;' name='<?php echo $i; ?>_description' value='<?php if (isset( $snippets[$i]['description'] ) ) echo esc_html($snippets[$i]['description']); ?>' /><br/>
+			<input type='text' style='width: 100%;' name='<?php echo $key; ?>_description' value='<?php if (isset( $snippet['description'] ) ) echo esc_html($snippet['description']); ?>' /><br/>
 			</td>
 			</tr>
 		<?php
 			}
 		}
 		?>
-	    </tbody>
+		</tbody>
 	</table>
 	<div class="submit">
 		<input type="submit" name="update-post-snippets" value="<?php _e( 'Update Snippets', 'post-snippets' ) ?>"  class="button-primary" /></div>

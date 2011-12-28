@@ -31,12 +31,11 @@ class Post_Snippets {
 
 	/**
 	 * Constructor
-	 *
 	 */
-	public function post_snippets() {
+	public function __construct() {
 		// Define the domain for translations
-		load_plugin_textdomain(	'post-snippets', false, 
-			dirname(plugin_basename(__FILE__)) . '/languages/');
+		$rel_path = dirname(plugin_basename(__FILE__)) . '/languages/';
+		load_plugin_textdomain(	'post-snippets', false, $rel_path );
 
 		$this->init_hooks();
 	}
@@ -200,21 +199,23 @@ class Post_Snippets {
 		# so they can be inserted into the editor, and get the variables replaced
 		# with user defined strings.
 		$snippets = get_option($this->plugin_options);
-		for ($i = 0; $i < count($snippets); $i++) {
-			if ($snippets[$i]['shortcode']) {
+		foreach ($snippets as $key => $snippet) {
+			if ($snippet['shortcode']) {
 				# Build a long string of the variables, ie: varname1={varname1} varname2={varname2}
 				# so {varnameX} can be replaced at runtime.
-				$var_arr = explode(",",$snippets[$i]['vars']);
+				$var_arr = explode(",",$snippet['vars']);
 				$variables = '';
 				if (!empty($var_arr[0])) {
-					for ($j = 0; $j < count($var_arr); $j++) {
-						$variables .= ' ' . $var_arr[$j] . '="{' . $var_arr[$j] . '}"';
+					foreach ($var_arr as $var) {
+						$variables .= ' ' . $var . '="{' . $var . '}"';
 					}
 				}
-				$shortcode = $snippets[$i]['title'] . $variables;
-				echo "var postsnippet_{$i} = '[" . $shortcode . "]';\n";
+				$shortcode = $snippet['title'] . $variables;
+				echo "var postsnippet_{$key} = '[" . $shortcode . "]';\n";
 			} else {
-				$snippet = $snippets[$i]['snippet'];
+				// To use $snippet is probably not a good naming convention here.
+				// rename to js_snippet or something?
+				$snippet = $snippet['snippet'];
 				# Fixes for potential collisions:
 				/* Replace <> with char codes, otherwise </script> in a snippet will break it */ 
 				$snippet = str_replace( '<', '\x3C', str_replace( '>', '\x3E', $snippet ) );
@@ -223,7 +224,7 @@ class Post_Snippets {
 				/* Remove CR and replace LF with \n to keep formatting */
 				$snippet = str_replace( chr(13), '', str_replace( chr(10), '\n', $snippet ) );
 				# Print out the variable containing the snippet
-				echo "var postsnippet_{$i} = \"" . $snippet . "\";\n";
+				echo "var postsnippet_{$key} = \"" . $snippet . "\";\n";
 			}
 		}
 		?>
@@ -231,11 +232,11 @@ class Post_Snippets {
 		jQuery(document).ready(function($){
 			<?php
 			# Create js variables for all form fields
-			for ($i = 0; $i < count($snippets); $i++) {
-				$var_arr = explode(",",$snippets[$i]['vars']);
+			foreach ($snippets as $key => $snippet) {
+				$var_arr = explode(",",$snippet['vars']);
 				if (!empty($var_arr[0])) {
-					for ($j = 0; $j < count($var_arr); $j++) {
-						$varname = "var_" . $i . "_" . $j;
+					foreach ($var_arr as $key_2 => $var) {
+						$varname = "var_" . $key . "_" . $key_2;
 						echo "var {$varname} = $( \"#{$varname}\" );\n";
 					}
 				}
@@ -257,16 +258,16 @@ class Post_Snippets {
 							$( this ).dialog( "close" );
 							var selected = $tabs.tabs('option', 'selected');
 							<?php
-							for ($i = 0; $i < count($snippets); $i++) {
+							foreach ($snippets as $key => $snippet) {
 							?>
-								if (selected == <?php echo $i; ?>) {
-									insert_snippet = postsnippet_<?php echo $i; ?>;
+								if (selected == <?php echo $key; ?>) {
+									insert_snippet = postsnippet_<?php echo $key; ?>;
 									<?php
-									$var_arr = explode(",",$snippets[$i]['vars']);
+									$var_arr = explode(",",$snippet['vars']);
 									if (!empty($var_arr[0])) {
-										for ($j = 0; $j < count($var_arr); $j++) {
-											$varname = "var_" . $i . "_" . $j; ?>
-											insert_snippet = insert_snippet.replace(/\{<?php echo $var_arr[$j]; ?>\}/g, <?php echo $varname; ?>.val());
+										foreach ($var_arr as $key_2 => $var) {
+											$varname = "var_" . $key . "_" . $key_2; ?>
+											insert_snippet = insert_snippet.replace(/\{<?php echo $var; ?>\}/g, <?php echo $varname; ?>.val());
 									<?php
 											echo "\n";
 										}
@@ -323,32 +324,33 @@ function edOpenPostSnippets(myField) {
 						<?php
 						# Create a tab for each available snippet
 						$snippets = get_option($this->plugin_options);
-						for ($i = 0; $i < count($snippets); $i++) { ?>
-							<li><a href="#ps-tabs-<?php echo $i; ?>"><?php echo $snippets[$i]['title']; ?></a></li>
+						foreach ($snippets as $key => $snippet) {
+						?>
+							<li><a href="#ps-tabs-<?php echo $key; ?>"><?php echo $snippet['title']; ?></a></li>
 						<?php }	?>					
 					</ul>
 
 					<?php
 					# Create a panel with form fields for each available snippet
-					for ($i = 0; $i < count($snippets); $i++) { ?>
-						<div id="ps-tabs-<?php echo $i; ?>">
+					foreach ($snippets as $key => $snippet) { ?>
+						<div id="ps-tabs-<?php echo $key; ?>">
 							<?php
 							// Print a snippet description is available
-							if ( isset($snippets[$i]['description']) )
-								echo '<p class="howto">' . $snippets[$i]['description'] . "</p>\n";
+							if ( isset($snippet['description']) )
+								echo '<p class="howto">' . $snippet['description'] . "</p>\n";
 
 							// Get all variables defined for the snippet and output them as input fields
-							$var_arr = explode(",",$snippets[$i]['vars']);
+							$var_arr = explode(",",$snippet['vars']);
 							if (!empty($var_arr[0])) {
-								for ($j = 0; $j < count($var_arr); $j++) { ?>
-									<label for="var_<?php echo $i; ?>_<?php echo $j; ?>"><?php echo($var_arr[$j]);?>:</label>
-									<input type="text" id="var_<?php echo $i; ?>_<?php echo $j; ?>" name="var_<?php echo $i; ?>_<?php echo $j; ?>" style="width: 190px" />
+								foreach ($var_arr as $key_2 => $var) { ?>
+									<label for="var_<?php echo $key; ?>_<?php echo $key_2; ?>"><?php echo($var);?>:</label>
+									<input type="text" id="var_<?php echo $key; ?>_<?php echo $key_2; ?>" name="var_<?php echo $key; ?>_<?php echo $key_2; ?>" style="width: 190px" />
 									<br/>
 							<?php
 								}
 							} else {
 								// If no variables and no description available, output a text to inform the user that it's an insert snippet only
-								if ( empty($snippets[$i]['description']) )
+								if ( empty($snippet['description']) )
 									echo '<p class="howto">' . __('This snippet is insert only, no variables defined.', 'post-snippets') . "</p>";
 							}
 							?>
@@ -428,17 +430,17 @@ function edOpenPostSnippets(myField) {
 	function create_shortcodes() {
 		$snippets = get_option($this->plugin_options);
 		if (!empty($snippets)) {
-			for ($i=0; $i < count($snippets); $i++) {
+			foreach ($snippets as $snippet) {
 				// If shortcode is enabled for the snippet, and a snippet has been entered, register it as a shortcode.
-				if ( $snippets[$i]['shortcode'] && !empty($snippets[$i]['snippet']) ) {
+				if ( $snippet['shortcode'] && !empty($snippet['snippet']) ) {
 					
-					$vars = explode(",",$snippets[$i]['vars']);
+					$vars = explode(",",$snippet['vars']);
 					$vars_str = '';
-					for ($j=0; $j < count($vars); $j++) {
-						$vars_str = $vars_str . '"'.$vars[$j].'" => "",';
-						
+					foreach ($vars as $var) {
+						$vars_str = $vars_str . '"'.$var.'" => "",';
 					}
-					add_shortcode($snippets[$i]['title'], create_function('$atts,$content=null', 
+
+					add_shortcode($snippet['title'], create_function('$atts,$content=null', 
 								'$shortcode_symbols = array('.$vars_str.');
 								extract(shortcode_atts($shortcode_symbols, $atts));
 								
@@ -448,7 +450,7 @@ function edOpenPostSnippets(myField) {
 								if ( $content != null )
 									$attributes["content"] = $content;
 								
-								$snippet = "'. addslashes($snippets[$i]["snippet"]) .'";
+								$snippet = "'. addslashes($snippet["snippet"]) .'";
 								$snippet = str_replace("&", "&amp;", $snippet);
 
 								foreach ($attributes as $key => $val) {
@@ -535,11 +537,11 @@ function edOpenPostSnippets(myField) {
 		if (isset($_POST['update-post-snippets'])) {
 			$snippets = get_option($this->plugin_options);
 			if (!empty($snippets)) {
-				for ($i=0; $i < count($snippets); $i++) {
-					$new_snippets[$i]['title'] = trim($_POST[$i.'_title']);
-					$new_snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
-					$new_snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
-					$new_snippets[$i]['php'] = isset($_POST[$i.'_php']) ? true : false;
+				foreach ($snippets as $key => $value) {
+					$new_snippets[$key]['title'] = trim($_POST[$key.'_title']);
+					$new_snippets[$key]['vars'] = str_replace(" ", "", trim($_POST[$key.'_vars']) );
+					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
+					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
 					/*	Check if the plugin runs on PHP below version 5.1.0
 						Because of a bug in WP 2.7.x in includes/compat.php the htmlspecialchars_decode
 						don't revert back to a PHP 4.x compatible version. So this is a workaround to make
@@ -550,8 +552,8 @@ function edOpenPostSnippets(myField) {
 						$new_snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
 						$new_snippets[$i]['description'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
 					} else {
-						$new_snippets[$i]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
-						$new_snippets[$i]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
+						$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
+						$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);
 					}
 				}
 				update_option($this->plugin_options, $new_snippets);
@@ -565,9 +567,9 @@ function edOpenPostSnippets(myField) {
 			if (!empty($snippets)) {
 				$delete = $_POST['checked'];
 				$newsnippets = array();
-				for ($i=0; $i < count($snippets); $i++) {
-					if (in_array($i,$delete) == false) {
-						array_push($newsnippets,$snippets[$i]);	
+				foreach ($snippets as $key => $snippet) {
+					if (in_array($key,$delete) == false) {
+						array_push($newsnippets,$snippet);	
 					}
 				}
 				update_option($this->plugin_options, $newsnippets);
