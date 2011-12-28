@@ -60,7 +60,6 @@ public function render()
 		<?php 
 		// $snippets = get_option($this->plugin_options);
 		$snippets = $this->plugin_options;
-	var_dump($snippets);
 		if (!empty($snippets)) {
 			for ($i=0; $i < count($snippets); $i++) { ?>
 			<tr class='recent'>
@@ -74,7 +73,6 @@ public function render()
 			$this->checkbox(__('Shortcode', 'post-snippets'), $i.'_shortcode',
 							$snippets[$i]['shortcode']);
 			?>
-			<input type='checkbox' name='<?php echo $i; ?>_quicktag' value='true'<?php if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /> <?php _e( 'Quicktag', 'post-snippets' ) ?><br/>
 			<!-- <input type='checkbox' name='< ?php echo $i; ? >_php' value='true'< ?php if ($snippets[$i]['php'] == true) { echo " checked"; }? > /> < ?php _e( 'PHP Code', 'post-snippets' ) ? ><br/> -->
 			</td>
 			<td class='desc'>

@@ -66,6 +66,11 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 
 == Changelog ==
 
+= Version 1.8.8 - 28 Dec 2011 =
+ * Removed the unneeded QuickTag checkbox from the settings screen for snippets,
+   as all snippets are now always available from the HTML editor's QuickTag
+   button.
+
 = Version 1.8.7 - 25 Dec 2011 =
  * Updated the TinyMCE plugin for the Post Snippets button in WordPress Visual
    Editor to use the same jQuery UI Dialog window that the HTML button have had

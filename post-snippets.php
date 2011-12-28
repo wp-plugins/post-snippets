@@ -525,7 +525,6 @@ function edOpenPostSnippets(myField) {
 			    'vars' => "",
 			    'description' => "",
 			    'shortcode' => false,
-			    'quicktag' => false,
 			    'php' => false,
 			    'snippet' => ""));
 			update_option($this->plugin_options, $snippets);
@@ -537,11 +536,10 @@ function edOpenPostSnippets(myField) {
 			$snippets = get_option($this->plugin_options);
 			if (!empty($snippets)) {
 				for ($i=0; $i < count($snippets); $i++) {
-					$snippets[$i]['title'] = trim($_POST[$i.'_title']);
-					$snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
-					$snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
-					$snippets[$i]['quicktag'] = isset($_POST[$i.'_quicktag']) ? true : false;
-					$snippets[$i]['php'] = isset($_POST[$i.'_php']) ? true : false;
+					$new_snippets[$i]['title'] = trim($_POST[$i.'_title']);
+					$new_snippets[$i]['vars'] = str_replace(" ", "", trim($_POST[$i.'_vars']) );
+					$new_snippets[$i]['shortcode'] = isset($_POST[$i.'_shortcode']) ? true : false;
+					$new_snippets[$i]['php'] = isset($_POST[$i.'_php']) ? true : false;
 					/*	Check if the plugin runs on PHP below version 5.1.0
 						Because of a bug in WP 2.7.x in includes/compat.php the htmlspecialchars_decode
 						don't revert back to a PHP 4.x compatible version. So this is a workaround to make
@@ -549,14 +547,14 @@ function edOpenPostSnippets(myField) {
 						This problem is fixed in WP 2.8.
 					*/
 					if (version_compare(PHP_VERSION, '5.1.0', '<')) {
-						$snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
-						$snippets[$i]['description'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
+						$new_snippets[$i]['snippet'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+						$new_snippets[$i]['description'] = htmlspecialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
 					} else {
-						$snippets[$i]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
-						$snippets[$i]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
+						$new_snippets[$i]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_snippet'])), ENT_NOQUOTES);
+						$new_snippets[$i]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$i.'_description'])), ENT_NOQUOTES);
 					}
 				}
-				update_option($this->plugin_options, $snippets);
+				update_option($this->plugin_options, $new_snippets);
 				$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
 			}
 		}
