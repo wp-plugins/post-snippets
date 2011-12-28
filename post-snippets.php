@@ -579,12 +579,10 @@ function edOpenPostSnippets(myField) {
 		$import = $this->import_snippets();
 
 
-
-// Render the settings screen
-require plugin_dir_path(__FILE__).'classes/settings.php';
-$settings = new Post_Snippets_Settings();
-$settings->set_options( get_option($this->plugin_options) );
-$settings->render();
+		// Render the settings screen
+		$settings = new Post_Snippets_Settings();
+		$settings->set_options( get_option($this->plugin_options) );
+		$settings->render();
 
 ?>
 	<h3><?php _e( 'Import/Export', 'post-snippets' ); ?></h3>
@@ -731,10 +729,16 @@ $settings->render();
 // -----------------------------------------------------------------------------
 
 
-// Check so the environment is up to date, before initializing the plugin
+// Check the host environment
 $test_post_snippets_host = new Post_Snippets_Host_Environment();
 
+// If environment is up to date, start the plugin
 if($test_post_snippets_host->passed) {
+	// Load external classes
+	if (is_admin()) {
+		require plugin_dir_path(__FILE__).'classes/settings.php';
+	}
+
 	add_action(
 		'plugins_loaded', 
 		create_function( 
