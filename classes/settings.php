@@ -1,6 +1,13 @@
 <?php
 /**
- * 
+ * Post Snippets Settings.
+ *
+ * Class that renders out the HTML for the settings screen and contains helpful
+ * methods to simply the maintainance of the admin screen.
+ *
+ * @package		Post Snippets
+ * @author		Johan Steen <artstorm at gmail dot com>
+ * @since		Post Snippets 1.8.8
  */
 class Post_Snippets_Settings
 {
@@ -16,7 +23,7 @@ public function render()
 {
 ?>
 <div class=wrap>
-    <h2>Post Snippets NEW</h2>
+    <h2>Post Snippets</h2>
 
 	<form method="post" action="">
 	<?php wp_nonce_field('update-options'); ?>
@@ -53,6 +60,7 @@ public function render()
 		<?php 
 		// $snippets = get_option($this->plugin_options);
 		$snippets = $this->plugin_options;
+	var_dump($snippets);
 		if (!empty($snippets)) {
 			for ($i=0; $i < count($snippets); $i++) { ?>
 			<tr class='recent'>
@@ -62,7 +70,10 @@ public function render()
 			</td>
 			<td class='name'>
 			<input type='text' name='<?php echo $i; ?>_vars' value='<?php echo $snippets[$i]['vars']; ?>' /><br/>
-			<input type='checkbox' name='<?php echo $i; ?>_shortcode' value='true'<?php if ($snippets[$i]['shortcode'] == true) { echo " checked"; }?> /> <?php _e( 'Shortcode', 'post-snippets' ) ?><br/>
+			<?php
+			$this->checkbox(__('Shortcode', 'post-snippets'), $i.'_shortcode',
+							$snippets[$i]['shortcode']);
+			?>
 			<input type='checkbox' name='<?php echo $i; ?>_quicktag' value='true'<?php if ($snippets[$i]['quicktag'] == true) { echo " checked"; }?> /> <?php _e( 'Quicktag', 'post-snippets' ) ?><br/>
 			<!-- <input type='checkbox' name='< ?php echo $i; ? >_php' value='true'< ?php if ($snippets[$i]['php'] == true) { echo " checked"; }? > /> < ?php _e( 'PHP Code', 'post-snippets' ) ? ><br/> -->
 			</td>
@@ -84,5 +95,24 @@ public function render()
 </div>
 <?php
 }
-
+	// -------------------------------------------------------------------------
+	// HTML and Form element methods
+	// -------------------------------------------------------------------------
+	
+	/**
+	 * Checkbox.
+	 * Renders the HTML for an input checkbox.
+	 *
+	 * @param	string	$label		The label rendered to screen
+	 * @param	string	$name		The unique name to identify the input
+	 * @param	boolean	$checked	If the input is checked or not
+	 */
+	private function checkbox( $label, $name, $checked )
+	{
+		printf( '<input type="checkbox" name="%s" value="true"', $name );
+		if ($checked)
+			echo ' checked';
+		echo ' />';
+		echo ' '.$label.'<br/>';
+	}
 }
