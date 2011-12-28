@@ -12,15 +12,15 @@
 class Post_Snippets_Settings
 {
 
-private $plugin_options;
+	private $plugin_options;
 
-public function set_options( $options )
-{
-	$this->plugin_options = $options;
-}
+	public function set_options( $options )
+	{
+		$this->plugin_options = $options;
+	}
 
-public function render()
-{
+	public function render()
+	{
 ?>
 <div class=wrap>
     <h2>Post Snippets</h2>
@@ -92,7 +92,8 @@ public function render()
 	</form>
 </div>
 <?php
-}
+	}
+
 	// -------------------------------------------------------------------------
 	// HTML and Form element methods
 	// -------------------------------------------------------------------------

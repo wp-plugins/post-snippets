@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.8.7
+Version: 1.8.8
 Author: Johan Steen
 Author URI: http://johansteen.se/
 Text Domain: post-snippets 
@@ -826,7 +826,6 @@ class Post_Snippets_Host_Environment
 // -----------------------------------------------------------------------------
 // Helper functions
 // -----------------------------------------------------------------------------
-
 
 /**
  * Allow snippets to be retrieved directly from PHP
