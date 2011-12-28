@@ -22,7 +22,7 @@ This admin plugin stores snippets of HTML code or reoccurring text that you ofte
 * **Import/Export** Snippets can be imported and exported between sites.
 * **Uninstall** If you delete the plugin from your plugins panel it cleans up all data it has created in the Wordpress database. 
 
-Related Links:
+= Related Links =
 
 * [Documentation](http://wpstorm.net/wordpress-plugins/post-snippets/ 
   "Complete usage instructions")
@@ -34,6 +34,11 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 == Installation ==
 
+= Requirements =
+
+* PHP version 5.2.4 or greater.
+* WordPress version 3.0 or greater.
+
 = Install =
 
 1. Upload the 'post-snippets' folder  to the '/wp-content/plugins/' directory.
@@ -43,8 +48,10 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 = Uninstall =
 
 1. Deactivate Post Snippets in the 'Plugins' menu in Wordpress.
-2. Select Post Snippets in the 'Recently Active Plugins' section and select 'Delete' from the 'Bulk Actions' drop down menu.
-3. This will delete all the plugin files from the server as well as erasing all options the plugin has stored in the database.
+2. Select Post Snippets in the 'Recently Active Plugins' section and select 
+   'Delete' from the 'Bulk Actions' drop down menu.
+3. This will delete all the plugin files from the server as well as erasing all
+   options the plugin has stored in the database.
 
 == Frequently Asked Questions ==
 
