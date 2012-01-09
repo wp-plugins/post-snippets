@@ -84,7 +84,7 @@ class Post_Snippets {
 	 * @returns	Array with all the plugin's action links
 	 */
 	function plugin_action_links( $links, $file ) {
-		if ( $file == plugin_basename( dirname(__FILE__).'/post-snippets.php' ) ) {
+		if ( $file == plugin_basename( dirname($this->get_FILE()).'/post-snippets.php' ) ) {
 			$links[] = '<a href="options-general.php?page=post-snippets/post-snippets.php">'.__('Settings', 'post-snippets').'</a>';
 		 }
 		return $links;
@@ -104,7 +104,8 @@ class Post_Snippets {
 		wp_enqueue_style( 'wp-jquery-ui-dialog');
 
 		# Adds the CSS stylesheet for the jQuery UI dialog
-		$style_url = plugins_url( '/assets/post-snippets.css', __FILE__);
+		$style_url = plugins_url( '/assets/post-snippets.css', __FILE__ );
+		$style_url = plugins_url( '/assets/post-snippets.css', $this->get_FILE() );
 		wp_register_style('post-snippets', $style_url);
 		wp_enqueue_style( 'post-snippets');
 	}
@@ -174,7 +175,7 @@ class Post_Snippets {
 	{
 		// Load the TinyMCE plugin, editor_plugin.js, into the array
 		$plugins[$this->tinymce_plugin_name] = 
-			plugins_url('/tinymce/editor_plugin.js', __FILE__);
+			plugins_url('/tinymce/editor_plugin.js', $this->get_FILE());
 
 		return $plugins;
 	}
@@ -470,7 +471,7 @@ function edOpenPostSnippets(myField) {
 	 */
 	function wp_admin()	{
 		add_action( 'contextual_help', array(&$this,'add_help_text'), 10, 3 );
-		add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', __FILE__, array(&$this, 'options_page') );
+		add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', $this->get_FILE(), array(&$this, 'options_page') );
 	}
 
 	function admin_message($message) {
@@ -712,7 +713,34 @@ function edOpenPostSnippets(myField) {
 		}
 		return $import;
 	}
-	
+
+	// -------------------------------------------------------------------------
+	// Helpers
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Get __FILE__ with no symlinks.
+	 *
+	 * For development purposes mainly. Returns __FILE__ without resolved 
+	 * symlinks to be used when __FILE__ is needed while resolving symlinks
+	 * breaks WP functionaly, so the actual WordPress path is returned instead.
+	 * This makes it possible for all WordPress versions to point to the same
+	 * plugin folder for faster testing of the plugin in different WordPress
+	 * versions.
+	 *
+	 * @since	Post Snippets 1.9
+	 * @return	The __FILE__ constant without resolved symlinks.
+	 */
+	private function get_FILE() {
+		$dev_path = 'E:\Code\WordPress';
+		$result = strpos( __FILE__, $dev_path );
+
+		if ( $result === false ) {
+			return __FILE__;
+		} else {
+			return str_replace($dev_path, WP_PLUGIN_DIR, __FILE__);
+		}
+	}
 }
 
 
