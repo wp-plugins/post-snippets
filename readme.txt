@@ -6,8 +6,8 @@ Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.8.9
 
-Build a library of snippets with HTML code or reoccurring text that you often
-use in your posts. Custom variables can be used.
+Build a library of snippets of text, HTML or PHP code to be reused in posts.
+Variables can be set for flexibility. Insert directly or as a shortcode.
 
 == Description ==
 
