@@ -8,7 +8,7 @@ Author: Johan Steen
 Author URI: http://johansteen.se/
 Text Domain: post-snippets 
 
-Copyright 2009-2011  Johan Steen  (email : artstorm [at] gmail [dot] com)
+Copyright 2009-2012 Johan Steen  (email : artstorm [at] gmail [dot] com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 class Post_Snippets {
 	private $tinymce_plugin_name = 'post_snippets';
-	var $plugin_options = "post_snippets_options";
+	var $plugin_options = 'post_snippets_options';
 
 	// -------------------------------------------------------------------------
 
@@ -815,14 +815,14 @@ class Post_Snippets_Host_Environment
 	function php_version_error() {
 		echo '<div class="error"><p><strong>';
 		printf( __(
-			'Notice:<br/>
-			When Post Snippets v1.9 will be released, the minimum 
-			required PHP Version will be %1$s to be on par with WordPress 3.3.
-			<br/>
-			Please update your
-			PHP installation before updating Post Snippets to v1.9+, or 
-			contact the plugin author to plead your case.<br/>
-			Your installed PHP version: %2$s',
+			'Notice:<br/>'.
+			'When Post Snippets v1.9 will be released, the minimum '.
+			'required PHP Version will be %1$s to be on par with WordPress 3.3.'.
+			'<br/>'.
+			'Please update your '.
+			'PHP installation before updating Post Snippets to v1.9+, or '.
+			'contact the plugin author to plead your case.<br/>'.
+			'Your installed PHP version: %2$s',
 			'post-snippets'),
 			$this->MIN_PHP_VERSION, PHP_VERSION);
 		echo '</strong></p></div>';
