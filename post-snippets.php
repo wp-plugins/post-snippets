@@ -26,8 +26,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 class Post_Snippets {
-	private $tinymce_plugin_name = 'post_snippets';
-	var $plugin_options = 'post_snippets_options';
+	private $tinymce_plugin_name	= 'post_snippets';
+	private $plugin_options			= 'post_snippets_options';
 
 	// -------------------------------------------------------------------------
 
@@ -41,8 +41,6 @@ class Post_Snippets {
 
 	/**
 	 * Initializes the hooks for the plugin
-	 *
-	 * @returns	Nothing
 	 */
 	function init_hooks() {
 
@@ -80,7 +78,7 @@ class Post_Snippets {
 	/**
 	 * Quick link to the Post Snippets Settings page from the Plugins page.
 	 *
-	 * @returns	Array with all the plugin's action links
+	 * @return	Array with all the plugin's action links
 	 */
 	function plugin_action_links( $links, $file ) {
 		if ( $file == plugin_basename( dirname($this->get_FILE()).'/post-snippets.php' ) ) {
@@ -94,8 +92,6 @@ class Post_Snippets {
 	 * Enqueues the necessary scripts and styles for the plugins
 	 *
 	 * @since		Post Snippets 1.7
-	 *
-	 * @returns		Nothing
 	 */
 	function enqueue_assets() {
 		wp_enqueue_script( 'jquery-ui-dialog' );
@@ -183,13 +179,10 @@ class Post_Snippets {
 	// -------------------------------------------------------------------------
 
 
-
 	/**
 	 * jQuery control for the dialog and Javascript needed to insert snippets into the editor
 	 *
 	 * @since		Post Snippets 1.7
-	 *
-	 * @returns		Nothing
 	 */
 	function jquery_ui_dialog() {
 		echo "\n<!-- START: Post Snippets jQuery UI and related functions -->\n";
@@ -310,8 +303,6 @@ function edOpenPostSnippets(myField) {
 	 * Insert Snippet jQuery UI dialog HTML for the post editor
 	 *
 	 * @since		Post Snippets 1.7
-	 *
-	 * @returns		Nothing
 	 */
 	function insert_ui_dialog() {
 		echo "\n<!-- START: Post Snippets UI Dialog -->\n";
@@ -373,8 +364,6 @@ function edOpenPostSnippets(myField) {
 	 *
 	 * @see			wp-includes/js/quicktags.dev.js -> qt.addButton()
 	 * @since		Post Snippets 1.8.6
-	 *
-	 * @returns		Nothing
 	 */
 	public function add_quicktag_button() {
 		echo "\n<!-- START: Add QuickTag button for Post Snippets -->\n";
@@ -397,8 +386,6 @@ function edOpenPostSnippets(myField) {
 	 * @see			wp-includes/js/quicktags.dev.js
 	 * @since		Post Snippets 1.7
 	 * @deprecated	Since 1.8.6
-	 *
-	 * @returns		Nothing
 	 */
 	function add_quicktag_button_pre33() {
 		echo "\n<!-- START: Post Snippets QuickTag button -->\n";
@@ -425,7 +412,6 @@ function edOpenPostSnippets(myField) {
 
 	/**
 	 * Create the functions for shortcodes dynamically and register them
-	 *
 	 */
 	function create_shortcodes() {
 		$snippets = get_option($this->plugin_options);
@@ -466,11 +452,12 @@ function edOpenPostSnippets(myField) {
 
 	/**
 	 * The Admin Page and all it's functions
-	 *
 	 */
 	function wp_admin()	{
-		add_action( 'contextual_help', array(&$this,'add_help_text'), 10, 3 );
-		add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', $this->get_FILE(), array(&$this, 'options_page') );
+		$option_page = add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', $this->get_FILE(), array(&$this, 'options_page') );
+		if ( $option_page ) {
+			$help = new Post_Snippets_Help( $option_page );
+		}
 	}
 
 	function admin_message($message) {
@@ -480,42 +467,6 @@ function edOpenPostSnippets(myField) {
 			<?php	
 		}
 	}
-
-	/**
-	 * Display contextual help in the help drop down menu at the options page.
-	 *
-	 * @since		Post Snippets 1.7.1
-	 *
-	 * @returns		string			The Contextual Help
-	 */
-	function add_help_text($contextual_help, $screen_id, $screen) {
-		//$contextual_help .= var_dump($screen); // use this to help determine $screen->id
-		if ( $screen->id == 'settings_page_post-snippets/post-snippets' ) {
-			$contextual_help =
-			'<p><strong>' . __('Title', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('Give the snippet a title that helps you identify it in the post editor. If you make it into a shortcode, this is the name of the shortcode as well.', 'post-snippets') . '</p>' .
-
-			'<p><strong>' . __('Variables', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name', 'post-snippets') . '</p>' .
-
-			'<p><strong>' . __('Snippet', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href="{url}"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables.', 'post-snippets') . '</p>' .
-
-			'<p><strong>' . __('Description', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('An optional description for the Snippet. If entered it will be displayed in the snippets popup window in the post editor.', 'post-snippets') . '</p>' .
-
-			'<p><strong>' . __('Shortcode', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert. If you enclose the shortcode in your posts, you can access the enclosed content by using the variable {content} in your snippet. The content variable is reserved, so don\'t use it in the variables field.', 'post-snippets') . '</p>' .
-
-			'<p><strong>' . __('Advanced', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('The snippets can be retrieved directly from PHP, in a theme for instance, with the get_post_snippet() function. Visit the Post Snippets link under more information for instructions.', 'post-snippets') . '</p>' .
-
-			'<p><strong>' . __('For more information:', 'post-snippets') . '</strong></p>' .
-			'<p>' . __('Visit my <a href="http://wpstorm.net/wordpress-plugins/post-snippets/">Post Snippets</a> page for additional information.', 'post-snippets') . '</p>';
-		}
-		return $contextual_help;
-	}
-
 
 	function options_page() {
 		// Add a new Snippet		
@@ -595,7 +546,7 @@ function edOpenPostSnippets(myField) {
 	 *
 	 * @since		Post Snippets 1.8
 	 *
-	 * @returns		string			URL to the exported snippets
+	 * @return		string			URL to the exported snippets
 	 */
 	function export_snippets() {
 		if ( isset($_POST['postsnippets_export']) ) {
@@ -628,7 +579,7 @@ function edOpenPostSnippets(myField) {
 	 *
 	 * @since		Post Snippets 1.8
 	 *
-	 * @returns		string			URL to the exported snippets
+	 * @return		string			URL to the exported snippets
 	 */
 	function create_export_file() {
 		$snippets = serialize(get_option($this->plugin_options));
@@ -664,7 +615,7 @@ function edOpenPostSnippets(myField) {
 	 * @uses 		wp_handle_upload() in wp-admin/includes/file.php
 	 * @since		Post Snippets 1.8
 	 *
- 	 * @returns		string			HTML to handle the import
+ 	 * @return		string			HTML to handle the import
 	 */
 	function import_snippets() {
 		$import = '<br/><br/><strong>'.__( 'Import', 'post-snippets' ).'</strong><br/>';
@@ -756,6 +707,7 @@ if($test_post_snippets_host->passed) {
 	// Load external classes
 	if (is_admin()) {
 		require plugin_dir_path(__FILE__).'classes/settings.php';
+		require plugin_dir_path(__FILE__).'classes/help.php';
 	}
 
 	add_action(
