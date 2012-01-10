@@ -29,12 +29,11 @@ class Post_Snippets {
 	private $tinymce_plugin_name = 'post_snippets';
 	var $plugin_options = "post_snippets_options";
 
-	/**
-	 * Constructor
-	 */
+	// -------------------------------------------------------------------------
+
 	public function __construct() {
-		// Define the domain for translations
-		$rel_path = dirname(plugin_basename(__FILE__)) . '/languages/';
+		// Define the domain and path for translations
+		$rel_path = dirname(plugin_basename($this->get_File())).'/languages/';
 		load_plugin_textdomain(	'post-snippets', false, $rel_path );
 
 		$this->init_hooks();
