@@ -4,9 +4,10 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.8.8
+Stable tag: 1.8.9
 
-Store snippets of HTML code or reoccurring text that you often use in your posts. Custom variables can be used.
+Build a library of snippets with HTML code or reoccurring text that you often
+use in your posts. Custom variables can be used.
 
 == Description ==
 
@@ -61,11 +62,15 @@ Upload of zip files must be allowed, enable this in Sites Network Admin -> Setti
 
 = How can I use the content in an enclosed shortcode? =
 
-If the shortcode is enclosed and contains content between the tags in a post. Example: [shortcode]Some text[/shortcode] the text within will be availble in a variable called content. So in your snippet use {content} to display it. Don't enter 'content' in the variable field, it's automatically assigned.
+If the shortcode is enclosed and contains content between the tags in a post. 
+Example: `[shortcode]Some text[/shortcode]` the text within will be availble in
+a variable called content. So in your snippet use {content} to display it. Don't
+enter 'content' in the variable field, it's automatically assigned.
 
 = Where can I get support? =
 
-Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests") for questions, answers, support and feature requests.
+Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 "Use this for support and feature requests") 
+for questions, answers, support and feature requests.
 
 == Screenshots ==
 
