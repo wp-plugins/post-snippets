@@ -76,6 +76,8 @@ Please visit the [Support Forum](http://wordpress.org/tags/post-snippets?forum_i
 == Changelog ==
 
 = Version 1.8.9 - 10 Jan 2012 =
+ * Updated the help text to take advantage of the new Help API introduced with
+   WordPress 3.3.
  * Updated the Swedish translation.
 
 = Version 1.8.8 - 28 Dec 2011 =
