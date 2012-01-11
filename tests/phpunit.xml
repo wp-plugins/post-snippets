@@ -2,7 +2,7 @@
 <phpunit 
 	colors="true" 
 	stopOnFailure="false" 
-	bootstrap="/../../../../wordpress-tests/init.php">
+	bootstrap="E:/Code/_Tools/UniformServer/www/wordpress.dev/wordpress-tests/init.php">
 	<testsuites>
 		<testsuite name="PostSnippets">
 			<file>post-snippets-test.php</file>

@@ -12,7 +12,8 @@
  */
 class Post_Snippets_Test extends WP_UnitTestCase {
 
-	protected $post_snippets;
+	// protected	$post_snippets;
+	public		$plugin_slug = 'post-snippets';
 
 	/**
 	 * setUp runs before each test to create a Fixture.
@@ -22,7 +23,18 @@ class Post_Snippets_Test extends WP_UnitTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		$this->post_snippets = new Post_Snippets();
+		// $this->post_snippets = new Post_Snippets();
+		global $post_snippets; $post_snippets = new Post_Snippets();
+
+		$snippets = array();
+		array_push($snippets, array(
+		    'title' => "TestTmp",
+		    'vars' => "",
+		    'description' => "",
+		    'shortcode' => false,
+		    'php' => false,
+		    'snippet' => "A test snippet..."));
+			update_option('post_snippets_options', $snippets);
 	}
 
 
@@ -59,7 +71,8 @@ class Post_Snippets_Test extends WP_UnitTestCase {
 
 	public function test_get_post_snippet()
 	{
-		$test = get_post_snippet('Test', 'var1=a&var2=b');
+		$test = get_post_snippet('TestTmp');
 		$this->assertTrue(is_string($test));
+		$this->assertEquals($test, 'A test snippet...');
 	}
 }

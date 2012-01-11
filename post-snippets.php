@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Stores snippets of HTML code or reoccurring text that you often use in your posts. You can use predefined variables to replace parts of the snippet on insert. All snippets are available in the post editor with a TinyMCE button or Quicktags.
-Version: 1.8.9
+Version: 1.8.9.1
 Author: Johan Steen
 Author URI: http://johansteen.se/
 Text Domain: post-snippets 
@@ -681,7 +681,8 @@ function edOpenPostSnippets(myField) {
 	 * @since	Post Snippets 1.9
 	 * @return	The __FILE__ constant without resolved symlinks.
 	 */
-	private function get_FILE() {
+	private function get_FILE()
+	{
 		$dev_path = 'E:\Code\WordPress';
 		$result = strpos( __FILE__, $dev_path );
 
@@ -691,13 +692,43 @@ function edOpenPostSnippets(myField) {
 			return str_replace($dev_path, WP_PLUGIN_DIR, __FILE__);
 		}
 	}
+
+	/**
+	 * Allow snippets to be retrieved directly from PHP.
+	 *
+	 * @since	Post Snippets 1.8.9.1
+	 *
+	 * @param	string		$snippet_name
+	 *			The name of the snippet to retrieve
+	 * @param	string		$snippet_vars
+	 *			The variables to pass to the snippet, formatted as a query string.
+	 * @return	string
+	 *			The Snippet
+	 */
+	public function get_snippet( $snippet_name, $snippet_vars = '' )
+	{
+		$snippets = get_option($this->plugin_options);
+		for ($i = 0; $i < count($snippets); $i++) {
+			if ($snippets[$i]['title'] == $snippet_name) {
+				parse_str( htmlspecialchars_decode($snippet_vars), $snippet_output );
+				$snippet = $snippets[$i]['snippet'];
+				$var_arr = explode(",",$snippets[$i]['vars']);
+
+				if ( !empty($var_arr[0]) ) {
+					for ($j = 0; $j < count($var_arr); $j++) {
+						$snippet = str_replace("{".$var_arr[$j]."}", $snippet_output[$var_arr[$j]], $snippet);
+					}
+				}
+			}
+		}
+		return $snippet;
+	}
 }
 
 
 // -----------------------------------------------------------------------------
 // Start the plugin
 // -----------------------------------------------------------------------------
-
 
 // Check the host environment
 $test_post_snippets_host = new Post_Snippets_Host_Environment();
@@ -793,13 +824,13 @@ class Post_Snippets_Host_Environment
 	}
 }
 
-
 // -----------------------------------------------------------------------------
 // Helper functions
 // -----------------------------------------------------------------------------
 
 /**
- * Allow snippets to be retrieved directly from PHP
+ * Allow snippets to be retrieved directly from PHP.
+ * This function is a wrapper for Post_Snippets::get_snippet().
  *
  * @since	Post Snippets 1.6
  *
@@ -812,20 +843,5 @@ class Post_Snippets_Host_Environment
  */
 function get_post_snippet( $snippet_name, $snippet_vars = '' ) {
 	global $post_snippets;
-	$snippets = get_option($post_snippets -> plugin_options);
-	for ($i = 0; $i < count($snippets); $i++) {
-		if ($snippets[$i]['title'] == $snippet_name) {
-			parse_str( htmlspecialchars_decode($snippet_vars), $snippet_output );
-			$snippet = $snippets[$i]['snippet'];
-			$var_arr = explode(",",$snippets[$i]['vars']);
-
-			if ( !empty($var_arr[0]) ) {
-				for ($j = 0; $j < count($var_arr); $j++) {
-					$snippet = str_replace("{".$var_arr[$j]."}", $snippet_output[$var_arr[$j]], $snippet);
-				}
-			}
-		}
-	}
-	return $snippet;
+	return $post_snippets->get_snippet( $snippet_name, $snippet_vars );
 }
-
