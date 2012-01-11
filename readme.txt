@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.8.9
 
-Build a library of snippets of text, HTML or PHP code to be reused in posts.
+Keep a library of snippets of text, HTML or PHP code to be used in posts.
 Variables can be set for flexibility. Insert directly or as a shortcode.
 
 == Description ==
@@ -15,13 +15,18 @@ This admin plugin stores snippets of HTML code or reoccurring text that you ofte
 
 = Features =
 
-* **Insert** All defined snippets is inserted from a button directly in the post editor.
+* **Insert** All defined snippets is inserted from a button directly in the post
+  editor.
 * **Shortcodes** You can use this plugin to create your own shortcodes.
-* **Buttons** The snippets are available in the viusal editor with a TinyMCE button and in the HTML editor with a quicktag button.
-* **Admin** Easy to use administration panel where you can add, edit and remove snippets.
-* **Variables** Each snippet can have as many custom variables as you like, which can be used on insert.
+* **Buttons** The snippets are available in the viusal editor with a TinyMCE
+  button and in the HTML editor with a quicktag button.
+* **Admin** Easy to use administration panel where you can add, edit and remove
+  snippets.
+* **Variables** Each snippet can have as many custom variables as you like,
+  which can be used on insert.
 * **Import/Export** Snippets can be imported and exported between sites.
-* **Uninstall** If you delete the plugin from your plugins panel it cleans up all data it has created in the Wordpress database. 
+* **Uninstall** If you delete the plugin from your plugins panel it cleans up
+  all data it has created in the Wordpress database. 
 
 = Related Links =
 
