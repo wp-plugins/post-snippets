@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.8.9.1
+Stable tag: 1.8.9.2
 
 Keep a snippet library of text, HTML or PHP code to be used in posts. Variables
 can be set for more flexibility. Inserts directly or as shortcodes.
@@ -84,6 +84,11 @@ for questions, answers, support and feature requests.
 3. The Post Snippet Insert Window.
 
 == Changelog ==
+
+= Version 1.8.9.2 - 15 Jan 2012 =
+ * Added an additional check to see if Post Snippets is loaded via a
+   bootstrapped WP Admin that doesn't set the is_admin() flag, so it works in
+   that environment as well.
 
 = Version 1.8.9.1 - 11 Jan 2012 =
  * A bug fixed with get_post_snippets() that were introduced in the last update.
