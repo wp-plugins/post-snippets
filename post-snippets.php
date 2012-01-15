@@ -782,6 +782,7 @@ class Post_Snippets_Host_Environment
 		if (version_compare(PHP_VERSION, $this->MIN_PHP_VERSION, '<')) {
 			// Display notice
 			add_action( 'admin_notices', array(&$this, 'php_version_error') );
+			$this->passed = false;
 		}
 
 		// Check if WordPress is too old
@@ -797,16 +798,9 @@ class Post_Snippets_Host_Environment
 	 */
 	function php_version_error() {
 		echo '<div class="error"><p><strong>';
-		printf( __(
-			'Notice:<br/>'.
-			'When Post Snippets v1.9 will be released, the minimum '.
-			'required PHP Version will be %1$s to be on par with WordPress 3.3.'.
-			'<br/>'.
-			'Please update your '.
-			'PHP installation before updating Post Snippets to v1.9+, or '.
-			'contact the plugin author to plead your case.<br/>'.
+		printf(
+			'Error: Post Snippets requires PHP version %1$s or greater.<br/>'.
 			'Your installed PHP version: %2$s',
-			'post-snippets'),
 			$this->MIN_PHP_VERSION, PHP_VERSION);
 		echo '</strong></p></div>';
 	}
@@ -816,9 +810,8 @@ class Post_Snippets_Host_Environment
 	 */
 	function wp_version_error() {
 		echo '<div class="error"><p><strong>';
-		printf( __( 
-			'Error: Post Snippets requires WordPress Version %s or higher.',
-			'post-snippets'),
+		printf(
+			'Error: Post Snippets requires WordPress version %s or greater.',
 			$this->MIN_WP_VERSION );
 		echo '</strong></p></div>';
 	}

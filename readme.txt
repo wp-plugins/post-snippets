@@ -85,6 +85,9 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version 1.9 - 16 Jan 2012 =
+ * PHP version 5.2.4 or greater is now required to run Post Snippets.
+
 = Version 1.8.9.2 - 15 Jan 2012 =
  * Added an additional check to see if Post Snippets is loaded via a
    bootstrapped WP Admin that doesn't set the is_admin() flag, so it works in
@@ -282,3 +285,9 @@ for questions, answers, support and feature requests.
 
 = Version 1.0 - 23 Mar 2009 =
  * Initial Release
+
+== Upgrade Notice ==
+
+= 1.9 =
+Note that starting with this version and moving forward, at least PHP v5.2.4 is
+required to run Post Snippets.
