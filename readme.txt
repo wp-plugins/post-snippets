@@ -1,7 +1,7 @@
 ﻿=== Post Snippets ===
 Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
-Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php
+Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.9
