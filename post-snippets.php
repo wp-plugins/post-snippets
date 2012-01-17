@@ -436,19 +436,41 @@ function edOpenPostSnippets(myField) {
 								if ( $content != null )
 									$attributes["content"] = $content;
 								
-								$snippet = "'. addslashes($snippet["snippet"]) .'";
+
+								$snippet = \''. addslashes($snippet["snippet"]) .'\';
 								$snippet = str_replace("&", "&amp;", $snippet);
 
 								foreach ($attributes as $key => $val) {
 									$snippet = str_replace("{".$key."}", $val, $snippet);
 								}
-	
+
+								$php = "'. $snippet["php"] .'";
+								if ($php == true) {
+									$snippet = Post_Snippets::php_eval( $snippet );
+								}
+
 								return do_shortcode(stripslashes($snippet));') );
 				}
 			}
 		}
 	}
 
+	/**
+	 * Evaluate a snippet as PHP code.
+	 *
+	 * @since	Post Snippets 1.9
+	 * @param	string	$content	The snippet to evaluate
+	 * @return	string				The result of the evaluation
+	 */
+	public static function php_eval( $content )
+	{
+		$content = stripslashes($content);
+		ob_start();
+		eval ($content);
+		$return = ob_get_clean();
+		$return = addslashes($return);
+		return $return;
+	}
 
 	/**
 	 * The Admin Page and all it's functions

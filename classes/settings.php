@@ -73,8 +73,10 @@ class Post_Snippets_Settings
 			<?php
 			$this->checkbox(__('Shortcode', 'post-snippets'), $key.'_shortcode',
 							$snippet['shortcode']);
+
+			$this->checkbox(__('PHP Code', 'post-snippets'), $key.'_php',
+							$snippet['php']);
 			?>
-			<!-- <input type='checkbox' name='< ?php echo $i; ? >_php' value='true'< ?php if ($snippets[$i]['php'] == true) { echo " checked"; }? > /> < ?php _e( 'PHP Code', 'post-snippets' ) ? ><br/> -->
 			</td>
 			<td class='desc'>
 			<textarea name="<?php echo $key; ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippet['snippet'], ENT_NOQUOTES); ?></textarea>

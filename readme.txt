@@ -1,7 +1,7 @@
 ﻿=== Post Snippets ===
 Contributors: artstorm
 Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
-Tags: post, admin, snippet, html, custom, page, dynamic, editor, quicktag
+Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, code, php, eval, exec
 Requires at least: 3.0
 Tested up to: 3.3.1
 Stable tag: 1.8.9.2
@@ -85,7 +85,9 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
-= Version 1.9 - 16 Jan 2012 =
+= Version 1.9 - 17 Jan 2012 =
+ * Initial implementation to allow snippets to be evaluated as PHP code.
+   [Read more](http://wpstorm.net/wordpress-plugins/post-snippets/#php).
  * PHP version 5.2.4 or greater is now required to run Post Snippets.
 
 = Version 1.8.9.2 - 15 Jan 2012 =
