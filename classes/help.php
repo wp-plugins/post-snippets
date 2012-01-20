@@ -65,8 +65,7 @@ class Post_Snippets_Help
 	public function help_advanced()
 	{
 		return '<p>'.
-		__('You can retrieve a Post Snippet directly from PHP, in a theme for'.
-		'instance, by using the get_post_snippet() function.').
+		__('You can retrieve a Post Snippet directly from PHP, in a theme for instance, by using the get_post_snippet() function.').
 		'</p>
 
 		<p><strong>'.
