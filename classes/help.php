@@ -32,14 +32,20 @@ class Post_Snippets_Help
 	 * @since	Post Snippets 1.8.9
 	 */
 	public function add_help_tabs() {
-	    $screen = get_current_screen();
+		$screen = get_current_screen();
 		$screen->set_help_sidebar( $this->help_sidebar() );
-	    $screen->add_help_tab( array(
-	        'id'      => 'additional-plugin-help', // This should be unique for the screen.
-	        'title'   => 'Plugin Usage',
-	        'content' => $this->contextual_help_wp_pre33()
-	        // Use 'callback' instead of 'content' for a function callback that renders the tab content.
-	    ) );
+		$screen->add_help_tab( array(
+			'id'      => 'additional-plugin-help', // This should be unique for the screen.
+			'title'   => 'Plugin Usage',
+			'content' => $this->contextual_help_wp_pre33()
+			// Use 'callback' instead of 'content' for a function callback that renders the tab content.
+		) );
+		$screen->add_help_tab( array(
+			'id'      => 'advanced-plugin-help', // This should be unique for the screen.
+			'title'   => __('Advanced'),
+			'content' => $this->help_advanced()
+			// Use 'callback' instead of 'content' for a function callback that renders the tab content.
+		) );
 	}
 
 	/**
@@ -54,6 +60,44 @@ class Post_Snippets_Help
 		$content .= '<p><a href="http://wpstorm.net/wordpress-plugins/post-snippets/" target="_blank">'.__('Post Snippets Documentation').'</a></p>';
 		$content .= '<p><a href="http://wordpress.org/tags/post-snippets?forum_id=10" target="_blank">'.__('Support Forums').'</a></p>';
 		return $content;
+	}
+
+	public function help_advanced()
+	{
+		return '<p>'.
+		__('
+		You can retrieve a Post Snippet directly from PHP, in a theme for
+		instance, by using the get_post_snippet() function.').
+		'</p>
+
+		<p><strong>'.
+		__('Usage:').
+		'</strong><br><code>
+		&lt;?php $my_snippet = get_post_snippet( $snippet_name, $snippet_vars ); ?&gt;
+		</code></p>
+
+		<p><strong>'.
+		__('Parameters:').
+		'</strong><br><code>
+		$snippet_name</code><br/>'.
+		__('
+		(string) (required) The name of the snippet to retrieve.').
+
+		'<br/><br/><code>'.
+		'$snippet_vars
+		</code><br/>'.
+		__('
+		(string) The variables to pass to the snippet, formatted as a query string.').
+		'</p>
+
+		<p><strong>'.
+		__('Example:').
+		'</strong><br/><code>
+		&lt;?php<br/>
+			$my_snippet = get_post_snippet( \'internal-link\', \'title=Awesome&url=2011/02/awesome/\' );<br/>
+			echo $my_snippet;<br/>
+		?&gt;
+		</code></p>';
 	}
 
 
