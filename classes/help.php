@@ -65,9 +65,8 @@ class Post_Snippets_Help
 	public function help_advanced()
 	{
 		return '<p>'.
-		__('
-		You can retrieve a Post Snippet directly from PHP, in a theme for
-		instance, by using the get_post_snippet() function.').
+		__('You can retrieve a Post Snippet directly from PHP, in a theme for'.
+		'instance, by using the get_post_snippet() function.').
 		'</p>
 
 		<p><strong>'.
@@ -80,14 +79,12 @@ class Post_Snippets_Help
 		__('Parameters:').
 		'</strong><br><code>
 		$snippet_name</code><br/>'.
-		__('
-		(string) (required) The name of the snippet to retrieve.').
+		__('(string) (required) The name of the snippet to retrieve.').
 
 		'<br/><br/><code>'.
 		'$snippet_vars
 		</code><br/>'.
-		__('
-		(string) The variables to pass to the snippet, formatted as a query string.').
+		__('(string) The variables to pass to the snippet, formatted as a query string.').
 		'</p>
 
 		<p><strong>'.
