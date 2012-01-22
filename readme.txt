@@ -92,8 +92,7 @@ for questions, answers, support and feature requests.
 == Changelog ==
 
 = Version 1.9.1 - 22 Jan 2012 =
- * Updated the built in help text to include all the latest features added so it
-   is up to date.
+ * Updated the built in help text to include all the latest features added.
 
 = Version 1.9 - 17 Jan 2012 =
  * Initial implementation to allow snippets to be evaluated as PHP code.
