@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Post Snippets\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/post-snippets\n"
-"POT-Creation-Date: 2012-01-10 14:00:40+00:00\n"
-"PO-Revision-Date: 2012-01-10 20:32+0100\n"
+"POT-Creation-Date: 2012-01-22 15:13:10+00:00\n"
+"PO-Revision-Date: 2012-01-22 16:38+0100\n"
 "Last-Translator: Johan Steen <artstorm@gmail.com>\n"
 "Language-Team:  <artstorm@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -30,142 +30,216 @@ msgstr "(Se hjälpmenyn ovan för mer information.)"
 
 #: classes/settings.php:44
 #: classes/settings.php:53
-#: post-snippets.php:495
+#: classes/help.php:91
 msgid "Title"
 msgstr "Titel"
 
 #: classes/settings.php:45
 #: classes/settings.php:54
-#: post-snippets.php:498
+#: classes/help.php:98
 msgid "Variables"
 msgstr "Variabler"
 
 #: classes/settings.php:46
 #: classes/settings.php:55
-#: post-snippets.php:501
+#: classes/help.php:109
 msgid "Snippet"
 msgstr "Snippet"
 
 #: classes/settings.php:74
-#: post-snippets.php:507
+#: classes/help.php:46
+#: classes/help.php:248
 msgid "Shortcode"
 msgstr "Shortcode"
 
-#: classes/settings.php:81
-#: post-snippets.php:504
+#: classes/settings.php:77
+msgid "PHP Code"
+msgstr "PHP kod"
+
+#: classes/settings.php:83
+#: classes/help.php:125
 msgid "Description"
 msgstr "Beskrivning"
 
-#: classes/settings.php:92
+#: classes/settings.php:94
 msgid "Update Snippets"
 msgstr "Uppdatera snippets"
 
-#: post-snippets.php:87
-msgid "Settings"
-msgstr "Inställningar"
+#: classes/help.php:41
+#: classes/help.php:246
+msgid "Basic"
+msgstr "Grundläggande"
 
-#: post-snippets.php:354
-msgid "This snippet is insert only, no variables defined."
-msgstr "Denna snippet saknar variabler, så den infogas som den är."
+#: classes/help.php:51
+#: classes/help.php:250
+msgid "PHP"
+msgstr "PHP"
 
-#: post-snippets.php:496
-msgid "Give the snippet a title that helps you identify it in the post editor. If you make it into a shortcode, this is the name of the shortcode as well."
-msgstr "Ge snippeten en titel som hjälper till att identifiera den i inläggsredigeraren. Om du väljer att snippeten ska fungera som en shortcode, blir titeln även shortcode namnet."
-
-#: post-snippets.php:499
-msgid "A comma separated list of custom variables you can reference in your snippet.<br/><br/>Example:<br/>url,name"
-msgstr "En kommaseparerad lista av egendefinerade variabler som du kan referera i ditt avsnitt.<br/><br/>Exempel:<br/>url,namn"
-
-#: post-snippets.php:502
-msgid "This is the block of text or HTML to insert in the post when you select the snippet from the insert button in the TinyMCE panel in the post editor. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/>To reference the variables in the example above, you would enter {url} and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the website of &lt;a href=\"{url}\"&gt;{name}&lt;/a&gt;</i><br/>You will get the option to replace url and name on insert if they are defined as variables."
-msgstr "Detta är blocket med text eller HTML att lägga till inlägget när du väljer ett avsnitt med insättnings knappen i TinyMCE panelen i inläggsredigeraren. Om du har definerat egna variabler kan du referera dem i avnittet genom att omsluta dem med {}.<br/><br/>Exempel:<br/>För att referera variabler i exemplet ovan, skulle du skriva {url} and {namn}.<br/><br/>Så om du har det här avsnittet:<br/><i>Det är websidan till &lt;a href=\"{url}\"&gt;{namn}&lt;/a&gt;</i><br/>När du infogar avsnittet i ditt inlägg kan du fylla i vad som ska ersätta url och namn."
-
-#: post-snippets.php:505
-msgid "An optional description for the Snippet. If entered it will be displayed in the snippets popup window in the post editor."
-msgstr "En valfri beskrivning för snippeten. Om den är ifylld, så kommer den synas i popup fönstret i inläggsredigeraren."
-
-#: post-snippets.php:508
-msgid "Treats the snippet as a shortcode. The name for the shortcode is the same as the title of the snippet (spaces not allowed) and will be used on insert. If you enclose the shortcode in your posts, you can access the enclosed content by using the variable {content} in your snippet. The content variable is reserved, so don't use it in the variables field."
-msgstr "Definera snippeten som en shortcode. Namnet för shortcoden blir detsamma som snippetsens titel (mellanslag är inte tillåtet) och kommer användas vid infogning. Om du innesluter text med shortcoden i dina inlägg, så kan du komma åt det inneslutna innehålet genom att använda variabeln {content} i din snippet. Content variablen är reserverade, så använd inte det namnet i variabel fältet."
-
-#: post-snippets.php:510
+#: classes/help.php:56
+#: classes/help.php:252
 msgid "Advanced"
 msgstr "Avancerat"
 
-#: post-snippets.php:511
-msgid "The snippets can be retrieved directly from PHP, in a theme for instance, with the get_post_snippet() function. Visit the Post Snippets link under more information for instructions."
-msgstr "En snippet kan hämtas direkt via PHP, till exempel i ett tema, med get_post_snippet() funktionen. Besök Post Snippets länken under mer information för instruktioner."
-
-#: post-snippets.php:513
+#: classes/help.php:70
 msgid "For more information:"
 msgstr "För mer information:"
 
-#: post-snippets.php:514
-msgid "Visit my <a href=\"http://wpstorm.net/wordpress-plugins/post-snippets/\">Post Snippets</a> page for additional information."
-msgstr "Besök <a href=\"http://wpstorm.net/wordpress-plugins/post-snippets/\">Post Snippets</a> sidan för mer information."
+#: classes/help.php:74
+msgid "Post Snippets Documentation"
+msgstr "Post Snippets Dokumentation"
 
-#: post-snippets.php:533
+#: classes/help.php:78
+msgid "Support Forums"
+msgstr "Supportforum"
+
+#: classes/help.php:94
+msgid "Give the snippet a title that helps you identify it in the post editor. This also becomes the name of the shortcode if you enable that option"
+msgstr "Ge snippeten en titel som hjälper till att identifiera den i inläggsredigeraren. Titeln blir också namnet på shortcoden om du aktiverar det valet."
+
+#: classes/help.php:101
+msgid "A comma separated list of custom variables you can reference in your snippet."
+msgstr "En kommaseparerad lista av egendefinerade variabler som du kan referera i din snippet."
+
+#: classes/help.php:104
+#: classes/help.php:115
+#: classes/help.php:220
+msgid "Example"
+msgstr "Exempel"
+
+#: classes/help.php:112
+msgid "This is the block of text, HTML or PHP to insert in the post or as a shortcode. If you have entered predefined variables you can reference them from the snippet by enclosing them in {} brackets."
+msgstr "Detta är blocket med text, HTML eller PHP att infoga i inläggen eller som en shortcode. Om du har definerat variabler kan du referera dem från snippeten genom att skriva dem inom {} tecken."
+
+#: classes/help.php:117
+msgid "To reference the variables in the example above, you would enter {url} and {name}. So if you enter this snippet:"
+msgstr "För att referera variablerna i exemplet ovan, skulle du använda {url} och {name}. So om du skapar denna snippeten:"
+
+#: classes/help.php:121
+msgid "You will get the option to replace url and name on insert if they are defined as variables."
+msgstr "Du har möjligheten att ersätta url och name vid infogning om de är definerade som variabler."
+
+#: classes/help.php:128
+msgid "An optional description for the Snippet. If filled out, the description will be displayed in the snippets insert window in the post editor."
+msgstr "En valfri beskrivning för snippeten. Om den är ifylld, så kommer den synas i Post Snippets infogningsfönster i inläggsredigeraren."
+
+#: classes/help.php:141
+msgid "When enabling the shortcode checkbox, the snippet is no longer inserted directly but instead inserted as a shortcode. The obvious advantage of this is of course that you can insert a block of text or code in many places on the site, and update the content from one single place."
+msgstr "Genom att aktivera shortcode kryssrutan, så infogas inte längre snippeten rakt av utan sätts in som en shortcode. The uppenbara fördelen med detta är naturligtvis att du kan infoga ett block med text eller kod på många ställen på sajten, och uppdatera dem från ett ställe."
+
+#: classes/help.php:145
+msgid "The name to use the shortcode is the same as the title of the snippet (spaces are not allowed). When inserting a shortcode snippet, the shortcode and not the content will be inserted in the post."
+msgstr "Titeln på snippeten blir även namnet för att komma åt den som en shortcode (mellanslag är inte tillåtet). När man infogar en shortcode snippet, så blir shortcoden det som hamnar i inlägget och inte själva innehållet i snippeten."
+
+#: classes/help.php:148
+msgid "If you enclose the shortcode in your posts, you can access the enclosed content by using the variable {content} in your snippet. The {content} variable is reserved, so don't use it in the variables field."
+msgstr "Om du innesluter text med shortcoden i dina inlägg, så kan du komma åt det inneslutna innehålet genom att använda variabeln {content} i din snippet. {content} variablen är reserverad, så använd inte det namnet content i variabel fältet."
+
+#: classes/help.php:161
+msgid "Snippets defined as shortcodes can optionally also be evaluated as PHP Code by enabling the PHP checkbox. PHP snippets is only available when treating the snippet as a shortcode."
+msgstr "Snippets som är definerade som shortcodes, kan om så önskas bli evaluerade som PHP kod genom att aktivera PHP kryssrutan. PHP snippets fungerar endast när snippet är aktiverad som en shortcode."
+
+#: classes/help.php:164
+msgid "Example PHP Snippet"
+msgstr "Exempel PHP Snippet"
+
+#: classes/help.php:173
+msgid "With a snippet defined like the one above, you can call it with its shortcode definition in a post. Let's pretend that the example snippet is named phpcode and have one variable defined loop_me, then it would be called like this from a post:"
+msgstr "Med en snippet definerad som den ovan, kan du komma åt den via dess shortcode namn i ett inlägg. Låt oss säga att exempel snippeten har fått namnet phpcode och att den har en variabel definerad loop_me, då skulle man komma åt den från ett inlägg så här:"
+
+#: classes/help.php:179
+msgid "When the shortcode is executed the loop_me variable will be replaced with the string supplied in the shortcode and then the PHP code will be evaluated. (Outputting the string five times in this case. Wow!)"
+msgstr "När shortcoden körs kommer loop_me variabeln bli ersatt med strängen som definerad från shortcoden och efter det så evalueras PHP koden. (Skriver strängen 5 gånger i detta fallet. Wow!)"
+
+#: classes/help.php:182
+msgid "Note the evaluation order, any snippet variables will be replaced before the snippet is evaluated as PHP code. Also note that a PHP snippet don't need to be wrapped in &lt;?php #code; ?&gt;."
+msgstr "Notera evaluerings ordningen, variabler för snippet kommer ersättas innan snippeten evalueras som PHP kod. Notera också att en PHP snippet inte ska omslutas med &lt;?php #code; ?&gt;."
+
+#: classes/help.php:195
+msgid "You can retrieve a Post Snippet directly from PHP, in a theme for instance, by using the get_post_snippet() function."
+msgstr "En snippet kan hämtas direkt via PHP, till exempel i ett tema, med get_post_snippet() funktionen."
+
+#: classes/help.php:199
+msgid "Usage"
+msgstr "Användning"
+
+#: classes/help.php:207
+msgid "Parameters"
+msgstr "Parametrar"
+
+#: classes/help.php:211
+msgid "(string) (required) The name of the snippet to retrieve."
+msgstr "(sträng) (krävs) Namnet på snippeten att hämta."
+
+#: classes/help.php:216
+msgid "(string) The variables to pass to the snippet, formatted as a query string."
+msgstr "(sträng) Variablerna att skicka till snippeten, formatterat som en query sträng."
+
+#: post-snippets.php:85
+msgid "Settings"
+msgstr "Inställningar"
+
+#: post-snippets.php:345
+msgid "This snippet is insert only, no variables defined."
+msgstr "Denna snippet saknar variabler, så den infogas som den är."
+
+#: post-snippets.php:507
 msgid "A snippet named Untitled has been added."
 msgstr "En ny snippet med namnet Untitled har lagts till."
 
-#: post-snippets.php:550
-#: post-snippets.php:700
+#: post-snippets.php:524
+#: post-snippets.php:674
 msgid "Snippets have been updated."
 msgstr "Ändrade snippets  har uppdaterats."
 
-#: post-snippets.php:566
+#: post-snippets.php:540
 msgid "Selected snippets have been deleted."
 msgstr "Valda snippets har raderats."
 
-#: post-snippets.php:580
+#: post-snippets.php:554
 msgid "Import/Export"
 msgstr "Importera/Exportera"
 
-#: post-snippets.php:581
+#: post-snippets.php:555
 msgid "Export"
 msgstr "Exportera"
 
-#: post-snippets.php:583
+#: post-snippets.php:557
 msgid "Export your snippets for backup or to import them on another site."
 msgstr "Exportera dina snippets för backup eller för att importera dem till en annan sajt."
 
-#: post-snippets.php:584
+#: post-snippets.php:558
 msgid "Export Snippets"
 msgstr "Exportera snippets"
 
-#: post-snippets.php:670
+#: post-snippets.php:644
 msgid "Import"
 msgstr "Importera"
 
-#: post-snippets.php:672
+#: post-snippets.php:646
 msgid "Import snippets from a post-snippets-export.zip file. Importing overwrites any existing snippets."
 msgstr "Importera snippets från en  post-snippets-export.zip fil. Importen skriver över eventuella snippets som redan finns."
 
-#: post-snippets.php:676
+#: post-snippets.php:650
 msgid "Import Snippets"
 msgstr "Importera snippets"
 
-#: post-snippets.php:702
+#: post-snippets.php:676
 msgid "Snippets successfully imported."
 msgstr "Importeringen av snippets lyckades."
 
-#: post-snippets.php:704
-#: post-snippets.php:708
-#: post-snippets.php:710
+#: post-snippets.php:678
+#: post-snippets.php:682
+#: post-snippets.php:684
 msgid "Snippets could not be imported:"
 msgstr "Snippets kunde inte importeras:"
 
-#: post-snippets.php:704
+#: post-snippets.php:678
 msgid "Unzipping failed."
 msgstr "Uppackningen misslyckades."
 
-#: post-snippets.php:710
+#: post-snippets.php:684
 msgid "Upload failed."
 msgstr "Uppladdningen misslyckades."
-
-#: post-snippets.php:836
-msgid "Error: Post Snippets requires WordPress Version %s or higher."
-msgstr "Fel: Post Snippets kräver WordPress version %s eller nyare!"
 
 #. Plugin Name of the plugin/theme
 msgid "Post Snippets"
@@ -186,6 +260,36 @@ msgstr "Johan Steen"
 #. Author URI of the plugin/theme
 msgid "http://johansteen.se/"
 msgstr "http://johansteen.se/"
+
+#~ msgid ""
+#~ "This is the block of text or HTML to insert in the post when you select "
+#~ "the snippet from the insert button in the TinyMCE panel in the post "
+#~ "editor. If you have entered predefined variables you can reference them "
+#~ "from the snippet by enclosing them in {} brackets.<br/><br/>Example:<br/"
+#~ ">To reference the variables in the example above, you would enter {url} "
+#~ "and {name}.<br/><br/>So if you enter this snippet:<br/><i>This is the "
+#~ "website of &lt;a href=\"{url}\"&gt;{name}&lt;/a&gt;</i><br/>You will get "
+#~ "the option to replace url and name on insert if they are defined as "
+#~ "variables."
+#~ msgstr ""
+#~ "Detta är blocket med text eller HTML att lägga till inlägget när du "
+#~ "väljer ett avsnitt med insättnings knappen i TinyMCE panelen i "
+#~ "inläggsredigeraren. Om du har definerat egna variabler kan du referera "
+#~ "dem i avnittet genom att omsluta dem med {}.<br/><br/>Exempel:<br/>För "
+#~ "att referera variabler i exemplet ovan, skulle du skriva {url} and {namn}."
+#~ "<br/><br/>Så om du har det här avsnittet:<br/><i>Det är websidan till &lt;"
+#~ "a href=\"{url}\"&gt;{namn}&lt;/a&gt;</i><br/>När du infogar avsnittet i "
+#~ "ditt inlägg kan du fylla i vad som ska ersätta url och namn."
+
+#~ msgid ""
+#~ "Visit my <a href=\"http://wpstorm.net/wordpress-plugins/post-snippets/"
+#~ "\">Post Snippets</a> page for additional information."
+#~ msgstr ""
+#~ "Besök <a href=\"http://wpstorm.net/wordpress-plugins/post-snippets/"
+#~ "\">Post Snippets</a> sidan för mer information."
+
+#~ msgid "Error: Post Snippets requires WordPress Version %s or higher."
+#~ msgstr "Fel: Post Snippets kräver WordPress version %s eller nyare!"
 
 #~ msgid "Help"
 #~ msgstr "Hjälp"
