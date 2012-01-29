@@ -174,6 +174,60 @@ class Post_Snippets {
 		return $plugins;
 	}
 
+	/**
+	 * Adds a QuickTag button to the HTML editor.
+	 *
+	 * Compatible with WordPress 3.3 and newer.
+	 *
+	 * @see			wp-includes/js/quicktags.dev.js -> qt.addButton()
+	 * @since		Post Snippets 1.8.6
+	 */
+	public function add_quicktag_button() {
+		echo "\n<!-- START: Add QuickTag button for Post Snippets -->\n";
+		?>
+		<script type="text/javascript" charset="utf-8">
+			QTags.addButton( 'post_snippets_id', 'Post Snippets', qt_post_snippets );
+			function qt_post_snippets() {
+				post_snippets_caller = 'html';
+				jQuery( "#post-snippets-dialog" ).dialog( "open" );
+			}
+		</script>
+		<?php
+		echo "\n<!-- END: Add QuickTag button for Post Snippets -->\n";
+	}
+
+
+	/**
+	 * Adds a QuickTag button to the HTML editor.
+	 *
+	 * Used when running on WordPress lower than version 3.3.
+	 *
+	 * @see			wp-includes/js/quicktags.dev.js
+	 * @since		Post Snippets 1.7
+	 * @deprecated	Since 1.8.6
+	 */
+	function add_quicktag_button_pre33() {
+		echo "\n<!-- START: Post Snippets QuickTag button -->\n";
+		?>
+		<script type="text/javascript" charset="utf-8">
+		// <![CDATA[
+			//edButton(id, display, tagStart, tagEnd, access, open)
+			edbuttonlength = edButtons.length;
+			edButtons[edbuttonlength++] = new edButton('ed_postsnippets', 'Post Snippets', '', '', '', -1);
+		   (function(){
+				  if (typeof jQuery === 'undefined') {
+						 return;
+				  }
+				  jQuery(document).ready(function(){
+						 jQuery("#ed_toolbar").append('<input type="button" value="Post Snippets" id="ed_postsnippets" class="ed_button" onclick="edOpenPostSnippets(edCanvas);" title="Post Snippets" />');
+				  });
+			}());
+		// ]]>
+		</script>
+		<?php
+		echo "\n<!-- END: Post Snippets QuickTag button -->\n";
+	}
+
 
 	// -------------------------------------------------------------------------
 	// JavaScript / jQuery handling for the post editor
@@ -271,10 +325,17 @@ class Post_Snippets {
 							}
 							?>
 
-							if (caller == 'html') {
-								edInsertContent(muppCanv, insert_snippet);
+							// Decide what method to use to insert the snippet depending
+							// from what editor the window was opened from
+							if (post_snippets_caller == 'html') {
+								// HTML editor in WordPress 3.3 and greater
+								QTags.insertContent(insert_snippet);
+							} else if (post_snippets_caller == 'html_pre33') {
+								// HTML editor in WordPress below 3.3.
+								edInsertContent(post_snippets_canvas, insert_snippet);
 							} else {
-								muppCanv.execCommand('mceInsertContent', false, insert_snippet);
+								// Visual Editor
+								post_snippets_canvas.execCommand('mceInsertContent', false, insert_snippet);
 							}
 
 						}
@@ -284,20 +345,25 @@ class Post_Snippets {
 			});
 		});
 
-var muppCanv;
-caller = '';
+// Global variables to keep track on the canvas instance and from what editor
+// that opened the Post Snippets popup.
+var post_snippets_canvas;
+var post_snippets_caller = '';
 
-<!-- Deprecated -->
+/**
+ * Used in WordPress lower than version 3.3.
+ * Not used anymore starting with WordPress version 3.3.
+ * Called from: add_quicktag_button_pre33()
+ */
 function edOpenPostSnippets(myField) {
-		muppCanv = myField;
-		caller = 'html';
+		post_snippets_canvas = myField;
+		post_snippets_caller = 'html_pre33';
 		jQuery( "#post-snippets-dialog" ).dialog( "open" );
 };
 <?php
 		echo "</script>\n";
 		echo "\n<!-- END: Post Snippets jQuery UI and related functions -->\n";
 	}
-
 
 	/**
 	 * Build jQuery UI Window.
@@ -363,60 +429,6 @@ function edOpenPostSnippets(myField) {
 	// -------------------------------------------------------------------------
 	// XXXXXX
 	// -------------------------------------------------------------------------
-
-
-	/**
-	 * Adds a QuickTag button to the HTML editor.
-	 *
-	 * Compatible with WordPress 3.3 and newer.
-	 *
-	 * @see			wp-includes/js/quicktags.dev.js -> qt.addButton()
-	 * @since		Post Snippets 1.8.6
-	 */
-	public function add_quicktag_button() {
-		echo "\n<!-- START: Add QuickTag button for Post Snippets -->\n";
-		?>
-		<script type="text/javascript" charset="utf-8">
-			QTags.addButton( 'post_snippets_id', 'Post Snippets', qt_post_snippets );
-			function qt_post_snippets() {
-				caller = 'html';
-				jQuery( "#post-snippets-dialog" ).dialog( "open" );
-			}
-		</script>
-		<?php
-		echo "\n<!-- END: Add QuickTag button for Post Snippets -->\n";
-	}
-
-
-	/**
-	 * Adds a QuickTag button to the HTML editor
-	 *
-	 * @see			wp-includes/js/quicktags.dev.js
-	 * @since		Post Snippets 1.7
-	 * @deprecated	Since 1.8.6
-	 */
-	function add_quicktag_button_pre33() {
-		echo "\n<!-- START: Post Snippets QuickTag button -->\n";
-		?>
-		<script type="text/javascript" charset="utf-8">
-		// <![CDATA[
-			//edButton(id, display, tagStart, tagEnd, access, open)
-			edbuttonlength = edButtons.length;
-			edButtons[edbuttonlength++] = new edButton('ed_postsnippets', 'Post Snippets', '', '', '', -1);
-		   (function(){
-				  if (typeof jQuery === 'undefined') {
-						 return;
-				  }
-				  jQuery(document).ready(function(){
-						 jQuery("#ed_toolbar").append('<input type="button" value="Post Snippets" id="ed_postsnippets" class="ed_button" onclick="edOpenPostSnippets(edCanvas);" title="Post Snippets" />');
-				  });
-			}());
-		// ]]>
-		</script>
-		<?php
-		echo "\n<!-- END: Post Snippets QuickTag button -->\n";
-	}
-
 
 	/**
 	 * Create the functions for shortcodes dynamically and register them

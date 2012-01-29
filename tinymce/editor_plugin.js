@@ -1,4 +1,4 @@
-// Docu : http://wiki.moxiecode.com/index.php/TinyMCE:Create_plugin/3.x#Creating_your_own_plugins
+// Docu : http://www.tinymce.com/wiki.php/API3:tinymce.api.3.x
 
 (function() {
 	// Load plugin specific language pack
@@ -14,26 +14,18 @@
 		 * @param {string} url Absolute URL to where the plugin is located.
 		 */
 		init : function(ed, url) {
-			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('mceExample');
 
-			ed.addCommand('mcepost_snippets', function() {
-				muppCanv = ed;
-				caller = 'visual';
+			// Register the command so that it can be invoked from the button
+			ed.addCommand('mce_post_snippets', function() {
+				post_snippets_canvas = ed;
+				post_snippets_caller = 'visual';
 				jQuery( "#post-snippets-dialog" ).dialog( "open" );
-/*				ed.windowManager.open({
-					file : url + '/window.php',
-					width : 360 + ed.getLang('post_snippets.delta_width', 0),
-					height : 210 + ed.getLang('post_snippets.delta_height', 0),
-					inline : 1
-				}, {
-					plugin_url : url // Plugin absolute URL
-				});
-*/			});
+			});
 
 			// Register example button
 			ed.addButton('post_snippets', {
 				title : 'post_snippets.desc',
-				cmd : 'mcepost_snippets',
+				cmd : 'mce_post_snippets',
 				image : url + '/post-snippets.gif'
 			});
 		},
@@ -46,11 +38,11 @@
 		 */
 		getInfo : function() {
 			return {
-					longname  : 'post_snippets',
+					longname  : 'Post Snippets',
 					author 	  : 'Johan Steen',
 					authorurl : 'http://johansteen.se/',
 					infourl   : 'http://wpstorm.net/wordpress-plugins/post-snippets/',
-					version   : "1.1"
+					version   : '1.9'
 			};
 		}
 	});
