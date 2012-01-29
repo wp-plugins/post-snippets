@@ -99,9 +99,8 @@ class Post_Snippets {
 		wp_enqueue_style( 'wp-jquery-ui-dialog');
 
 		# Adds the CSS stylesheet for the jQuery UI dialog
-		$style_url = plugins_url( '/assets/post-snippets.css', __FILE__ );
 		$style_url = plugins_url( '/assets/post-snippets.css', $this->get_FILE() );
-		wp_register_style('post-snippets', $style_url);
+		wp_register_style( 'post-snippets', $style_url, false, '1.0' );
 		wp_enqueue_style( 'post-snippets');
 	}
 	
