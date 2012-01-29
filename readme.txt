@@ -92,7 +92,8 @@ for questions, answers, support and feature requests.
 == Changelog ==
 
 = Version 1.9.2 - XX Jan 2012 =
- * Added versioning to the Admin Popup Window CSS.
+ * Added versioning to the admin jQuery dialog CSS and the TinyMCE plugin 
+   JavaScript to prevent browser caching of older versions on update.
 
 = Version 1.9.1 - 22 Jan 2012 =
  * Updated the built-in help text to include all the latest features added.

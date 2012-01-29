@@ -169,7 +169,7 @@ class Post_Snippets {
 	{
 		// Load the TinyMCE plugin, editor_plugin.js, into the array
 		$plugins[$this->tinymce_plugin_name] = 
-			plugins_url('/tinymce/editor_plugin.js', $this->get_FILE());
+			plugins_url('/tinymce/editor_plugin.js?ver=1.9', $this->get_FILE());
 
 		return $plugins;
 	}
