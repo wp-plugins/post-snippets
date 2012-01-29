@@ -57,7 +57,7 @@ class Post_Snippets {
 		# Adds the JS and HTML code in the header and footer for the jQuery insert UI dialog in the editor
 		add_action( 'admin_init', array(&$this,'enqueue_assets') );
 		add_action( 'admin_head', array(&$this,'jquery_ui_dialog') );
-		add_action( 'admin_footer', array(&$this,'insert_ui_dialog') );
+		add_action( 'admin_footer', array(&$this,'add_jquery_ui_dialog') );
 		
 		# Add Editor QuickTag button
 		// IF WordPress is 3.3 or higher, use the new refactored method to add
@@ -176,7 +176,8 @@ class Post_Snippets {
 
 
 	// -------------------------------------------------------------------------
-
+	// JavaScript / jQuery handling for the post editor
+	// -------------------------------------------------------------------------
 
 	/**
 	 * jQuery control for the dialog and Javascript needed to insert snippets into the editor
@@ -299,61 +300,69 @@ function edOpenPostSnippets(myField) {
 
 
 	/**
-	 * Insert Snippet jQuery UI dialog HTML for the post editor
+	 * Build jQuery UI Window.
+	 *
+	 * Creates the jQuery for Post Editor popup window, its snippet tabs and the
+	 * form fields to enter variables.
 	 *
 	 * @since		Post Snippets 1.7
 	 */
-	function insert_ui_dialog() {
+	public function add_jquery_ui_dialog()
+	{
 		echo "\n<!-- START: Post Snippets UI Dialog -->\n";
-		?>
-		<div class="hidden">
-			<div id="post-snippets-dialog" title="Post Snippets">
+		// Setup the dialog divs
+		echo "<div class=\"hidden\">\n";
+		echo "\t<div id=\"post-snippets-dialog\" title=\"Post Snippets\">\n";
+		// Init the tabs div
+		echo "\t\t<div id=\"post-snippets-tabs\">\n";
+		echo "\t\t\t<ul>\n";
 
-				<div id="post-snippets-tabs">
-					<ul>
-						<?php
-						# Create a tab for each available snippet
-						$snippets = get_option($this->plugin_options);
-						foreach ($snippets as $key => $snippet) {
-						?>
-							<li><a href="#ps-tabs-<?php echo $key; ?>"><?php echo $snippet['title']; ?></a></li>
-						<?php }	?>					
-					</ul>
+		// Create a tab for each available snippet
+		$snippets = get_option($this->plugin_options);
+		foreach ($snippets as $key => $snippet) {
+			echo "\t\t\t\t";
+			echo "<li><a href=\"#ps-tabs-{$key}\">{$snippet['title']}</a></li>";
+			echo "\n";
+		}
+		echo "\t\t\t</ul>\n";
 
-					<?php
-					# Create a panel with form fields for each available snippet
-					foreach ($snippets as $key => $snippet) { ?>
-						<div id="ps-tabs-<?php echo $key; ?>">
-							<?php
-							// Print a snippet description is available
-							if ( isset($snippet['description']) )
-								echo '<p class="howto">' . $snippet['description'] . "</p>\n";
+		// Create a panel with form fields for each available snippet
+		foreach ($snippets as $key => $snippet) {
+			echo "\t\t\t<div id=\"ps-tabs-{$key}\">\n";
 
-							// Get all variables defined for the snippet and output them as input fields
-							$var_arr = explode(",",$snippet['vars']);
-							if (!empty($var_arr[0])) {
-								foreach ($var_arr as $key_2 => $var) { ?>
-									<label for="var_<?php echo $key; ?>_<?php echo $key_2; ?>"><?php echo($var);?>:</label>
-									<input type="text" id="var_<?php echo $key; ?>_<?php echo $key_2; ?>" name="var_<?php echo $key; ?>_<?php echo $key_2; ?>" style="width: 190px" />
-									<br/>
-							<?php
-								}
-							} else {
-								// If no variables and no description available, output a text to inform the user that it's an insert snippet only
-								if ( empty($snippet['description']) )
-									echo '<p class="howto">' . __('This snippet is insert only, no variables defined.', 'post-snippets') . "</p>";
-							}
-							?>
-						</div><!-- #ps-tabs-## -->
-					<?php
-					}
-					?>					
-				</div><!-- #post-snippets-tabs -->
-			</div><!-- #post-snippets-dialog -->
-		</div><!-- .hidden -->
-		<?php
-		echo "\n<!-- END: Post Snippets UI Dialog -->\n";
+			// Print a snippet description is available
+			if ( isset($snippet['description']) )
+				echo "\t\t\t\t<p class=\"howto\">" . $snippet['description'] . "</p>\n";
+
+			// Get all variables defined for the snippet and output them as
+			// input fields
+			$var_arr = explode(',', $snippet['vars']);
+			if (!empty($var_arr[0])) {
+				foreach ($var_arr as $key_2 => $var) {
+					echo "\t\t\t\t<label for=\"var_{$key}_{$key_2}\">{$var}:</label>\n";
+					echo "\t\t\t\t<input type=\"text\" id=\"var_{$key}_{$key_2}\" name=\"var_{$key}_{$key_2}\" style=\"width: 190px\" />\n";
+					echo "\t\t\t\t<br/>\n";
+				}
+			} else {
+				// If no variables and no description available, output a text
+				// to inform the user that it's an insert snippet only.
+				if ( empty($snippet['description']) )
+					echo "\t\t\t\t<p class=\"howto\">" . __('This snippet is insert only, no variables defined.', 'post-snippets') . "</p>\n";
+			}
+			echo "\t\t\t</div><!-- #ps-tabs-{$key} -->\n";
+		}
+		// Close the tabs and dialog divs
+		echo "\t\t</div><!-- #post-snippets-tabs -->\n";
+		echo "\t</div><!-- #post-snippets-dialog -->\n";
+		echo "</div><!-- .hidden -->\n";
+
+		echo "<!-- END: Post Snippets UI Dialog -->\n\n";
 	}
+
+
+	// -------------------------------------------------------------------------
+	// XXXXXX
+	// -------------------------------------------------------------------------
 
 
 	/**
