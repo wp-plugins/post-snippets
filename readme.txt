@@ -91,7 +91,10 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
-= Version 1.9.2 - 30 Jan 2012 =
+= Version 1.9.3 - 30 Jan 2012 =
+ * Fixed a bug that variables using a default value wasn't inserted properly.
+
+= Version 1.9.2 - 29 Jan 2012 =
  * A variable can now be assigned a default value that will be used in the
    insert window. Use the = sign to give a variable a default value. Ie.
    var1,var2=default,var3.

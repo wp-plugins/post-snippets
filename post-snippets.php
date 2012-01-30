@@ -238,7 +238,7 @@ class Post_Snippets {
 	 *
 	 * @since		Post Snippets 1.7
 	 */
-	function jquery_ui_dialog() {
+	public function jquery_ui_dialog() {
 		echo "\n<!-- START: Post Snippets jQuery UI and related functions -->\n";
 		echo "<script type='text/javascript'>\n";
 		
@@ -254,6 +254,9 @@ class Post_Snippets {
 				$variables = '';
 				if (!empty($var_arr[0])) {
 					foreach ($var_arr as $var) {
+						// '[test2 yet="{yet}" mupp=per="{mupp=per}" content="{content}"]';
+						$var = $this->strip_default_val( $var );
+
 						$variables .= ' ' . $var . '="{' . $var . '}"';
 					}
 				}
@@ -314,7 +317,7 @@ class Post_Snippets {
 									if (!empty($var_arr[0])) {
 										foreach ($var_arr as $key_2 => $var) {
 											$varname = "var_" . $key . "_" . $key_2; ?>
-											insert_snippet = insert_snippet.replace(/\{<?php echo $var; ?>\}/g, <?php echo $varname; ?>.val());
+											insert_snippet = insert_snippet.replace(/\{<?php echo $this->strip_default_val( $var ); ?>\}/g, <?php echo $varname; ?>.val());
 									<?php
 											echo "\n";
 										}
@@ -406,10 +409,13 @@ function edOpenPostSnippets(myField) {
 			if (!empty($var_arr[0])) {
 				foreach ($var_arr as $key_2 => $var) {
 					// Default value exists?
-					if (strpos($var, '=') !== false) {
-						$result = explode('=', $var);
-						$var = $result[0];
-						$def = $result[1];
+					$def_pos = strpos( $var, '=' );
+					if ( $def_pos !== false ) {
+						$split = str_split( $var, $def_pos );
+						$var = $split[0];
+						$def = $split[1];
+						// Remove the = (first char) in the default value
+						$def = substr( $def, 1 );
 					} else {
 						$def = '';
 					}
@@ -433,6 +439,28 @@ function edOpenPostSnippets(myField) {
 		echo "<!-- END: Post Snippets UI Dialog -->\n\n";
 	}
 
+	/**
+	 * Strip Default Value.
+	 *
+	 * Checks if a variable string contains a default value, and if it does it 
+	 * will strip it away and return the string with only the variable name
+	 * kept.
+	 *
+	 * @since	Post Snippets 1.9.3
+	 * @param	string	$variable	The variable to check for default value
+	 * @return	string				The variable without any default value
+	 */
+	public function strip_default_val( $variable )
+	{
+		// Check if variable contains a default defintion
+		$def_pos = strpos( $variable, '=' );
+
+		if ( $def_pos !== false ) {
+			$split = str_split( $variable, $def_pos );
+			$variable = $split[0];
+		}
+		return $variable;
+	}
 
 	// -------------------------------------------------------------------------
 	// XXXXXX
