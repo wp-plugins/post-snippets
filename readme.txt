@@ -11,12 +11,12 @@ can be set for more flexibility. Inserts directly or as shortcodes.
 
 == Description ==
 
-This plugin lets you store a library with snippets of HTML, PHO code or 
+This plugin lets you build a library with snippets of HTML, PHP code or 
 reoccurring text that you often use in your posts and pages. You can use
 predefined variables to replace parts of the snippet on insert. All snippets are
-available in the post editor via a button in the editor. The snippet can be 
-inserted as defined, or as a shortcode to keep flexibility for updating the 
-snippet. PHP code is supported for snippets inserted as shortcodes.
+available in the post editor via a button in the Visual and HTML modes. The 
+snippet can be inserted as defined, or as a shortcode to keep flexibility for
+updating the snippet. PHP code is supported for snippets inserted as shortcodes.
 
 = Features =
 
