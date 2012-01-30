@@ -4,7 +4,7 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 
 Keep a snippet library of text, HTML or PHP code to be used in posts. Variables
 can be set for more flexibility. Inserts directly or as shortcodes.
@@ -69,7 +69,8 @@ See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/
 
 = Why do importing Snippets on a multi site install fail? =
 
-Upload of zip files must be allowed, enable this in Sites Network Admin -> Settings -> Upload Settings -> Upload file types.
+Upload of zip files must be allowed, enable this in Sites Network Admin ->
+Settings -> Upload Settings -> Upload file types.
 
 = How can I use the content in an enclosed shortcode? =
 
