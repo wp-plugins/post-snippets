@@ -405,8 +405,16 @@ function edOpenPostSnippets(myField) {
 			$var_arr = explode(',', $snippet['vars']);
 			if (!empty($var_arr[0])) {
 				foreach ($var_arr as $key_2 => $var) {
+					// Default value exists?
+					if (strpos($var, '=') !== false) {
+						$result = explode('=', $var);
+						$var = $result[0];
+						$def = $result[1];
+					} else {
+						$def = '';
+					}
 					echo "\t\t\t\t<label for=\"var_{$key}_{$key_2}\">{$var}:</label>\n";
-					echo "\t\t\t\t<input type=\"text\" id=\"var_{$key}_{$key_2}\" name=\"var_{$key}_{$key_2}\" style=\"width: 190px\" />\n";
+					echo "\t\t\t\t<input type=\"text\" id=\"var_{$key}_{$key_2}\" name=\"var_{$key}_{$key_2}\" value=\"{$def}\" style=\"width: 190px\" />\n";
 					echo "\t\t\t\t<br/>\n";
 				}
 			} else {
@@ -533,7 +541,7 @@ function edOpenPostSnippets(myField) {
 			if (!empty($snippets)) {
 				foreach ($snippets as $key => $value) {
 					$new_snippets[$key]['title'] = trim($_POST[$key.'_title']);
-					$new_snippets[$key]['vars'] = str_replace(" ", "", trim($_POST[$key.'_vars']) );
+					$new_snippets[$key]['vars'] = str_replace(' ', '', trim($_POST[$key.'_vars']) );
 					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
 					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
 

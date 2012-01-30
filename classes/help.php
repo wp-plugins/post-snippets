@@ -98,12 +98,12 @@ class Post_Snippets_Help
 		__( 'Variables', 'post-snippets' ).
 		'</h2>
 		<p>'.
-		__( 'A comma separated list of custom variables you can reference in your snippet.', 'post-snippets' ).
+		__( 'A comma separated list of custom variables you can reference in your snippet. A variable can also be assigned a default value that will be used in the insert window by using the equal sign, variable=default.', 'post-snippets' ).
 		'</p>
 		<p><strong>'.
 		__( 'Example', 'post-snippets' ).
 		'</strong><br/>
-		<code>url,name</code></p>'.
+		<code>url,name,role=user,title</code></p>'.
 
 		'<h2>'.
 		__( 'Snippet', 'post-snippets' ).
