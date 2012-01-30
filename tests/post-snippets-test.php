@@ -1,4 +1,11 @@
 <?php
+// Hack to set the theme to test. As WP needs to reload once after a new theme
+// is set, I can't switch in the setUp, and then switch back to the old theme
+// in teardown, so instead I do it like this.
+// Another option would be to load the functions.php directly, but that might
+// collide with the alread loaded functions.php from the set theme.
+switch_theme( 'twentyeleven', 'twentyeleven' );
+
 /**
  * Post Snippets PHPUnit Tests.
  *

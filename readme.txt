@@ -4,19 +4,19 @@ Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.9.1
+Stable tag: 1.9.2
 
 Keep a snippet library of text, HTML or PHP code to be used in posts. Variables
 can be set for more flexibility. Inserts directly or as shortcodes.
 
 == Description ==
 
-This admin plugin stores snippets of HTML code or reoccurring text that you
-often use in your posts. You can use predefined variables to replace parts of
-the snippet on insert. All snippets are available in the post editor with a
-TinyMCE button. The snippet can be inserted as defined, or as a shortcode to
-keep flexibility for updating the snippet. Also PHP code is supported for 
-snippets inserted as shortcodes.
+This plugin lets you store a library with snippets of HTML, PHO code or 
+reoccurring text that you often use in your posts and pages. You can use
+predefined variables to replace parts of the snippet on insert. All snippets are
+available in the post editor via a button in the editor. The snippet can be 
+inserted as defined, or as a shortcode to keep flexibility for updating the 
+snippet. PHP code is supported for snippets inserted as shortcodes.
 
 = Features =
 
