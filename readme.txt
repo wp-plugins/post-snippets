@@ -94,6 +94,7 @@ for questions, answers, support and feature requests.
 
 = Version 1.9.4 - 8 Feb 2012 =
  * Added an option to run shortcodes through wptexturize before output.
+ * Bugfix: Default values could be cut off. Corrected in this update.
 
 = Version 1.9.3 - 30 Jan 2012 =
  * Fixed a bug that variables using a default value wasn't inserted properly.

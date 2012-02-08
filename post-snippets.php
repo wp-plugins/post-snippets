@@ -411,11 +411,9 @@ function edOpenPostSnippets(myField) {
 					// Default value exists?
 					$def_pos = strpos( $var, '=' );
 					if ( $def_pos !== false ) {
-						$split = str_split( $var, $def_pos );
+						$split = explode( '=', $var );
 						$var = $split[0];
 						$def = $split[1];
-						// Remove the = (first char) in the default value
-						$def = substr( $def, 1 );
 					} else {
 						$def = '';
 					}
