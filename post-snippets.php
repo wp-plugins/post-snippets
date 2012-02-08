@@ -571,6 +571,7 @@ function edOpenPostSnippets(myField) {
 			    'description' => "",
 			    'shortcode' => false,
 			    'php' => false,
+			    'wptexturize' => false,
 			    'snippet' => ""));
 			update_option($this->plugin_options, $snippets);
 			$this->admin_message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
@@ -585,6 +586,7 @@ function edOpenPostSnippets(myField) {
 					$new_snippets[$key]['vars'] = str_replace(' ', '', trim($_POST[$key.'_vars']) );
 					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
 					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
+					$new_snippets[$key]['wptexturize'] = isset($_POST[$key.'_wptexturize']) ? true : false;
 
 					$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
 					$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);

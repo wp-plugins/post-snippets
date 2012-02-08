@@ -69,13 +69,20 @@ class Post_Snippets_Settings
 			<input type='text' name='<?php echo $key; ?>_title' value='<?php echo $snippet['title']; ?>' />
 			</td>
 			<td class='name'>
-			<input type='text' name='<?php echo $key; ?>_vars' value='<?php echo $snippet['vars']; ?>' /><br/>
+			<input type='text' name='<?php echo $key; ?>_vars' value='<?php echo $snippet['vars']; ?>' />
+			<br/>
+			<br/>
 			<?php
 			$this->checkbox(__('Shortcode', 'post-snippets'), $key.'_shortcode',
 							$snippet['shortcode']);
 
+			echo '<br/><strong>Shortcode Options:</strong><br/>';
+
 			$this->checkbox(__('PHP Code', 'post-snippets'), $key.'_php',
 							$snippet['php']);
+
+			$wptexturize = isset( $snippet['wptexturize'] ) ? $snippet['wptexturize'] : false;
+			$this->checkbox('wptexturize', $key.'_wptexturize',	$wptexturize);
 			?>
 			</td>
 			<td class='desc'>
