@@ -96,12 +96,12 @@ class Post_Snippets {
 	function enqueue_assets() {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_style( 'wp-jquery-ui-dialog');
+		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 		# Adds the CSS stylesheet for the jQuery UI dialog
 		$style_url = plugins_url( '/assets/post-snippets.css', $this->get_FILE() );
 		wp_register_style( 'post-snippets', $style_url, false, '1.0' );
-		wp_enqueue_style( 'post-snippets');
+		wp_enqueue_style( 'post-snippets' );
 	}
 	
 
@@ -482,6 +482,9 @@ function edOpenPostSnippets(myField) {
 						$vars_str = $vars_str . '"'.$var.'" => "",';
 					}
 
+					// Get the wptexturize setting
+					$texturize = isset( $snippet["wptexturize"] ) ? $snippet["wptexturize"] : false;
+
 					add_shortcode($snippet['title'], create_function('$atts,$content=null', 
 								'$shortcode_symbols = array('.$vars_str.');
 								extract(shortcode_atts($shortcode_symbols, $atts));
@@ -500,12 +503,22 @@ function edOpenPostSnippets(myField) {
 									$snippet = str_replace("{".$key."}", $val, $snippet);
 								}
 
+								// Handle PHP shortcodes
 								$php = "'. $snippet["php"] .'";
 								if ($php == true) {
 									$snippet = Post_Snippets::php_eval( $snippet );
 								}
 
-								return do_shortcode(stripslashes($snippet));') );
+								// Strip escaping and execute nested shortcodes
+								$snippet = do_shortcode(stripslashes($snippet));
+
+								// WPTexturize the Snippet
+								$texturize = "'. $texturize .'";
+								if ($texturize == true) {
+									$snippet = wptexturize( $snippet );
+								}
+
+								return $snippet;') );
 				}
 			}
 		}

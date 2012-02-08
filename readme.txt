@@ -92,6 +92,9 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version 1.9.4 - 8 Feb 2012 =
+ * 
+
 = Version 1.9.3 - 30 Jan 2012 =
  * Fixed a bug that variables using a default value wasn't inserted properly.
 
