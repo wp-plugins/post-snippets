@@ -146,6 +146,16 @@ class Post_Snippets_Help
 		'</p>
 		<p>'.
 		__( 'If you enclose the shortcode in your posts, you can access the enclosed content by using the variable {content} in your snippet. The {content} variable is reserved, so don\'t use it in the variables field.', 'post-snippets' ).
+		'</p>
+
+		<h2>'
+		. __( 'Options', 'post-snippets' ).
+		'</h2>
+		<p><strong>PHP</strong><br/>'.
+		__( 'See the dedicated help section for information about PHP shortcodes.', 'post-snippets' ).
+		'</p>
+		<p><strong>wptexturize</strong><br/>'.
+		sprintf(__( 'Before the shortcode is outputted, it can optionally be formatted with %s, to transform quotes to smart quotes, apostrophes, dashes, ellipses, the trademark symbol, and the multiplication symbol.', 'post-snippets' ), '<a href="http://codex.wordpress.org/Function_Reference/wptexturize">wptexturize</a>' ).
 		'</p>';
 	}
 
