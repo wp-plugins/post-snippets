@@ -1,6 +1,5 @@
 ﻿=== Post Snippets ===
 Contributors: artstorm
-Donate link: http://wpstorm.net/wordpress-plugins/post-snippets/#donation
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.0
 Tested up to: 3.3.1
@@ -41,7 +40,8 @@ updating the snippet. PHP code is supported for snippets inserted as shortcodes.
 * [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 
   "Use this for support and feature requests")
 
-See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
+See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) 
+for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
 
 
 == Installation ==
