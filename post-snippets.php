@@ -3,7 +3,7 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
-Version: 1.9.4
+Version: 1.9.5
 Author: Johan Steen
 Author URI: http://johansteen.se/
 Text Domain: post-snippets 
@@ -182,7 +182,15 @@ class Post_Snippets {
 	 * @see			wp-includes/js/quicktags.dev.js -> qt.addButton()
 	 * @since		Post Snippets 1.8.6
 	 */
-	public function add_quicktag_button() {
+	public function add_quicktag_button()
+	{
+		// Only run the function on post edit screens
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ($screen->base != 'post')
+				return;
+		}
+
 		echo "\n<!-- START: Add QuickTag button for Post Snippets -->\n";
 		?>
 		<script type="text/javascript" charset="utf-8">
@@ -207,6 +215,13 @@ class Post_Snippets {
 	 * @deprecated	Since 1.8.6
 	 */
 	function add_quicktag_button_pre33() {
+		// Only run the function on post edit screens
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ($screen->base != 'post')
+				return;
+		}
+
 		echo "\n<!-- START: Post Snippets QuickTag button -->\n";
 		?>
 		<script type="text/javascript" charset="utf-8">
@@ -238,7 +253,15 @@ class Post_Snippets {
 	 *
 	 * @since		Post Snippets 1.7
 	 */
-	public function jquery_ui_dialog() {
+	public function jquery_ui_dialog()
+	{
+		// Only run the function on post edit screens
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ($screen->base != 'post')
+				return;
+		}
+
 		echo "\n<!-- START: Post Snippets jQuery UI and related functions -->\n";
 		echo "<script type='text/javascript'>\n";
 		
@@ -378,6 +401,13 @@ function edOpenPostSnippets(myField) {
 	 */
 	public function add_jquery_ui_dialog()
 	{
+		// Only run the function on post edit screens
+		if ( function_exists( 'get_current_screen' ) ) {
+			$screen = get_current_screen();
+			if ($screen->base != 'post')
+				return;
+		}
+
 		echo "\n<!-- START: Post Snippets UI Dialog -->\n";
 		// Setup the dialog divs
 		echo "<div class=\"hidden\">\n";

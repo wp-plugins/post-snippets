@@ -92,6 +92,10 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version 1.9.5 - 17 Mar 2012 =
+ * The HTML and scripts for the popup window in the post editor is now only 
+   generated on the screens where it's needed.
+
 = Version 1.9.4 - 8 Feb 2012 =
  * Added an option to run shortcodes through wptexturize before output.
  * Bugfix: Default values could be cut off. Corrected in this update.
