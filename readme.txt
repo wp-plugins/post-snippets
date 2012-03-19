@@ -3,7 +3,7 @@ Contributors: artstorm
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.9.5
+Stable tag: 1.9.6
 
 Keep a snippet library of text, HTML or PHP code to be used in posts. Variables
 can be set for more flexibility. Inserts directly or as shortcodes.
@@ -93,7 +93,8 @@ for questions, answers, support and feature requests.
 == Changelog ==
 
 = Version 1.9.6 - 19 Mar 2012 =
- * post_snippets_import post_snippets_export
+ * Added two new filters. `post_snippets_import` and `post_snippets_export`.
+   [Read more](http://wpstorm.net/wordpress-plugins/post-snippets/#filters).
 
 = Version 1.9.5 - 17 Mar 2012 =
  * The HTML and scripts for the popup window in the post editor is now only 
