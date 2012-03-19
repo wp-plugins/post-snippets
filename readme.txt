@@ -92,6 +92,9 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version 1.9.X - XX XXX 2012 =
+ * Included Romanian translation by Alexander Ovsov.
+
 = Version 1.9.6 - 19 Mar 2012 =
  * Added two new filters. `post_snippets_import` and `post_snippets_export`.
    [Read more](http://wpstorm.net/wordpress-plugins/post-snippets/#filters).
