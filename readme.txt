@@ -92,6 +92,9 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version 1.9.6 - 19 Mar 2012 =
+ * post_snippets_import post_snippets_export
+
 = Version 1.9.5 - 17 Mar 2012 =
  * The HTML and scripts for the popup window in the post editor is now only 
    generated on the screens where it's needed.

@@ -705,6 +705,7 @@ function edOpenPostSnippets(myField) {
 	 */
 	function create_export_file() {
 		$snippets = serialize(get_option($this->plugin_options));
+		$snippets = apply_filters( 'post_snippets_export', $snippets );
 		$dir = wp_upload_dir();
 		$upload_dir = $dir['basedir'] . '/';
 		$upload_url = $dir['baseurl'] . '/';
@@ -763,9 +764,11 @@ function edOpenPostSnippets(myField) {
 					// Delete the uploaded archive
 					unlink($file['file']);
 
-					$options = file_get_contents( $upload_dir.'post-snippets-export.cfg' );		// Returns false on failure, else the contents
-					if ($options)
-						update_option($this->plugin_options, unserialize($options));
+					$snippets = file_get_contents( $upload_dir.'post-snippets-export.cfg' );		// Returns false on failure, else the contents
+					if ($snippets) {
+						$snippets = apply_filters( 'post_snippets_import', $snippets );
+						update_option($this->plugin_options, unserialize($snippets));
+					}
 
 					// Delete the snippet file
 					unlink('./post-snippets-export.cfg');
