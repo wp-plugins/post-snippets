@@ -581,7 +581,7 @@ function edOpenPostSnippets(myField) {
 				$help = new Post_Snippets_Help( $option_page );
 			}
 		} else {
-			// If user can't edit options, but can edit posts, display the overview page
+			// If user can't manage options, but can edit posts, display the overview page
 			$option_page = add_options_page( 'Post Snippets', 'Post Snippets', 'edit_posts', $this->get_FILE(), array(&$this, 'overview_page') );
 		}
 	}
