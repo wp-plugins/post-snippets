@@ -171,10 +171,15 @@ class Post_Snippets_Settings
 					echo "<br/>";
 				}
 
-				echo "<strong>Snippet:</strong><br/>";
-				echo "<code>";
-				echo nl2br( esc_html( $snippet['snippet'] ) );
-				echo "</code>";
+				if (defined('POST_SNIPPETS_RENDERED_OVERVIEW') and POST_SNIPPETS_RENDERED_OVERVIEW == true):
+					echo "<strong>Snippet:</strong><br/>";
+					echo $snippet['snippet'];
+				else:
+					echo "<strong>Snippet:</strong><br/>";
+					echo "<code>";
+					echo nl2br( esc_html( $snippet['snippet'] ) );
+					echo "</code>";
+				endif;
 			}
 		}
 
