@@ -601,8 +601,8 @@ function edOpenPostSnippets(myField) {
 	public function overview_page() {
 		// Render the settings screen
 		$settings = new Post_Snippets_Settings();
-		// $settings->set_options( get_option($this->plugin_options) );
-		$settings->overview_page();
+		$settings->set_options( get_option($this->plugin_options) );
+		$settings->render( 'overview' );
 	}
 
 	function options_page() {
@@ -664,7 +664,7 @@ function edOpenPostSnippets(myField) {
 		// Render the settings screen
 		$settings = new Post_Snippets_Settings();
 		$settings->set_options( get_option($this->plugin_options) );
-		$settings->render();
+		$settings->render( 'options' );
 
 ?>
 	<h3><?php _e( 'Import/Export', 'post-snippets' ); ?></h3>

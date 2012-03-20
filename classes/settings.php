@@ -19,7 +19,20 @@ class Post_Snippets_Settings
 		$this->plugin_options = $options;
 	}
 
-	public function render()
+	public function render( $page )
+	{
+		switch ( $page ) {
+			case 'options':
+				$this->render_old();
+				break;
+			
+			default:
+				$this->overview_page();
+				break;
+		}
+	}
+
+	public function render_old()
 	{
 ?>
 <div class=wrap>
@@ -109,14 +122,33 @@ class Post_Snippets_Settings
 
 	}
 
-	public function overview_page()
+	/**
+	 * Creates a read-only overview page.
+	 *
+	 * For users with edit_posts capability but without manage_options 
+	 * capability.
+	 *
+	 * @since	Post Snippets 1.9.7
+	 */
+	private function overview_page()
 	{
-?>
-<div class=wrap>
-	<h2>Post Snippets</h2>
-	<p>.... add display here ......</p>
-</div>
-<?php
+		echo '<div class=wrap>';
+		echo '<h2>Post Snippets</h2>';
+		// ---
+
+		$snippets = $this->plugin_options;
+		if (!empty($snippets)) {
+			foreach ($snippets as $key => $snippet) {
+				echo "<h3>{$snippet['title']}</h3>";
+
+				if ($snippet['description'])
+					echo "<p class='description'>{$snippet['description']}</p>";
+
+			}
+		}
+
+		// ---
+		echo '</div>';
 	}
 
 	// -------------------------------------------------------------------------
