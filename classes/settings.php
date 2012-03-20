@@ -173,7 +173,7 @@ class Post_Snippets_Settings
 
 				echo "<strong>Snippet:</strong><br/>";
 				echo "<code>";
-				echo nl2br( htmlentities( $snippet['snippet'] ) );
+				echo nl2br( esc_html( $snippet['snippet'] ) );
 				echo "</code>";
 			}
 		}
