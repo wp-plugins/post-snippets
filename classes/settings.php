@@ -104,6 +104,21 @@ class Post_Snippets_Settings
 <?php
 	}
 
+	private function options_page()
+	{
+
+	}
+
+	public function overview_page()
+	{
+?>
+<div class=wrap>
+	<h2>Post Snippets</h2>
+	<p>.... add display here ......</p>
+</div>
+<?php
+	}
+
 	// -------------------------------------------------------------------------
 	// HTML and Form element methods
 	// -------------------------------------------------------------------------

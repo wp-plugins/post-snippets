@@ -574,9 +574,15 @@ function edOpenPostSnippets(myField) {
 	 * The Admin Page and all it's functions
 	 */
 	function wp_admin()	{
-		$option_page = add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', $this->get_FILE(), array(&$this, 'options_page') );
-		if ( $option_page and class_exists('Post_Snippets_Help') ) {
-			$help = new Post_Snippets_Help( $option_page );
+		if ( current_user_can('manage_options') ) {
+			// If user can manage options, display the admin page
+			$option_page = add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', $this->get_FILE(), array(&$this, 'options_page') );
+			if ( $option_page and class_exists('Post_Snippets_Help') ) {
+				$help = new Post_Snippets_Help( $option_page );
+			}
+		} else {
+			// If user can't edit options, but can edit posts, display the overview page
+			$option_page = add_options_page( 'Post Snippets', 'Post Snippets', 'edit_posts', $this->get_FILE(), array(&$this, 'overview_page') );
 		}
 	}
 
@@ -586,6 +592,17 @@ function edOpenPostSnippets(myField) {
 			<div class="updated"><p><strong><?php echo $message; ?></strong></p></div>
 			<?php	
 		}
+	}
+
+
+	/**
+	 * @since	Post Snippets 1.9.7
+	 */
+	public function overview_page() {
+		// Render the settings screen
+		$settings = new Post_Snippets_Settings();
+		// $settings->set_options( get_option($this->plugin_options) );
+		$settings->overview_page();
 	}
 
 	function options_page() {
