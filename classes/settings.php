@@ -153,11 +153,28 @@ class Post_Snippets_Settings
 		$snippets = $this->plugin_options;
 		if (!empty($snippets)) {
 			foreach ($snippets as $key => $snippet) {
-				echo "<h3>{$snippet['title']}</h3>";
 
+				echo "<hr style='border: none;border-top:1px dashed #aaa; margin:24px 0;' />";
+
+				echo "<h3>{$snippet['title']}";
 				if ($snippet['description'])
-					echo "<p class='description'>{$snippet['description']}</p>";
+					echo "<span class='description'> {$snippet['description']}</span>";
+				echo "</h3>";
 
+				if ($snippet['vars'])
+					echo "<strong>Variables:</strong> {$snippet['vars']}<br/>";
+
+				if ($snippet['shortcode']) {
+					echo "<strong>Shortcode:</strong> Yes";
+					if ($snippet['php'])
+						echo " (PHP)";
+					echo "<br/>";
+				}
+
+				echo "<strong>Snippet:</strong><br/>";
+				echo "<code>";
+				echo nl2br( htmlentities( $snippet['snippet'] ) );
+				echo "</code>";
 			}
 		}
 

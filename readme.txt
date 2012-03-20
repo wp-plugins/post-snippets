@@ -94,7 +94,7 @@ for questions, answers, support and feature requests.
 
 = Version 1.9.7 - XX XXX 2012 =
  * Users without manage_options but with edit_posts capability can now see a
-   read-only list of available snippets.
+   read-only list of available snippets and related info.
  * Included Romanian translation by Web Hosting Geeks.
 
 = Version 1.9.6 - 19 Mar 2012 =
