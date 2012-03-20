@@ -594,16 +594,20 @@ function edOpenPostSnippets(myField) {
 		}
 	}
 
-
 	/**
+	 * The options Overview page.
+	 *
+	 * For users without manage_options cap but with edit_posts cap. A read-only
+	 * view.
+	 *
 	 * @since	Post Snippets 1.9.7
 	 */
 	public function overview_page() {
-		// Render the settings screen
 		$settings = new Post_Snippets_Settings();
 		$settings->set_options( get_option($this->plugin_options) );
 		$settings->render( 'overview' );
 	}
+
 
 	function options_page() {
 		// Add a new Snippet		

@@ -19,11 +19,17 @@ class Post_Snippets_Settings
 		$this->plugin_options = $options;
 	}
 
+	/**
+	 * Render the options page.
+	 *
+	 * @since	Post Snippets 1.9.7
+	 * @param	$page	string	Admin page to render. Default: options
+	 */
 	public function render( $page )
 	{
 		switch ( $page ) {
 			case 'options':
-				$this->render_old();
+				$this->options_page();
 				break;
 			
 			default:
@@ -32,7 +38,19 @@ class Post_Snippets_Settings
 		}
 	}
 
-	public function render_old()
+
+	// -------------------------------------------------------------------------
+	// HTML generation for option pages.
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Creates the snippets administration page.
+	 *
+	 * For users with manage_options capability (admin, super admin).
+	 *
+	 * @since	Post Snippets 1.8.8
+	 */
+	private function options_page()
 	{
 ?>
 <div class=wrap>
@@ -117,10 +135,6 @@ class Post_Snippets_Settings
 <?php
 	}
 
-	private function options_page()
-	{
-
-	}
 
 	/**
 	 * Creates a read-only overview page.
@@ -150,6 +164,7 @@ class Post_Snippets_Settings
 		// ---
 		echo '</div>';
 	}
+
 
 	// -------------------------------------------------------------------------
 	// HTML and Form element methods
