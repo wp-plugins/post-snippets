@@ -173,7 +173,7 @@ class Post_Snippets_Settings
 
 				if (defined('POST_SNIPPETS_RENDERED_OVERVIEW') and POST_SNIPPETS_RENDERED_OVERVIEW == true):
 					echo "<strong>Snippet:</strong><br/>";
-					echo $snippet['snippet'];
+					echo do_shortcode( $snippet['snippet'] );
 				else:
 					echo "<strong>Snippet:</strong><br/>";
 					echo "<code>";
