@@ -14,10 +14,38 @@ class Post_Snippets_Settings
 
 	private $plugin_options;
 
+	// Constants
+	const USER_OPTION_KEY = 'post_snippets';
+
 	public function set_options( $options )
 	{
 		$this->plugin_options = $options;
 	}
+
+
+	// -------------------------------------------------------------------------
+	// Handle form I/O
+	// -------------------------------------------------------------------------
+	private function set_user_options()
+	{
+		if ( isset( $_POST['update-post-snippets-user'] ) ) {
+			$id = get_current_user_id();
+			$render = isset( $_POST['render'] ) ? true : false;
+			update_user_meta( $id, self::USER_OPTION_KEY, $render );
+		}
+	}
+
+	private function get_user_options()
+	{
+		$id = get_current_user_id();
+		$options = get_user_meta( $id, self::USER_OPTION_KEY, true ); 
+		return $options;
+	}
+
+
+	// -------------------------------------------------------------------------
+	// HTML generation for option pages
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Render the options page.
@@ -37,11 +65,6 @@ class Post_Snippets_Settings
 				break;
 		}
 	}
-
-
-	// -------------------------------------------------------------------------
-	// HTML generation for option pages.
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Creates the snippets administration page.
@@ -137,7 +160,6 @@ class Post_Snippets_Settings
 		echo '</div>';
 	}
 
-
 	/**
 	 * Creates a read-only overview page.
 	 *
@@ -152,15 +174,16 @@ class Post_Snippets_Settings
 		echo '<div class=wrap>';
 		echo '<h2>Post Snippets</h2>';
 		echo '<p>';
-		_e( 'This is an overview of all custom snippets defined for this site. These snippets are inserted into posts from the post editor using the Post Snippets button. You can choose to see the snippets here as-is or as they are actually rendered on the website. Enabling rendered snippets for this overview might look strange if the snippet have dependencies on variables, CSS or other parameters only available on the frontend. If that is the case it is recommended to keep this option disabled.', 'post-snippets' );
+		_e( 'This is an overview of all snippets defined for this site. These snippets are inserted into posts from the post editor using the Post Snippets button. You can choose to see the snippets here as-is or as they are actually rendered on the website. Enabling rendered snippets for this overview might look strange if the snippet have dependencies on variables, CSS or other parameters only available on the frontend. If that is the case it is recommended to keep this option disabled.', 'post-snippets' );
 		echo '</p>';
 
-		// echo get_current_user_id();
-
 		// Update Form
+		$this->set_user_options();
+		$render = $this->get_user_options();
+
 		echo '<form method="post" action="">';
 		wp_nonce_field('update-user-options');
-		$this->checkbox(__('Display rendered snippets', 'post-snippets'), 'mupp', false );
+		$this->checkbox(__('Display rendered snippets', 'post-snippets'), 'render', $render  );
 		$this->submit( 'update-post-snippets-user', __('Update', 'post-snippets') );
 		echo '</form>';
 
@@ -186,15 +209,15 @@ class Post_Snippets_Settings
 					echo "<br/>";
 				}
 
-				if (defined('POST_SNIPPETS_RENDERED_OVERVIEW') and POST_SNIPPETS_RENDERED_OVERVIEW == true):
+				if ( $render ) {
 					echo "<strong>Snippet:</strong><br/>";
 					echo do_shortcode( $snippet['snippet'] );
-				else:
+				} else {
 					echo "<strong>Snippet:</strong><br/>";
 					echo "<code>";
 					echo nl2br( esc_html( $snippet['snippet'] ) );
 					echo "</code>";
-				endif;
+				}
 			}
 		}
 
@@ -209,6 +232,7 @@ class Post_Snippets_Settings
 	
 	/**
 	 * Checkbox.
+	 *
 	 * Renders the HTML for an input checkbox.
 	 *
 	 * @param	string	$label		The label rendered to screen
@@ -225,6 +249,10 @@ class Post_Snippets_Settings
 	}
 
 	/**
+	 * Submit.
+	 *
+	 * Renders the HTML for a submit button.
+	 *
 	 * @since	Post Snippets 1.9.7
 	 *
 	 * @param	string	$name	The name that identifies the button on submit
