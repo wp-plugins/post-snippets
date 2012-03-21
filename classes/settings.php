@@ -29,7 +29,8 @@ class Post_Snippets_Settings
 	 */
 	private function set_user_options()
 	{
-		if ( isset( $_POST['update-post-snippets-user'] ) ) {
+		if ( isset($_POST['post_snippets_user_nonce']) && wp_verify_nonce( $_POST['post_snippets_user_nonce'], 'post_snippets_user_options') )
+		{
 			$id = get_current_user_id();
 			$render = isset( $_POST['render'] ) ? true : false;
 			update_user_meta( $id, self::USER_OPTION_KEY, $render );
@@ -190,7 +191,8 @@ class Post_Snippets_Settings
 		$render = $this->get_user_options();
 
 		echo '<form method="post" action="">';
-		wp_nonce_field('update-user-options');
+		wp_nonce_field( 'post_snippets_user_options', 'post_snippets_user_nonce' );
+
 		$this->checkbox(__('Display rendered snippets', 'post-snippets'), 'render', $render  );
 		$this->submit( 'update-post-snippets-user', __('Update', 'post-snippets') );
 		echo '</form>';
