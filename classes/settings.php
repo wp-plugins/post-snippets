@@ -23,7 +23,7 @@ class Post_Snippets_Settings
 	 * Render the options page.
 	 *
 	 * @since	Post Snippets 1.9.7
-	 * @param	$page	string	Admin page to render. Default: options
+	 * @param	string	$page	Admin page to render. Default: options
 	 */
 	public function render( $page )
 	{
@@ -128,11 +128,13 @@ class Post_Snippets_Settings
 		?>
 		</tbody>
 	</table>
-	<div class="submit">
-		<input type="submit" name="update-post-snippets" value="<?php _e( 'Update Snippets', 'post-snippets' ) ?>"  class="button-primary" /></div>
-	</form>
-</div>
+
 <?php
+		$this->submit( 'update-post-snippets', __('Update Snippets', 'post-snippets') );
+		echo '</form>';
+		// ---
+
+		echo '</div>';
 	}
 
 
@@ -146,10 +148,23 @@ class Post_Snippets_Settings
 	 */
 	private function overview_page()
 	{
+		// Header
 		echo '<div class=wrap>';
 		echo '<h2>Post Snippets</h2>';
-		// ---
+		echo '<p>';
+		_e( 'This is an overview of all custom snippets defined for this site. These snippets are inserted into posts from the post editor using the Post Snippets button. You can choose to see the snippets here as-is or as they are actually rendered on the website. Enabling rendered snippets for this overview might look strange if the snippet have dependencies on variables, CSS or other parameters only available on the frontend. If that is the case it is recommended to keep this option disabled.', 'post-snippets' );
+		echo '</p>';
 
+		// echo get_current_user_id();
+
+		// Update Form
+		echo '<form method="post" action="">';
+		wp_nonce_field('update-user-options');
+		$this->checkbox(__('Display rendered snippets', 'post-snippets'), 'mupp', false );
+		$this->submit( 'update-post-snippets-user', __('Update', 'post-snippets') );
+		echo '</form>';
+
+		// Snippet List
 		$snippets = $this->plugin_options;
 		if (!empty($snippets)) {
 			foreach ($snippets as $key => $snippet) {
@@ -183,7 +198,7 @@ class Post_Snippets_Settings
 			}
 		}
 
-		// ---
+		// Close the wrapping div
 		echo '</div>';
 	}
 
@@ -207,5 +222,18 @@ class Post_Snippets_Settings
 			echo ' checked';
 		echo ' />';
 		echo ' '.$label.'<br/>';
+	}
+
+	/**
+	 * @since	Post Snippets 1.9.7
+	 *
+	 * @param	string	$name	The name that identifies the button on submit
+	 * @param	string	$label	The label rendered on the button
+	 */
+	private function submit( $name, $label )
+	{
+		echo '<div class="submit">';
+		printf( '<input type="submit" name="%s" value="%s" class="button-primary" />', $name, $label );
+		echo '</div>';
 	}
 }
