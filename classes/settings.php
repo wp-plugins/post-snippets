@@ -42,7 +42,6 @@ class Post_Snippets_Settings
 	 * Gets the per user option for the read-only overview page.
 	 *
 	 * @since	Post Snippets 1.9.7
-	 *
 	 * @return	boolean	If overview should be rendered on output or not
 	 */
 	private function get_user_options()
@@ -267,7 +266,6 @@ class Post_Snippets_Settings
 	 * Renders the HTML for a submit button.
 	 *
 	 * @since	Post Snippets 1.9.7
-	 *
 	 * @param	string	$name	The name that identifies the button on submit
 	 * @param	string	$label	The label rendered on the button
 	 */
