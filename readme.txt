@@ -98,6 +98,7 @@ for questions, answers, support and feature requests.
    related info.
  * Users with read-only access  can toggle if they want to see their snippets
    overview as rendered output or as-is.
+ * Enabled `label for=` with checkboxes.
  * Included Romanian translation by Web Hosting Geeks.
 
 = Version 1.9.6 - 19 Mar 2012 =

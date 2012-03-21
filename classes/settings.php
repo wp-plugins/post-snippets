@@ -250,16 +250,17 @@ class Post_Snippets_Settings
 	 * Renders the HTML for an input checkbox.
 	 *
 	 * @param	string	$label		The label rendered to screen
-	 * @param	string	$name		The unique name to identify the input
+	 * @param	string	$name		The unique name and id to identify the input
 	 * @param	boolean	$checked	If the input is checked or not
 	 */
 	private function checkbox( $label, $name, $checked )
 	{
-		printf( '<input type="checkbox" name="%s" value="true"', $name );
+		echo "<label for=\"{$name}\">";
+		printf( '<input type="checkbox" name="%1$s" id="%1$s" value="true"', $name );
 		if ($checked)
 			echo ' checked';
 		echo ' />';
-		echo ' '.$label.'<br/>';
+		echo " {$label}</label><br/>";
 	}
 
 	/**
