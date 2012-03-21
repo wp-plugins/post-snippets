@@ -11,15 +11,9 @@
  */
 class Post_Snippets_Settings
 {
-	private $plugin_options;
-
 	// Constants
-	const USER_OPTION_KEY = 'post_snippets';
-
-	public function set_options( $options )
-	{
-		$this->plugin_options = $options;
-	}
+	const PLUGIN_OPTION_KEY = 'post_snippets_options';
+	const USER_OPTION_KEY   = 'post_snippets';
 
 
 	// -------------------------------------------------------------------------
@@ -128,8 +122,7 @@ class Post_Snippets_Settings
     
         <tbody>
 		<?php 
-		// $snippets = get_option($this->plugin_options);
-		$snippets = $this->plugin_options;
+		$snippets = get_option( self::PLUGIN_OPTION_KEY );
 		if (!empty($snippets)) {
 			foreach ($snippets as $key => $snippet) {
 			?>
@@ -204,7 +197,7 @@ class Post_Snippets_Settings
 		echo '</form>';
 
 		// Snippet List
-		$snippets = $this->plugin_options;
+		$snippets = get_option( self::PLUGIN_OPTION_KEY );
 		if (!empty($snippets)) {
 			foreach ($snippets as $key => $snippet) {
 

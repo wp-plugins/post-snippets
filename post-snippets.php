@@ -604,7 +604,6 @@ function edOpenPostSnippets(myField) {
 	 */
 	public function overview_page() {
 		$settings = new Post_Snippets_Settings();
-		$settings->set_options( get_option($this->plugin_options) );
 		$settings->render( 'overview' );
 	}
 
@@ -667,7 +666,6 @@ function edOpenPostSnippets(myField) {
 
 		// Render the settings screen
 		$settings = new Post_Snippets_Settings();
-		$settings->set_options( get_option($this->plugin_options) );
 		$settings->render( 'options' );
 
 ?>
