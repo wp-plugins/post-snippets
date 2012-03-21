@@ -11,7 +11,6 @@
  */
 class Post_Snippets_Settings
 {
-
 	private $plugin_options;
 
 	// Constants
@@ -26,6 +25,14 @@ class Post_Snippets_Settings
 	// -------------------------------------------------------------------------
 	// Handle form I/O
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Update User Option.
+	 *
+	 * Sets the per user option for the read-only overview page.
+	 *
+	 * @since	Post Snippets 1.9.7
+	 */
 	private function set_user_options()
 	{
 		if ( isset( $_POST['update-post-snippets-user'] ) ) {
@@ -35,6 +42,15 @@ class Post_Snippets_Settings
 		}
 	}
 
+	/**
+	 * Get User Option.
+	 *
+	 * Gets the per user option for the read-only overview page.
+	 *
+	 * @since	Post Snippets 1.9.7
+	 *
+	 * @return	boolean	If overview should be rendered on output or not
+	 */
 	private function get_user_options()
 	{
 		$id = get_current_user_id();
@@ -177,7 +193,7 @@ class Post_Snippets_Settings
 		_e( 'This is an overview of all snippets defined for this site. These snippets are inserted into posts from the post editor using the Post Snippets button. You can choose to see the snippets here as-is or as they are actually rendered on the website. Enabling rendered snippets for this overview might look strange if the snippet have dependencies on variables, CSS or other parameters only available on the frontend. If that is the case it is recommended to keep this option disabled.', 'post-snippets' );
 		echo '</p>';
 
-		// Update Form
+		// Form
 		$this->set_user_options();
 		$render = $this->get_user_options();
 
@@ -200,20 +216,24 @@ class Post_Snippets_Settings
 				echo "</h3>";
 
 				if ($snippet['vars'])
-					echo "<strong>Variables:</strong> {$snippet['vars']}<br/>";
+					printf( "<strong>%s:</strong> {$snippet['vars']}<br/>", __('Variables', 'post-snippets') );
 
-				if ($snippet['shortcode']) {
-					echo "<strong>Shortcode:</strong> Yes";
-					if ($snippet['php'])
-						echo " (PHP)";
-					echo "<br/>";
-				}
+				// echo "<strong>Variables:</strong> {$snippet['vars']}<br/>";
 
+				$options = array();
+				if ($snippet['shortcode'])
+					array_push($options, 'Shortcode');
+				if ($snippet['php'])
+					array_push($options, 'PHP');
+				if ($snippet['wptexturize'])
+					array_push($options, 'wptexturize');
+				if ($options)
+					printf ( "<strong>%s:</strong> %s<br/>", __('Options', 'post-snippets'), implode(', ', $options) );
+
+				printf( "<br/><strong>%s:</strong><br/>", __('Snippet', 'post-snippets') );
 				if ( $render ) {
-					echo "<strong>Snippet:</strong><br/>";
 					echo do_shortcode( $snippet['snippet'] );
 				} else {
-					echo "<strong>Snippet:</strong><br/>";
 					echo "<code>";
 					echo nl2br( esc_html( $snippet['snippet'] ) );
 					echo "</code>";
@@ -221,7 +241,7 @@ class Post_Snippets_Settings
 			}
 		}
 
-		// Close the wrapping div
+		// Close
 		echo '</div>';
 	}
 
