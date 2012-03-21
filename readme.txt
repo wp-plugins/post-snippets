@@ -93,6 +93,9 @@ for questions, answers, support and feature requests.
 == Changelog ==
 
 = Version 1.9.7 - XX XXX 2012 =
+ * Updated the styling for the snippet insert window in the post editor. It 
+   shall now properly handle when the amount of snippets spread over multiple
+   tab rows.
  * Users without manage_options but with edit_posts capability (authors, 
    contributors, editors)can now see a read-only list of available snippets and
    related info.

@@ -1,41 +1,69 @@
 /**
  * Styling for the jQuery UI dialog used by Post Snippets 
  *
- * @version		1.0
+ * @version		2.0
  * @since		Post Snippets 1.7.1
  */
 #post-snippets-tabs {
-	padding: 15px 15px 3px;
-	background-color: #f1f1f1;
+	/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+	position: relative;
+	padding: .2em;
+	zoom: 1; 
+}
+#post-snippets-tabs .ui-tabs-nav {
+	margin: 0;
+	padding: .2em .2em 0;
+
+	/* Overrides */
+	background-color: #f9f9f9;
 	border-bottom: 1px solid #dfdfdf;
+	padding-bottom: 1px;
 }
-#post-snippets-tabs li {
-	display: inline;
+
+#post-snippets-tabs .ui-tabs-nav li {
+	list-style: none;
+	float: left;
+	position: relative;
+	top: 1px;
+	margin: 0 .2em 1px 0;
+	border-bottom: 0 !important;
+	padding: 0;
+	white-space: nowrap;
 }
-#post-snippets-tabs li {
-	color: #2583AD;
-	padding: 6px 6px 6px 6px;
-	border-width: 1px 1px 0;
-	border-style: solid solid none;
-	border-color: #f1f1f1;
-}
-#post-snippets-tabs li.ui-tabs-selected {
-	background-color: #fff;
-	border-color: #dfdfdf;
-	border-bottom-color: #fff;
-	color: #d54e21;
-}
-#post-snippets-tabs li.ui-state-hover {
-	color: #d54e21;
-}
-#post-snippets-tabs a {
+#post-snippets-tabs .ui-tabs-nav li a {
+	float: left;
+	padding: .5em 1em;
 	text-decoration: none;
+
+	/* Overrides */
+	border: 1px solid #dfdfdf;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+#post-snippets-tabs .ui-tabs-nav li.ui-tabs-selected {
+	margin-bottom: 0;
+	padding-bottom: 1px;
+
+	/* Overrides */
+	background-color: #fff;
+	padding-bottom: 0;
+}
+#post-snippets-tabs .ui-tabs-nav li.ui-tabs-selected a,
+#post-snippets-tabs .ui-tabs-nav li.ui-state-disabled a,
+#post-snippets-tabs .ui-tabs-nav li.ui-state-processing a {
+	cursor: text;
+}
+#post-snippets-tabs .ui-tabs-nav li a,
+#post-snippets-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+	/* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+	cursor: pointer;
 }
 #post-snippets-tabs .ui-tabs-panel {
-	margin: 5px 0 0 0;
-	padding: 5px 20px 10px;
-	background-color: #fff;
-	border-left: 1px solid #dfdfdf;
-	border-bottom: 1px solid #dfdfdf;
-	border: 1px solid #dfdfdf;
+	display: block;
+	border-width: 0;
+	padding: 1em 1.4em;
+	background: none;
+}
+#post-snippets-tabs .ui-tabs-hide {
+	display: none !important;
 }
