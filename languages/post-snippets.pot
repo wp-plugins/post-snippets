@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Post Snippets package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Post Snippets 1.9.3\n"
+"Project-Id-Version: Post Snippets 1.9.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/post-snippets\n"
-"POT-Creation-Date: 2012-02-08 16:54:26+00:00\n"
+"POT-Creation-Date: 2012-03-21 09:28:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,48 +12,12 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: classes/settings.php:33
-msgid "Add New Snippet"
-msgstr ""
-
-#: classes/settings.php:34
-msgid "Delete Selected"
-msgstr ""
-
-#: classes/settings.php:35
-msgid "(Use the help dropdown button above for additional information.)"
-msgstr ""
-
-#: classes/settings.php:44 classes/settings.php:53 classes/help.php:91
-msgid "Title"
-msgstr ""
-
-#: classes/settings.php:45 classes/settings.php:54 classes/help.php:98
-msgid "Variables"
-msgstr ""
-
-#: classes/settings.php:46 classes/settings.php:55 classes/help.php:109
-msgid "Snippet"
-msgstr ""
-
-#: classes/settings.php:76 classes/help.php:46 classes/help.php:258
-msgid "Shortcode"
-msgstr ""
-
-#: classes/settings.php:81
-msgid "PHP Code"
-msgstr ""
-
-#: classes/settings.php:90 classes/help.php:125
-msgid "Description"
-msgstr ""
-
-#: classes/settings.php:101
-msgid "Update Snippets"
-msgstr ""
-
 #: classes/help.php:41 classes/help.php:256
 msgid "Basic"
+msgstr ""
+
+#: classes/help.php:46 classes/help.php:258 classes/settings.php:146
+msgid "Shortcode"
 msgstr ""
 
 #: classes/help.php:51 classes/help.php:260
@@ -76,10 +40,19 @@ msgstr ""
 msgid "Support Forums"
 msgstr ""
 
+#: classes/help.php:91 classes/settings.php:114 classes/settings.php:123
+msgid "Title"
+msgstr ""
+
 #: classes/help.php:94
 msgid ""
 "Give the snippet a title that helps you identify it in the post editor. This "
 "also becomes the name of the shortcode if you enable that option"
+msgstr ""
+
+#: classes/help.php:98 classes/settings.php:115 classes/settings.php:124
+#: classes/settings.php:219
+msgid "Variables"
 msgstr ""
 
 #: classes/help.php:101
@@ -91,6 +64,11 @@ msgstr ""
 
 #: classes/help.php:104 classes/help.php:115 classes/help.php:230
 msgid "Example"
+msgstr ""
+
+#: classes/help.php:109 classes/settings.php:116 classes/settings.php:125
+#: classes/settings.php:233
+msgid "Snippet"
 msgstr ""
 
 #: classes/help.php:112
@@ -110,6 +88,10 @@ msgstr ""
 msgid ""
 "You will get the option to replace url and name on insert if they are "
 "defined as variables."
+msgstr ""
+
+#: classes/help.php:125 classes/settings.php:160
+msgid "Description"
 msgstr ""
 
 #: classes/help.php:128
@@ -140,7 +122,7 @@ msgid ""
 "variable is reserved, so don't use it in the variables field."
 msgstr ""
 
-#: classes/help.php:152
+#: classes/help.php:152 classes/settings.php:231
 msgid "Options"
 msgstr ""
 
@@ -211,69 +193,108 @@ msgid ""
 "(string) The variables to pass to the snippet, formatted as a query string."
 msgstr ""
 
+#: classes/settings.php:103
+msgid "Add New Snippet"
+msgstr ""
+
+#: classes/settings.php:104
+msgid "Delete Selected"
+msgstr ""
+
+#: classes/settings.php:105
+msgid "(Use the help dropdown button above for additional information.)"
+msgstr ""
+
+#: classes/settings.php:151
+msgid "PHP Code"
+msgstr ""
+
+#: classes/settings.php:172
+msgid "Update Snippets"
+msgstr ""
+
+#: classes/settings.php:193
+msgid ""
+"This is an overview of all snippets defined for this site. These snippets "
+"are inserted into posts from the post editor using the Post Snippets button. "
+"You can choose to see the snippets here as-is or as they are actually "
+"rendered on the website. Enabling rendered snippets for this overview might "
+"look strange if the snippet have dependencies on variables, CSS or other "
+"parameters only available on the frontend. If that is the case it is "
+"recommended to keep this option disabled."
+msgstr ""
+
+#: classes/settings.php:202
+msgid "Display rendered snippets"
+msgstr ""
+
+#: classes/settings.php:203
+msgid "Update"
+msgstr ""
+
 #: post-snippets.php:85
 msgid "Settings"
 msgstr ""
 
-#: post-snippets.php:430
+#: post-snippets.php:458
 msgid "This snippet is insert only, no variables defined."
 msgstr ""
 
-#: post-snippets.php:577
+#: post-snippets.php:626
 msgid "A snippet named Untitled has been added."
 msgstr ""
 
-#: post-snippets.php:595 post-snippets.php:745
+#: post-snippets.php:644 post-snippets.php:797
 msgid "Snippets have been updated."
 msgstr ""
 
-#: post-snippets.php:611
+#: post-snippets.php:660
 msgid "Selected snippets have been deleted."
 msgstr ""
 
-#: post-snippets.php:625
+#: post-snippets.php:674
 msgid "Import/Export"
 msgstr ""
 
-#: post-snippets.php:626
+#: post-snippets.php:675
 msgid "Export"
 msgstr ""
 
-#: post-snippets.php:628
+#: post-snippets.php:677
 msgid "Export your snippets for backup or to import them on another site."
 msgstr ""
 
-#: post-snippets.php:629
+#: post-snippets.php:678
 msgid "Export Snippets"
 msgstr ""
 
-#: post-snippets.php:715
+#: post-snippets.php:765
 msgid "Import"
 msgstr ""
 
-#: post-snippets.php:717
+#: post-snippets.php:767
 msgid ""
 "Import snippets from a post-snippets-export.zip file. Importing overwrites "
 "any existing snippets."
 msgstr ""
 
-#: post-snippets.php:721
+#: post-snippets.php:771
 msgid "Import Snippets"
 msgstr ""
 
-#: post-snippets.php:747
+#: post-snippets.php:799
 msgid "Snippets successfully imported."
 msgstr ""
 
-#: post-snippets.php:749 post-snippets.php:753 post-snippets.php:755
+#: post-snippets.php:801 post-snippets.php:805 post-snippets.php:807
 msgid "Snippets could not be imported:"
 msgstr ""
 
-#: post-snippets.php:749
+#: post-snippets.php:801
 msgid "Unzipping failed."
 msgstr ""
 
-#: post-snippets.php:755
+#: post-snippets.php:807
 msgid "Upload failed."
 msgstr ""
 
