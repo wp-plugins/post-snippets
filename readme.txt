@@ -96,9 +96,9 @@ for questions, answers, support and feature requests.
  * Updated the styling for the snippet insert window in the post editor. This
    fixes the visual glitch with tabs spanning multiple rows.
  * Users without `manage_options` but with `edit_posts` capability (authors, 
-   contributors, editors)can now see a read-only list of available snippets and
+   contributors, editors) can now see a read-only list of available snippets and
    related info.
- * Users with read-only access  can toggle if they want to see their snippets
+ * Users with read-only access can toggle if they want to see their snippets
    overview as rendered output or as-is.
  * Enabled `label for=` with checkboxes.
  * Included Romanian translation by Web Hosting Geeks.
