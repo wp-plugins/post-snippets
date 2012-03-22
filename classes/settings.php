@@ -229,7 +229,7 @@ class Post_Snippets_Settings
 					echo do_shortcode( $snippet['snippet'] );
 				} else {
 					echo "<code>";
-					echo nl2br( esc_html( $snippet['snippet'] ) );
+					echo nl2br( htmlspecialchars($snippet['snippet'], ENT_NOQUOTES) );
 					echo "</code>";
 				}
 			}
