@@ -586,6 +586,7 @@ function edOpenPostSnippets(myField) {
 		}
 	}
 
+	/** Moved to settings.php. Deprecate this one asap */
 	function admin_message($message) {
 		if ( $message ) {
 			?>
@@ -602,67 +603,22 @@ function edOpenPostSnippets(myField) {
 	 *
 	 * @since	Post Snippets 1.9.7
 	 */
-	public function overview_page() {
+	public function overview_page()
+	{
 		$settings = new Post_Snippets_Settings();
 		$settings->render( 'overview' );
 	}
 
-
-	function options_page() {
-		// Add a new Snippet		
-		if (isset($_POST['add-snippet'])) {
-			$snippets = get_option($this->plugin_options);
-			if (empty($snippets)) { $snippets = array(); }
-			array_push($snippets, array (
-			    'title' => "Untitled",
-			    'vars' => "",
-			    'description' => "",
-			    'shortcode' => false,
-			    'php' => false,
-			    'wptexturize' => false,
-			    'snippet' => ""));
-			update_option($this->plugin_options, $snippets);
-			$this->admin_message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
-		}
-		
-		// Update Snippets
-		if (isset($_POST['update-post-snippets'])) {
-			$snippets = get_option($this->plugin_options);
-			if (!empty($snippets)) {
-				foreach ($snippets as $key => $value) {
-					$new_snippets[$key]['title'] = trim($_POST[$key.'_title']);
-					$new_snippets[$key]['vars'] = str_replace(' ', '', trim($_POST[$key.'_vars']) );
-					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
-					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
-					$new_snippets[$key]['wptexturize'] = isset($_POST[$key.'_wptexturize']) ? true : false;
-
-					$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
-					$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);
-				}
-				update_option($this->plugin_options, $new_snippets);
-				$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
-			}
-		}
-
-		// Delete Snippets
-		if (isset($_POST['delete-selected'])) {
-			$snippets = get_option($this->plugin_options);
-			if (!empty($snippets)) {
-				$delete = $_POST['checked'];
-				$newsnippets = array();
-				foreach ($snippets as $key => $snippet) {
-					if (in_array($key,$delete) == false) {
-						array_push($newsnippets,$snippet);	
-					}
-				}
-				update_option($this->plugin_options, $newsnippets);
-				$this->admin_message( __( 'Selected snippets have been deleted.', 'post-snippets' ) );
-			}
-		}
-		
-		// Handle import of snippets (Run before the option page is outputted, in case any snippets have been imported, so they are displayed).
+	/**
+	 * The options Admin page.
+	 *
+	 * For users with manage_options capability.
+	 */
+	public function options_page()
+	{
+		// Handle import of snippets (Run before the option page is outputted,
+		// in case any snippets have been imported, so they are displayed).
 		$import = $this->import_snippets();
-
 
 		// Render the settings screen
 		$settings = new Post_Snippets_Settings();

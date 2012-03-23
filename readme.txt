@@ -92,6 +92,11 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version 2.0 - XX Mar 2012 =
+ * Pressing enter in a text field now defaults to Update and not Add.
+ * Fixed debug notice message displayed when deleting without any snippets
+   selected.
+
 = Version 1.9.7 - 22 Mar 2012 =
  * Updated the styling for the snippet insert window in the post editor. This
    fixes the visual glitch with tabs spanning multiple rows.

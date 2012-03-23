@@ -17,8 +17,91 @@ class Post_Snippets_Settings
 
 
 	// -------------------------------------------------------------------------
-	// Handle form I/O
+	// Handle form submissions
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Add New Snippet.
+	 */
+	private function add()
+	{
+		if (isset( $_POST['add-snippet'] )
+			&& isset( $_POST['update_snippets_nonce'])
+			&& wp_verify_nonce( $_POST['update_snippets_nonce'], 'update_snippets') )
+		{
+			$snippets = get_option( self::PLUGIN_OPTION_KEY );
+			if (empty($snippets)) { $snippets = array(); }
+
+			array_push($snippets, array (
+			    'title' => 'Untitled',
+			    'vars' => '',
+			    'description' => '',
+			    'shortcode' => false,
+			    'php' => false,
+			    'wptexturize' => false,
+			    'snippet' => '')
+			);
+
+			update_option( self::PLUGIN_OPTION_KEY, $snippets );
+			$this->message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
+		}
+	}
+
+	/**
+	 * Delete Snippet/s.
+	 */
+	private function delete()
+	{
+		if (isset( $_POST['delete-snippets'] )
+			&& isset( $_POST['update_snippets_nonce'])
+			&& wp_verify_nonce( $_POST['update_snippets_nonce'], 'update_snippets') )
+		{
+			$snippets = get_option( self::PLUGIN_OPTION_KEY );
+
+			if ( empty($snippets) || !isset($_POST['checked']) ) {
+				$this->message( __( 'Nothing selected to delete.', 'post-snippets' ) );
+				return;
+			}
+
+			$delete = $_POST['checked'];
+			$newsnippets = array();
+			foreach ($snippets as $key => $snippet) {
+				if (in_array($key,$delete) == false) {
+					array_push($newsnippets,$snippet);	
+				}
+			}
+
+			update_option( self::PLUGIN_OPTION_KEY, $newsnippets );
+			$this->message( __( 'Selected snippets have been deleted.', 'post-snippets' ) );
+		}
+	}
+
+	/**
+	 * Update Snippet/s.
+	 */
+	private function update()
+	{
+		if (isset( $_POST['update-snippets'] )
+			&& isset( $_POST['update_snippets_nonce'])
+			&& wp_verify_nonce( $_POST['update_snippets_nonce'], 'update_snippets') )
+		{
+			$snippets = get_option( self::PLUGIN_OPTION_KEY );
+			if (!empty($snippets)) {
+				foreach ($snippets as $key => $value) {
+					$new_snippets[$key]['title'] = trim($_POST[$key.'_title']);
+					$new_snippets[$key]['vars'] = str_replace(' ', '', trim($_POST[$key.'_vars']) );
+					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
+					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
+					$new_snippets[$key]['wptexturize'] = isset($_POST[$key.'_wptexturize']) ? true : false;
+
+					$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
+					$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);
+				}
+				update_option( self::PLUGIN_OPTION_KEY, $new_snippets );
+				$this->message( __( 'Snippets have been updated.', 'post-snippets' ) );
+			}
+		}
+	}
 
 	/**
 	 * Update User Option.
@@ -77,6 +160,17 @@ class Post_Snippets_Settings
 	}
 
 	/**
+	 * Display Flashing Message.
+	 *
+	 * @param	string	$message	Message to display to the user.
+	 */
+	private function message( $message )
+	{
+		if ( $message )
+			echo "<div class='updated'><p><strong>{$message}</strong></p></div>";
+	}
+
+	/**
 	 * Creates the snippets administration page.
 	 *
 	 * For users with manage_options capability (admin, super admin).
@@ -85,21 +179,22 @@ class Post_Snippets_Settings
 	 */
 	private function options_page()
 	{
+		// Handle Form Submits
+		$this->add();
+		$this->delete();
+		$this->update();
+
+		// Header
+		echo '<div class="wrap">';
+		echo '<h2>Post Snippets</h2>';
+		echo '<p class="description">';
+		_e( 'Use the help dropdown button above for additional information.', 'post-snippets' );
+		echo '</p>';
+
+		// Edit/Update Snippets
+		echo '<form method="post" action="">';
+		wp_nonce_field( 'update_snippets', 'update_snippets_nonce' );
 ?>
-<div class=wrap>
-    <h2>Post Snippets</h2>
-
-	<form method="post" action="">
-	<?php wp_nonce_field('update-options'); ?>
-
-    <div class="tablenav">
-        <div class="alignleft actions">
-            <input type="submit" name="add-snippet" value="<?php _e( 'Add New Snippet', 'post-snippets' ) ?>" class="button-secondary" />
-            <input type="submit" name="delete-selected" value="<?php _e( 'Delete Selected', 'post-snippets' ) ?>" class="button-secondary" />
-			<span class="description"><?php _e( '(Use the help dropdown button above for additional information.)', 'post-snippets' ); ?></span>
-        </div>
-    </div>
-    <div class="clear"></div>
 
     <table class="widefat fixed" cellspacing="0">
         <thead>
@@ -162,7 +257,9 @@ class Post_Snippets_Settings
 	</table>
 
 <?php
-		$this->submit( 'update-post-snippets', __('Update Snippets', 'post-snippets') );
+		$this->submit( 'update-snippets', __('Update Snippets', 'post-snippets') );
+		$this->submit( 'add-snippet', __('Add New Snippet', 'post-snippets'), 'button-secondary', false );
+		$this->submit( 'delete-snippets', __('Delete Selected', 'post-snippets'), 'button-secondary', false );
 		echo '</form>';
 		// ---
 
@@ -180,7 +277,7 @@ class Post_Snippets_Settings
 	private function overview_page()
 	{
 		// Header
-		echo '<div class=wrap>';
+		echo '<div class="wrap">';
 		echo '<h2>Post Snippets</h2>';
 		echo '<p>';
 		_e( 'This is an overview of all snippets defined for this site. These snippets are inserted into posts from the post editor using the Post Snippets button. You can choose to see the snippets here as-is or as they are actually rendered on the website. Enabling rendered snippets for this overview might look strange if the snippet have dependencies on variables, CSS or other parameters only available on the frontend. If that is the case it is recommended to keep this option disabled.', 'post-snippets' );
@@ -271,11 +368,16 @@ class Post_Snippets_Settings
 	 * @since	Post Snippets 1.9.7
 	 * @param	string	$name	The name that identifies the button on submit
 	 * @param	string	$label	The label rendered on the button
+	 * @param	string	$class	Optional. Button class. Default: button-primary
+	 * @param	boolean	$wrap	Optional. Wrap in a submit div. Default: true
 	 */
-	private function submit( $name, $label )
+	private function submit( $name, $label, $class='button-primary', $wrap=true )
 	{
-		echo '<div class="submit">';
-		printf( '<input type="submit" name="%s" value="%s" class="button-primary" />', $name, $label );
-		echo '</div>';
+		$btn = sprintf( '<input type="submit" name="%s" value="%s" class="%s" />', $name, $label, $class );
+
+		if ($wrap)
+			$btn = "<div class=\"submit\">{$btn}</div>";
+
+		echo $btn;
 	}
 }
