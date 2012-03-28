@@ -60,19 +60,20 @@ class Post_Snippets extends Post_Snippets_Base
 		// Add TinyMCE button
 		add_action('init', array(&$this, 'add_tinymce_button') );
 
-		# Settings link on plugins list
+		// Settings link on plugins list
 		add_filter( 'plugin_action_links', array(&$this, 'plugin_action_links'), 10, 2 );
-		# Options Page
+		// Options Page
 		add_action( 'admin_menu', array(&$this,'wp_admin') );
 
 		$this->create_shortcodes();
 
-		# Adds the JS and HTML code in the header and footer for the jQuery insert UI dialog in the editor
+		// Adds the JS and HTML code in the header and footer for the jQuery
+		// insert UI dialog in the editor
 		add_action( 'admin_init', array(&$this,'enqueue_assets') );
 		add_action( 'admin_head', array(&$this,'jquery_ui_dialog') );
 		add_action( 'admin_footer', array(&$this,'add_jquery_ui_dialog') );
 		
-		# Add Editor QuickTag button
+		// Add Editor QuickTag button:
 		// IF WordPress is 3.3 or higher, use the new refactored method to add
 		// the quicktag button.
 		// Start showing a deprecated message from version 1.9 of the plugin for
