@@ -8,7 +8,7 @@
  * @author		Johan Steen <artstorm at gmail dot com>
  * @since		Post Snippets 1.8.9
  */
-class Post_Snippets_Help
+class Post_Snippets_Help extends Post_Snippets_Base
 {
 	/**
 	 * Constructor.

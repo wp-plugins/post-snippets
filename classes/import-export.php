@@ -8,12 +8,8 @@
  * @author		Johan Steen <artstorm at gmail dot com>
  * @since		Post Snippets 2.0
  */
-class Post_Snippets_ImportExport
+class Post_Snippets_ImportExport extends Post_Snippets_Base
 {
-	// Constants
-	const PLUGIN_OPTION_KEY = 'post_snippets_options';
-
-
 	/**
 	 * Export Snippets.
 	 *

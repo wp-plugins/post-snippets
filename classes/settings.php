@@ -9,13 +9,8 @@
  * @author		Johan Steen <artstorm at gmail dot com>
  * @since		Post Snippets 1.8.8
  */
-class Post_Snippets_Settings
+class Post_Snippets_Settings extends Post_Snippets_Base
 {
-	// Constants
-	const PLUGIN_OPTION_KEY = 'post_snippets_options';
-	const USER_OPTION_KEY   = 'post_snippets';
-
-
 	// -------------------------------------------------------------------------
 	// Handle form submissions
 	// -------------------------------------------------------------------------

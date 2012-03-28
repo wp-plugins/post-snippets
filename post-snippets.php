@@ -25,9 +25,22 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class Post_Snippets {
-	private $tinymce_plugin_name	= 'post_snippets';
-	private $plugin_options			= 'post_snippets_options';
+/**
+ * Base Class.
+ */
+class Post_Snippets_Base {
+	// Constants
+	const PLUGIN_OPTION_KEY = 'post_snippets_options';
+	const USER_OPTION_KEY   = 'post_snippets';
+}
+
+/**
+ * Plugin Main Class.
+ */
+class Post_Snippets extends Post_Snippets_Base
+{
+	// Constants
+	const TINYMCE_PLUGIN_NAME = 'post_snippets';
 
 	// -------------------------------------------------------------------------
 
@@ -149,7 +162,7 @@ class Post_Snippets {
 	 */
 	public function register_tinymce_button( $buttons )
 	{
-		array_push( $buttons, 'separator', $this->tinymce_plugin_name );
+		array_push( $buttons, 'separator', self::TINYMCE_PLUGIN_NAME );
 		return $buttons;
 	}
 
@@ -168,7 +181,7 @@ class Post_Snippets {
 	public function register_tinymce_plugin( $plugins )
 	{
 		// Load the TinyMCE plugin, editor_plugin.js, into the array
-		$plugins[$this->tinymce_plugin_name] = 
+		$plugins[self::TINYMCE_PLUGIN_NAME] = 
 			plugins_url('/tinymce/editor_plugin.js?ver=1.9', $this->get_FILE());
 
 		return $plugins;
@@ -268,7 +281,7 @@ class Post_Snippets {
 		# Prepare the snippets and shortcodes into javascript variables
 		# so they can be inserted into the editor, and get the variables replaced
 		# with user defined strings.
-		$snippets = get_option($this->plugin_options);
+		$snippets = get_option( self::PLUGIN_OPTION_KEY );
 		foreach ($snippets as $key => $snippet) {
 			if ($snippet['shortcode']) {
 				# Build a long string of the variables, ie: varname1={varname1} varname2={varname2}
@@ -417,7 +430,7 @@ function edOpenPostSnippets(myField) {
 		echo "\t\t\t<ul>\n";
 
 		// Create a tab for each available snippet
-		$snippets = get_option($this->plugin_options);
+		$snippets = get_option( self::PLUGIN_OPTION_KEY );
 		foreach ($snippets as $key => $snippet) {
 			echo "\t\t\t\t";
 			echo "<li><a href=\"#ps-tabs-{$key}\">{$snippet['title']}</a></li>";
@@ -498,7 +511,7 @@ function edOpenPostSnippets(myField) {
 	 * Create the functions for shortcodes dynamically and register them
 	 */
 	function create_shortcodes() {
-		$snippets = get_option($this->plugin_options);
+		$snippets = get_option( self::PLUGIN_OPTION_KEY );
 		if (!empty($snippets)) {
 			foreach ($snippets as $snippet) {
 				// If shortcode is enabled for the snippet, and a snippet has been entered, register it as a shortcode.
@@ -660,7 +673,7 @@ function edOpenPostSnippets(myField) {
 	 */
 	public function get_snippet( $snippet_name, $snippet_vars = '' )
 	{
-		$snippets = get_option($this->plugin_options);
+		$snippets = get_option( self::PLUGIN_OPTION_KEY );
 		for ($i = 0; $i < count($snippets); $i++) {
 			if ($snippets[$i]['title'] == $snippet_name) {
 				parse_str( htmlspecialchars_decode($snippet_vars), $snippet_output );
