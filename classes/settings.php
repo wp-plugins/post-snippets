@@ -187,11 +187,38 @@ class Post_Snippets_Settings
 		// Header
 		echo '<div class="wrap">';
 		echo '<h2>Post Snippets</h2>';
+
+		// Tabs
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'snippets';
+		$base_url = '?page=post-snippets/post-snippets.php&amp;tab=';
+		$tabs = array( 'snippets' => __( 'Manage Snippets', 'post-snippets' ), 'tools' => __( 'Import/Export', 'post-snippets' ) );
+		echo '<h2 class="nav-tab-wrapper">';
+		foreach ( $tabs as $tab => $title ) {
+			$active = ( $active_tab == $tab ) ? ' nav-tab-active' : '';
+			echo "<a href='{$base_url}{$tab}' class='nav-tab {$active}'>{$title}</a>";
+		}
+		echo '</h2>';
 		echo '<p class="description">';
-		_e( 'Use the help dropdown button above for additional information.', 'post-snippets' );
+		_e( 'Use the help dropdown button for additional information.', 'post-snippets' );
 		echo '</p>';
 
-		// Edit/Update Snippets
+		// Tab content
+		if( $active_tab == 'snippets' )
+			$this->tab_snippets();
+		else
+			$this->tab_tools();
+
+		// Close it
+		echo '</div>';
+	}
+
+	/**
+	 * Tab to Manage Snippets.
+	 *
+	 * @since	Post Snippets 2.0
+	 */
+	private function tab_snippets()
+	{
 		echo '<form method="post" action="">';
 		wp_nonce_field( 'update_snippets', 'update_snippets_nonce' );
 ?>
@@ -261,10 +288,32 @@ class Post_Snippets_Settings
 		$this->submit( 'add-snippet', __('Add New Snippet', 'post-snippets'), 'button-secondary', false );
 		$this->submit( 'delete-snippets', __('Delete Selected', 'post-snippets'), 'button-secondary', false );
 		echo '</form>';
-		// ---
-
-		echo '</div>';
 	}
+
+	/**
+	 * Tab for Import/Export
+	 *
+	 * @since	Post Snippets 2.0
+	 */
+	private function tab_tools()
+	{
+		$ie = new Post_Snippets_ImportExport();
+
+		// Create header and export html form
+		printf( "<h3>%s</h3>", __( 'Import/Export', 'post-snippets' ));
+		printf( "<h4>%s</h4>", __( 'Export', 'post-snippets' ));
+		echo '<form method="post">';
+		echo '<p>';
+		_e( 'Export your snippets for backup or to import them on another site.', 'post-snippets' );
+		echo '</p>';
+		printf("<input type='submit' class='button' name='postsnippets_export' value='%s' />", __( 'Export Snippets', 'post-snippets') );
+		echo '</form>';
+
+		// Export logic, and import html form and logic
+		$ie->export_snippets();
+		echo $ie->import_snippets();
+	}
+
 
 	/**
 	 * Creates a read-only overview page.
