@@ -191,6 +191,19 @@ class Post_Snippets_Settings
 		_e( 'Use the help dropdown button above for additional information.', 'post-snippets' );
 		echo '</p>';
 
+		// Tabs
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'snippets';
+		$base_url = '?page=post-snippets/post-snippets.php&amp;tab=';
+		$tabs = array( 'snippets' => __( 'Snippets', 'post-snippets' ), 'io' => __( 'Import/Export', 'post-snippets' ) );
+		echo '<h2 class="nav-tab-wrapper">';
+		foreach ( $tabs as $tab => $title ) {
+			$active = ( $active_tab == $tab ) ? ' nav-tab-active' : '';
+			echo "<a href='{$base_url}{$tab}' class='nav-tab {$active}'>{$title}</a>";
+		}
+		echo '</h2>';
+
+
+		if( $active_tab == 'snippets' ):
 		// Edit/Update Snippets
 		echo '<form method="post" action="">';
 		wp_nonce_field( 'update_snippets', 'update_snippets_nonce' );
@@ -262,6 +275,8 @@ class Post_Snippets_Settings
 		$this->submit( 'delete-snippets', __('Delete Selected', 'post-snippets'), 'button-secondary', false );
 		echo '</form>';
 		// ---
+
+		endif;
 
 		echo '</div>';
 	}

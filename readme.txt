@@ -93,6 +93,7 @@ for questions, answers, support and feature requests.
 == Changelog ==
 
 = Version 2.0 - XX Mar 2012 =
+ * Added tabs to the Admin page, and moved Import/Export to a separate tab.
  * Pressing enter in a text field now defaults to Update and not Add.
  * Fixed debug notice message displayed when deleting without any snippets
    selected.
