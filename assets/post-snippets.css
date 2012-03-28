@@ -67,3 +67,9 @@
 #post-snippets-tabs .ui-tabs-hide {
 	display: none !important;
 }
+
+
+#post-snippets-dialog label {
+	width: 60px;
+	display: inline-block;
+}

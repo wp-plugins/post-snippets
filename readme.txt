@@ -86,13 +86,15 @@ for questions, answers, support and feature requests.
 
 == Screenshots ==
 
-1. The Admin page where you set up new snippets.
+1. The Admin page where you create and manage snippets.
 2. The TinyMCE button for Post Snippets.
-3. The Post Snippet Insert Window.
+3. The Post Snippet insert dialog.
+4. Help system available on the admin page.
+
 
 == Changelog ==
 
-= Version 2.0 - XX Mar 2012 =
+= Version 2.0 - 29 Mar 2012 =
  * Added tabs to the Admin page, and moved Import/Export to a separate tab.
  * Pressing enter in a text field now defaults to Update and not Add.
  * Fixed debug notice message displayed when deleting without any snippets
