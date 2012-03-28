@@ -1,8 +1,8 @@
 <?php
 /**
-* Uninstall.
-* Clean up the WP DB by deleting the options created by the plugin.
-*/
+ * Uninstall.
+ * Clean up the WP DB by deleting the options created by the plugin.
+ */
 function post_snippets_uninstall()
 {
 	// Delete all snippets

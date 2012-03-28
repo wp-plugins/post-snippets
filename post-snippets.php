@@ -491,7 +491,7 @@ function edOpenPostSnippets(myField) {
 	}
 
 	// -------------------------------------------------------------------------
-	// XXXXXX
+	// Shortcode
 	// -------------------------------------------------------------------------
 
 	/**
@@ -570,8 +570,13 @@ function edOpenPostSnippets(myField) {
 		return addslashes( $content );
 	}
 
+
+	// -------------------------------------------------------------------------
+	// Admin
+	// -------------------------------------------------------------------------
+
 	/**
-	 * The Admin Page and all it's functions
+	 * The Admin Page.
 	 */
 	function wp_admin()	{
 		if ( current_user_can('manage_options') ) {

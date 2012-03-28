@@ -97,6 +97,7 @@ for questions, answers, support and feature requests.
  * Pressing enter in a text field now defaults to Update and not Add.
  * Fixed debug notice message displayed when deleting without any snippets
    selected.
+ * Various code refactoring and optimizations.
 
 = Version 1.9.7 - 22 Mar 2012 =
  * Updated the styling for the snippet insert window in the post editor. This
