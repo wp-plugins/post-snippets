@@ -202,9 +202,23 @@ class Post_Snippets_Settings
 		_e( 'Use the help dropdown button for additional information.', 'post-snippets' );
 		echo '</p>';
 
+		// Tab content
+		if( $active_tab == 'snippets' )
+			$this->tab_snippets();
+		else
+			$this->tab_tools();
 
-		if( $active_tab == 'snippets' ):
-		// Edit/Update Snippets
+		// Close it
+		echo '</div>';
+	}
+
+	/**
+	 * Tab to Manage Snippets.
+	 *
+	 * @since	Post Snippets 2.0
+	 */
+	private function tab_snippets()
+	{
 		echo '<form method="post" action="">';
 		wp_nonce_field( 'update_snippets', 'update_snippets_nonce' );
 ?>
@@ -274,13 +288,6 @@ class Post_Snippets_Settings
 		$this->submit( 'add-snippet', __('Add New Snippet', 'post-snippets'), 'button-secondary', false );
 		$this->submit( 'delete-snippets', __('Delete Selected', 'post-snippets'), 'button-secondary', false );
 		echo '</form>';
-		// ---
-
-		else:
-			$this->tab_tools();
-		endif;
-
-		echo '</div>';
 	}
 
 	/**
