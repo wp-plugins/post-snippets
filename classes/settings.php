@@ -187,20 +187,20 @@ class Post_Snippets_Settings
 		// Header
 		echo '<div class="wrap">';
 		echo '<h2>Post Snippets</h2>';
-		echo '<p class="description">';
-		_e( 'Use the help dropdown button above for additional information.', 'post-snippets' );
-		echo '</p>';
 
 		// Tabs
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'snippets';
 		$base_url = '?page=post-snippets/post-snippets.php&amp;tab=';
-		$tabs = array( 'snippets' => __( 'Snippets', 'post-snippets' ), 'io' => __( 'Import/Export', 'post-snippets' ) );
+		$tabs = array( 'snippets' => __( 'Manage Snippets', 'post-snippets' ), 'io' => __( 'Import/Export', 'post-snippets' ) );
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $title ) {
 			$active = ( $active_tab == $tab ) ? ' nav-tab-active' : '';
 			echo "<a href='{$base_url}{$tab}' class='nav-tab {$active}'>{$title}</a>";
 		}
 		echo '</h2>';
+		echo '<p class="description">';
+		_e( 'Use the help dropdown button for additional information.', 'post-snippets' );
+		echo '</p>';
 
 
 		if( $active_tab == 'snippets' ):
