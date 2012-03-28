@@ -586,15 +586,6 @@ function edOpenPostSnippets(myField) {
 		}
 	}
 
-	/** Moved to settings.php. Deprecate this one asap */
-	function admin_message($message) {
-		if ( $message ) {
-			?>
-			<div class="updated"><p><strong><?php echo $message; ?></strong></p></div>
-			<?php	
-		}
-	}
-
 	/**
 	 * The options Overview page.
 	 *
@@ -616,74 +607,10 @@ function edOpenPostSnippets(myField) {
 	 */
 	public function options_page()
 	{
-		// Handle import of snippets (Run before the option page is outputted,
-		// in case any snippets have been imported, so they are displayed).
-		$import = $this->import_snippets();
-
-		// Render the settings screen
 		$settings = new Post_Snippets_Settings();
 		$settings->render( 'options' );
-
-		echo $import;
 	}
-
 	
-	/**
-	 * Handles uploading of post snippets archive and import the snippets.
-	 *
-	 * @uses 		wp_handle_upload() in wp-admin/includes/file.php
-	 * @since		Post Snippets 1.8
-	 *
- 	 * @return		string			HTML to handle the import
-	 */
-	function import_snippets() {
-		$import = '<br/><br/><strong>'.__( 'Import', 'post-snippets' ).'</strong><br/>';
-		if ( !isset($_FILES['postsnippets_import_file']) || empty($_FILES['postsnippets_import_file']) ) {
-			$import .= '<p>'.__( 'Import snippets from a post-snippets-export.zip file. Importing overwrites any existing snippets.', 'post-snippets' ).'</p>';
-			$import .= '<form method="post" enctype="multipart/form-data">';
-			$import .= '<input type="file" name="postsnippets_import_file"/>';
-			$import .= '<input type="hidden" name="action" value="wp_handle_upload"/>';
-			$import .= '<input type="submit" class="button" value="'.__( 'Import Snippets', 'post-snippets' ).'"/>';
-			$import .= '</form>';
-		} else {
-			$file = wp_handle_upload( $_FILES['postsnippets_import_file'] );
-			
-			if ( isset( $file['file'] ) && !is_wp_error($file) ) {
-				require_once (ABSPATH . 'wp-admin/includes/class-pclzip.php');
-				$zip = new PclZip( $file['file'] );
-				$dir = wp_upload_dir();
-				$upload_dir = $dir['basedir'] . '/';
-				chdir($upload_dir);
-				$unzipped = $zip->extract();
-
-				if ( $unzipped[0]['stored_filename'] == 'post-snippets-export.cfg' && $unzipped[0]['status'] == 'ok') {
-					// Delete the uploaded archive
-					unlink($file['file']);
-
-					$snippets = file_get_contents( $upload_dir.'post-snippets-export.cfg' );		// Returns false on failure, else the contents
-					if ($snippets) {
-						$snippets = apply_filters( 'post_snippets_import', $snippets );
-						update_option($this->plugin_options, unserialize($snippets));
-					}
-
-					// Delete the snippet file
-					unlink('./post-snippets-export.cfg');
-
-					$this->admin_message( __( 'Snippets have been updated.', 'post-snippets' ) );
-
-					$import .= '<p><strong>'.__( 'Snippets successfully imported.').'</strong></p>';
-				} else {
-					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Unzipping failed.').'</strong></p>';
-				}
-			} else {
-				if ( $file['error'] || is_wp_error( $file ) )
-					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.$file['error'].'</strong></p>';
-				else
-					$import .= '<p><strong>'.__( 'Snippets could not be imported:').' '.__('Upload failed.').'</strong></p>';
-			}
-		}
-		return $import;
-	}
 
 	// -------------------------------------------------------------------------
 	// Helpers

@@ -283,23 +283,28 @@ class Post_Snippets_Settings
 		echo '</div>';
 	}
 
+	/**
+	 * Tab for Import/Export
+	 *
+	 * @since	Post Snippets 2.0
+	 */
 	private function tab_tools()
 	{
 		$ie = new Post_Snippets_ImportExport();
-		?>
-	<h3><?php _e( 'Import/Export', 'post-snippets' ); ?></h3>
-	<strong><?php _e( 'Export', 'post-snippets' ); ?></strong><br/>
-	<form method="post">
-		<p><?php _e( 'Export your snippets for backup or to import them on another site.', 'post-snippets' ); ?></p>
-		<input type="submit" class="button" name="postsnippets_export" value="<?php _e( 'Export Snippets', 'post-snippets');?>"/>
-	</form>
-	<?php
 
+		// Create header and export html form
+		printf( "<h3>%s</h3>", __( 'Import/Export', 'post-snippets' ));
+		printf( "<h4>%s</h4>", __( 'Export', 'post-snippets' ));
+		echo '<form method="post">';
+		echo '<p>';
+		_e( 'Export your snippets for backup or to import them on another site.', 'post-snippets' );
+		echo '</p>';
+		printf("<input type='submit' class='button' name='postsnippets_export' value='%s' />", __( 'Export Snippets', 'post-snippets') );
+		echo '</form>';
+
+		// Export logic, and import html form and logic
 		$ie->export_snippets();
-
-
-
-
+		echo $ie->import_snippets();
 	}
 
 
