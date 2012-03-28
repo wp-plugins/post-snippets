@@ -191,7 +191,7 @@ class Post_Snippets_Settings
 		// Tabs
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'snippets';
 		$base_url = '?page=post-snippets/post-snippets.php&amp;tab=';
-		$tabs = array( 'snippets' => __( 'Manage Snippets', 'post-snippets' ), 'io' => __( 'Import/Export', 'post-snippets' ) );
+		$tabs = array( 'snippets' => __( 'Manage Snippets', 'post-snippets' ), 'tools' => __( 'Import/Export', 'post-snippets' ) );
 		echo '<h2 class="nav-tab-wrapper">';
 		foreach ( $tabs as $tab => $title ) {
 			$active = ( $active_tab == $tab ) ? ' nav-tab-active' : '';
@@ -276,10 +276,32 @@ class Post_Snippets_Settings
 		echo '</form>';
 		// ---
 
+		else:
+			$this->tab_tools();
 		endif;
 
 		echo '</div>';
 	}
+
+	private function tab_tools()
+	{
+		$ie = new Post_Snippets_ImportExport();
+		?>
+	<h3><?php _e( 'Import/Export', 'post-snippets' ); ?></h3>
+	<strong><?php _e( 'Export', 'post-snippets' ); ?></strong><br/>
+	<form method="post">
+		<p><?php _e( 'Export your snippets for backup or to import them on another site.', 'post-snippets' ); ?></p>
+		<input type="submit" class="button" name="postsnippets_export" value="<?php _e( 'Export Snippets', 'post-snippets');?>"/>
+	</form>
+	<?php
+
+		$ie->export_snippets();
+
+
+
+
+	}
+
 
 	/**
 	 * Creates a read-only overview page.
