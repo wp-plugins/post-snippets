@@ -3,7 +3,7 @@ Contributors: artstorm
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.9.7
+Stable tag: 2.0
 
 Keep a snippet library of text, HTML or PHP code to be used in posts. Variables
 can be set for more flexibility. Inserts directly or as shortcodes.
