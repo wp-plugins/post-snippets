@@ -96,6 +96,9 @@ for questions, answers, support and feature requests.
 
 == Changelog ==
 
+= Version X.X - XX XX 201X =
+ * Included Slovak translation (sk_SK) by Branco Radenovich.
+
 = Version 2.0 - 29 Mar 2012 =
  * Added tabs to the Admin page, and moved Import/Export to a separate tab.
  * Pressing enter in a text field now defaults to Update and not Add.
