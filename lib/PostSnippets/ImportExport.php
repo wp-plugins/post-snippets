@@ -8,7 +8,7 @@
  * @author		Johan Steen <artstorm at gmail dot com>
  * @since		Post Snippets 2.0
  */
-class Post_Snippets_ImportExport extends Post_Snippets_Base
+class PostSnippets_ImportExport
 {
 	/**
 	 * Export Snippets.
@@ -52,7 +52,7 @@ class Post_Snippets_ImportExport extends Post_Snippets_Base
 	 * @return		string			URL to the exported snippets
 	 */
 	private function create_export_file() {
-		$snippets = serialize(get_option( self::PLUGIN_OPTION_KEY ));
+		$snippets = serialize(get_option( PostSnippets::optionDBKey() ));
 		$snippets = apply_filters( 'post_snippets_export', $snippets );
 		$dir = wp_upload_dir();
 		$upload_dir = $dir['basedir'] . '/';
@@ -114,7 +114,7 @@ class Post_Snippets_ImportExport extends Post_Snippets_Base
 					$snippets = file_get_contents( $upload_dir.'post-snippets-export.cfg' );		// Returns false on failure, else the contents
 					if ($snippets) {
 						$snippets = apply_filters( 'post_snippets_import', $snippets );
-						update_option( self::PLUGIN_OPTION_KEY, unserialize($snippets));
+						update_option( PostSnippets::optionDBKey(), unserialize($snippets));
 					}
 
 					// Delete the snippet file

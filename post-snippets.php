@@ -3,12 +3,13 @@
 Plugin Name: Post Snippets
 Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
-Version: 2.0
 Author: Johan Steen
 Author URI: http://johansteen.se/
+Version: 2.1
+License: GPLv2 or later
 Text Domain: post-snippets 
 
-Copyright 2009-2012 Johan Steen  (email : artstorm [at] gmail [dot] com)
+Copyright 2009-2013 Johan Steen  (email : artstorm [at] gmail [dot] com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,37 +26,51 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/**
- * Base Class.
- */
-class Post_Snippets_Base {
-	// Constants
-	const PLUGIN_OPTION_KEY = 'post_snippets_options';
-	const USER_OPTION_KEY   = 'post_snippets';
-}
+/** Load all of the necessary class files for the plugin */
+spl_autoload_register('PostSnippets::autoload');
 
 /**
- * Plugin Main Class.
+ * Init Singleton Class for Post Snippets.
+ *
+ * @package Post Snippets
+ * @author  Johan Steen <artstorm at gmail dot com>
  */
-class Post_Snippets extends Post_Snippets_Base
+class PostSnippets
 {
+    private static $instance = false;
+
+    const MIN_PHP_VERSION = '5.2.4';
+    const MIN_WP_VERSION  = '3.0';
+    const OPTION_DB_KEY   = 'post_snippets_options';
+    const USER_META_KEY   = 'post_snippets';
+
 	// Constants
 	const TINYMCE_PLUGIN_NAME = 'post_snippets';
 
-	// -------------------------------------------------------------------------
+    /**
+     * Singleton class
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
-	public function __construct() {
-		// Define the domain and path for translations
-		$rel_path = dirname(plugin_basename($this->get_File())).'/languages/';
-		load_plugin_textdomain(	'post-snippets', false, $rel_path );
+    /**
+     * Constructor.
+     * Initializes the plugin by setting localization, filters, and
+     * administration functions.
+     */
+	private function __construct()
+	{
+        if (!$this->testHost()) {
+            return;
+        }
 
-		$this->init_hooks();
-	}
-
-	/**
-	 * Initializes the hooks for the plugin
-	 */
-	function init_hooks() {
+        add_action('init', array($this, 'textDomain'));
+        register_uninstall_hook(__FILE__, array(__CLASS__, 'uninstall'));
 
 		// Add TinyMCE button
 		add_action('init', array(&$this, 'add_tinymce_button') );
@@ -88,6 +103,70 @@ class Post_Snippets extends Post_Snippets_Base
 		}
 	}
 
+    /**
+     * PSR-0 compliant autoloader to load classes as needed.
+     *
+     * @since  2.1
+     *
+     * @param  string  $classname  The name of the class
+     * @return null    Return early if the class name does not start with the
+     *                 correct prefix
+     */
+    public static function autoload($className)
+    {
+        if ('PostSnippets' !== mb_substr($className, 0, 12)) {
+            return;
+        }
+        $className = ltrim($className, '\\');
+        $fileName  = '';
+        $namespace = '';
+        if ($lastNsPos = strrpos($className, '\\')) {
+            $namespace = substr($className, 0, $lastNsPos);
+            $className = substr($className, $lastNsPos + 1);
+            $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace);
+            $fileName .= DIRECTORY_SEPARATOR;
+        }
+        $fileName .= str_replace('_', DIRECTORY_SEPARATOR, 'lib_'.$className);
+        $fileName .='.php';
+
+        require $fileName;
+    }
+
+    /**
+     * Loads the text domain for translation
+     */
+    public function textDomain()
+    {
+        $domain = 'post-snippets';
+        $locale = apply_filters('plugin_locale', get_locale(), $domain);
+        load_textdomain(
+            $domain,
+            WP_LANG_DIR.'/'.$domain.'/'.$domain.'-'.$locale.'.mo'
+        );
+        load_plugin_textdomain(
+            $domain,
+            false,
+            dirname(plugin_basename(__FILE__)).'/lang/'
+        );
+    }
+
+    /**
+     * Fired when the plugin is uninstalled.
+     */
+    public function uninstall()
+    {
+		// Delete all snippets
+		delete_option('post_snippets_options');
+
+		// Delete any per user settings 
+		global $wpdb;
+		$wpdb->query(
+			"
+			DELETE FROM $wpdb->usermeta 
+			WHERE meta_key = 'post_snippets'
+			"
+		);
+	}
 
 	/**
 	 * Quick link to the Post Snippets Settings page from the Plugins page.
@@ -95,7 +174,7 @@ class Post_Snippets extends Post_Snippets_Base
 	 * @return	Array with all the plugin's action links
 	 */
 	function plugin_action_links( $links, $file ) {
-		if ( $file == plugin_basename( dirname($this->get_FILE()).'/post-snippets.php' ) ) {
+		if ( $file == plugin_basename( dirname(__FILE__).'/post-snippets.php' ) ) {
 			$links[] = '<a href="options-general.php?page=post-snippets/post-snippets.php">'.__('Settings', 'post-snippets').'</a>';
 		 }
 		return $links;
@@ -113,7 +192,7 @@ class Post_Snippets extends Post_Snippets_Base
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 		# Adds the CSS stylesheet for the jQuery UI dialog
-		$style_url = plugins_url( '/assets/post-snippets.css', $this->get_FILE() );
+		$style_url = plugins_url( '/assets/post-snippets.css', __FILE__ );
 		wp_register_style( 'post-snippets', $style_url, false, '2.0' );
 		wp_enqueue_style( 'post-snippets' );
 	}
@@ -183,7 +262,7 @@ class Post_Snippets extends Post_Snippets_Base
 	{
 		// Load the TinyMCE plugin, editor_plugin.js, into the array
 		$plugins[self::TINYMCE_PLUGIN_NAME] = 
-			plugins_url('/tinymce/editor_plugin.js?ver=1.9', $this->get_FILE());
+			plugins_url('/tinymce/editor_plugin.js?ver=1.9', __FILE__);
 
 		return $plugins;
 	}
@@ -282,7 +361,7 @@ class Post_Snippets extends Post_Snippets_Base
 		# Prepare the snippets and shortcodes into javascript variables
 		# so they can be inserted into the editor, and get the variables replaced
 		# with user defined strings.
-		$snippets = get_option( self::PLUGIN_OPTION_KEY );
+		$snippets = get_option( self::OPTION_DB_KEY );
 		foreach ($snippets as $key => $snippet) {
 			if ($snippet['shortcode']) {
 				# Build a long string of the variables, ie: varname1={varname1} varname2={varname2}
@@ -431,7 +510,7 @@ function edOpenPostSnippets(myField) {
 		echo "\t\t\t<ul>\n";
 
 		// Create a tab for each available snippet
-		$snippets = get_option( self::PLUGIN_OPTION_KEY );
+		$snippets = get_option( self::OPTION_DB_KEY );
 		foreach ($snippets as $key => $snippet) {
 			echo "\t\t\t\t";
 			echo "<li><a href=\"#ps-tabs-{$key}\">{$snippet['title']}</a></li>";
@@ -512,19 +591,21 @@ function edOpenPostSnippets(myField) {
 	 * Create the functions for shortcodes dynamically and register them
 	 */
 	function create_shortcodes() {
-		$snippets = get_option( self::PLUGIN_OPTION_KEY );
+		$snippets = get_option( self::OPTION_DB_KEY );
 		if (!empty($snippets)) {
 			foreach ($snippets as $snippet) {
 				// If shortcode is enabled for the snippet, and a snippet has been entered, register it as a shortcode.
 				if ( $snippet['shortcode'] && !empty($snippet['snippet']) ) {
 					
 					$vars = explode(",",$snippet['vars']);
-					$vars_str = '';
+					$vars_str = "";
 					foreach ($vars as $var) {
-						$vars_str = $vars_str . '"'.$var.'" => "",';
+						$attribute = explode('=', $var);
+						$default_value = (count($attribute) > 1) ? $attribute[1] : '';
+						$vars_str .= "\"{$attribute[0]}\" => \"{$default_value}\",";
 					}
 
-					// Get the wptexturize setting
+					// Get the wptexturize setting 
 					$texturize = isset( $snippet["wptexturize"] ) ? $snippet["wptexturize"] : false;
 
 					add_shortcode($snippet['title'], create_function('$atts,$content=null', 
@@ -575,6 +656,9 @@ function edOpenPostSnippets(myField) {
 	 */
 	public static function php_eval( $content )
 	{
+		if ( !self::canExecutePHP() )
+			return $content;
+
 		$content = stripslashes($content);
 
 		ob_start();
@@ -595,13 +679,13 @@ function edOpenPostSnippets(myField) {
 	function wp_admin()	{
 		if ( current_user_can('manage_options') ) {
 			// If user can manage options, display the admin page
-			$option_page = add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', $this->get_FILE(), array(&$this, 'options_page') );
-			if ( $option_page and class_exists('Post_Snippets_Help') ) {
-				$help = new Post_Snippets_Help( $option_page );
+			$option_page = add_options_page( 'Post Snippets Options', 'Post Snippets', 'administrator', __FILE__, array(&$this, 'options_page') );
+			if ( $option_page and class_exists('PostSnippets_Help') ) {
+				$help = new PostSnippets_Help( $option_page );
 			}
 		} else {
 			// If user can't manage options, but can edit posts, display the overview page
-			$option_page = add_options_page( 'Post Snippets', 'Post Snippets', 'edit_posts', $this->get_FILE(), array(&$this, 'overview_page') );
+			$option_page = add_options_page( 'Post Snippets', 'Post Snippets', 'edit_posts', __FILE__, array(&$this, 'overview_page') );
 		}
 	}
 
@@ -615,7 +699,7 @@ function edOpenPostSnippets(myField) {
 	 */
 	public function overview_page()
 	{
-		$settings = new Post_Snippets_Settings();
+		$settings = new PostSnippets_Admin();
 		$settings->render( 'overview' );
 	}
 
@@ -626,7 +710,7 @@ function edOpenPostSnippets(myField) {
 	 */
 	public function options_page()
 	{
-		$settings = new Post_Snippets_Settings();
+		$settings = new PostSnippets_Admin();
 		$settings->render( 'options' );
 	}
 	
@@ -634,31 +718,6 @@ function edOpenPostSnippets(myField) {
 	// -------------------------------------------------------------------------
 	// Helpers
 	// -------------------------------------------------------------------------
-
-	/**
-	 * Get __FILE__ with no symlinks.
-	 *
-	 * For development purposes mainly. Returns __FILE__ without resolved 
-	 * symlinks to be used when __FILE__ is needed while resolving symlinks
-	 * breaks WP functionaly, so the actual WordPress path is returned instead.
-	 * This makes it possible for all WordPress versions to point to the same
-	 * plugin folder for faster testing of the plugin in different WordPress
-	 * versions.
-	 *
-	 * @since	Post Snippets 1.9
-	 * @return	The __FILE__ constant without resolved symlinks.
-	 */
-	private function get_FILE()
-	{
-		$dev_path = 'E:\Code\WordPress';
-		$result = strpos( __FILE__, $dev_path );
-
-		if ( $result === false ) {
-			return __FILE__;
-		} else {
-			return str_replace($dev_path, WP_PLUGIN_DIR, __FILE__);
-		}
-	}
 
 	/**
 	 * Allow snippets to be retrieved directly from PHP.
@@ -672,9 +731,9 @@ function edOpenPostSnippets(myField) {
 	 * @return	string
 	 *			The Snippet
 	 */
-	public function get_snippet( $snippet_name, $snippet_vars = '' )
+	public static function getSnippet( $snippet_name, $snippet_vars = '' )
 	{
-		$snippets = get_option( self::PLUGIN_OPTION_KEY );
+		$snippets = get_option( self::OPTION_DB_KEY );
 		for ($i = 0; $i < count($snippets); $i++) {
 			if ($snippets[$i]['title'] == $snippet_name) {
 				parse_str( htmlspecialchars_decode($snippet_vars), $snippet_output );
@@ -688,102 +747,83 @@ function edOpenPostSnippets(myField) {
 				}
 			}
 		}
-		return $snippet;
-	}
-}
-
-
-// -----------------------------------------------------------------------------
-// Start the plugin
-// -----------------------------------------------------------------------------
-
-// Check the host environment
-$test_post_snippets_host = new Post_Snippets_Host_Environment();
-
-// If environment is up to date, start the plugin
-if($test_post_snippets_host->passed) {
-	// Load external classes
-	if (is_admin()) {
-		require plugin_dir_path(__FILE__).'classes/settings.php';
-		require plugin_dir_path(__FILE__).'classes/help.php';
-		require plugin_dir_path(__FILE__).'classes/import-export.php';
+		return do_shortcode($snippet);
 	}
 
-	add_action(
-		'plugins_loaded', 
-		create_function( 
-			'',
-			'global $post_snippets; $post_snippets = new Post_Snippets();'
-		)
-	);
-}
-
-
-/**
- * Post Snippets Host Environment.
- *
- * Checks that the host environment fulfils the requirements of Post Snippets.
- * This class is designed to work with PHP versions below 5, to make sure it's
- * always executed.
- *
- * - PHP Version 5.2.4 is on par with the requirements for WordPress 3.3.
- *
- * @since	Post Snippets 1.8.8
- */
-class Post_Snippets_Host_Environment
-{
-	// Minimum versions required
-	var $MIN_PHP_VERSION	= '5.2.4';
-	var $MIN_WP_VERSION		= '3.0';
-	var $passed				= true;
-
-	/**
-	 * Constructor.
-	 *
-	 * Checks PHP and WordPress versions. If any check failes, a system notice
-	 * is added and $passed is set to fail, which can be checked before trying
-	 * to create the main class.
-	 */
-	function Post_Snippets_Host_Environment()
+	public static function optionDBKey()
 	{
-		// Check if PHP is too old
-		if (version_compare(PHP_VERSION, $this->MIN_PHP_VERSION, '<')) {
-			// Display notice
-			add_action( 'admin_notices', array(&$this, 'php_version_error') );
-			$this->passed = false;
-		}
+		return self::OPTION_DB_KEY;
+	}
 
-		// Check if WordPress is too old
-		global $wp_version;
-		if ( version_compare($wp_version, $this->MIN_WP_VERSION, '<') ) {
-			add_action( 'admin_notices', array(&$this, 'wp_version_error') );
-			$this->passed = false;
-		}
+	public static function userMetaKey()
+	{
+		return self::USER_META_KEY;
 	}
 
 	/**
-	 * Displays a warning when installed on an old PHP version.
+	 * Allow other plugins to disable the PHP Code execution feature.
+	 *
+	 * @see   http://wordpress.org/extend/plugins/post-snippets/faq/
+	 * @since 2.1
 	 */
-	function php_version_error() {
-		echo '<div class="error"><p><strong>';
-		printf(
-			'Error: Post Snippets requires PHP version %1$s or greater.<br/>'.
-			'Your installed PHP version: %2$s',
-			$this->MIN_PHP_VERSION, PHP_VERSION);
-		echo '</strong></p></div>';
+	public static function canExecutePHP()
+	{
+		return apply_filters('post_snippets_php_execution_enabled', true);
 	}
 
-	/**
-	 * Displays a warning when installed in an old Wordpress version.
-	 */
-	function wp_version_error() {
-		echo '<div class="error"><p><strong>';
-		printf(
-			'Error: Post Snippets requires WordPress version %s or greater.',
-			$this->MIN_WP_VERSION );
-		echo '</strong></p></div>';
-	}
+
+    // -------------------------------------------------------------------------
+    // Environment Checks
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks PHP and WordPress versions.
+     */
+    private function testHost()
+    {
+        // Check if PHP is too old
+        if (version_compare(PHP_VERSION, self::MIN_PHP_VERSION, '<')) {
+            // Display notice
+            add_action( 'admin_notices', array(&$this, 'phpVersionError') );
+            return false;
+        }
+
+        // Check if WordPress is too old
+        global $wp_version;
+        if (version_compare($wp_version, self::MIN_WP_VERSION, '<')) {
+            add_action( 'admin_notices', array(&$this, 'wpVersionError') );
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Displays a warning when installed on an old PHP version.
+     */
+    public function phpVersionError()
+    {
+        echo '<div class="error"><p><strong>';
+        printf(
+            'Error: Post Snippets requires PHP version %1$s or greater.<br/>'.
+            'Your installed PHP version: %2$s',
+            self::MIN_PHP_VERSION, PHP_VERSION);
+        echo '</strong></p></div>';
+    }
+
+    /**
+     * Displays a warning when installed in an old Wordpress version.
+     */
+    public function wpVersionError()
+    {
+        echo '<div class="error"><p><strong>';
+        printf(
+            'Error: Post Snippets requires WordPress version %s or greater.',
+            self::MIN_WP_VERSION );
+        echo '</strong></p></div>';
+    }
 }
+
+add_action('plugins_loaded', array('PostSnippets', 'getInstance'));
 
 // -----------------------------------------------------------------------------
 // Helper functions
@@ -794,6 +834,7 @@ class Post_Snippets_Host_Environment
  * This function is a wrapper for Post_Snippets::get_snippet().
  *
  * @since	Post Snippets 1.6
+ * @deprecated Post Snippets 2.1
  *
  * @param	string		$snippet_name
  *			The name of the snippet to retrieve
@@ -802,7 +843,8 @@ class Post_Snippets_Host_Environment
  * @return	string
  *			The Snippet
  */
-function get_post_snippet( $snippet_name, $snippet_vars = '' ) {
-	global $post_snippets;
-	return $post_snippets->get_snippet( $snippet_name, $snippet_vars );
+function get_post_snippet($snippet_name, $snippet_vars = '')
+{
+	_deprecated_function(__FUNCTION__, '2.1', 'PostSnippets::getSnippet()');
+	return PostSnippets::getSnippet($snippet_name, $snippet_vars);
 }

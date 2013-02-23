@@ -9,7 +9,7 @@
  * @author		Johan Steen <artstorm at gmail dot com>
  * @since		Post Snippets 1.8.8
  */
-class Post_Snippets_Settings extends Post_Snippets_Base
+class PostSnippets_Admin
 {
 	// -------------------------------------------------------------------------
 	// Handle form submissions
@@ -24,7 +24,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 			&& isset( $_POST['update_snippets_nonce'])
 			&& wp_verify_nonce( $_POST['update_snippets_nonce'], 'update_snippets') )
 		{
-			$snippets = get_option( self::PLUGIN_OPTION_KEY );
+			$snippets = get_option( PostSnippets::optionDBKey() );
 			if (empty($snippets)) { $snippets = array(); }
 
 			array_push($snippets, array (
@@ -37,7 +37,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 			    'snippet' => '')
 			);
 
-			update_option( self::PLUGIN_OPTION_KEY, $snippets );
+			update_option( PostSnippets::optionDBKey(), $snippets );
 			$this->message( __( 'A snippet named Untitled has been added.', 'post-snippets' ) );
 		}
 	}
@@ -51,7 +51,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 			&& isset( $_POST['update_snippets_nonce'])
 			&& wp_verify_nonce( $_POST['update_snippets_nonce'], 'update_snippets') )
 		{
-			$snippets = get_option( self::PLUGIN_OPTION_KEY );
+			$snippets = get_option( PostSnippets::optionDBKey() );
 
 			if ( empty($snippets) || !isset($_POST['checked']) ) {
 				$this->message( __( 'Nothing selected to delete.', 'post-snippets' ) );
@@ -66,7 +66,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 				}
 			}
 
-			update_option( self::PLUGIN_OPTION_KEY, $newsnippets );
+			update_option( PostSnippets::optionDBKey(), $newsnippets );
 			$this->message( __( 'Selected snippets have been deleted.', 'post-snippets' ) );
 		}
 	}
@@ -80,19 +80,24 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 			&& isset( $_POST['update_snippets_nonce'])
 			&& wp_verify_nonce( $_POST['update_snippets_nonce'], 'update_snippets') )
 		{
-			$snippets = get_option( self::PLUGIN_OPTION_KEY );
+			$snippets = get_option( PostSnippets::optionDBKey() );
 			if (!empty($snippets)) {
 				foreach ($snippets as $key => $value) {
 					$new_snippets[$key]['title'] = trim($_POST[$key.'_title']);
 					$new_snippets[$key]['vars'] = str_replace(' ', '', trim($_POST[$key.'_vars']) );
 					$new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
-					$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
+
+					if ( PostSnippets::canExecutePHP() )
+						$new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
+					else
+						$new_snippets[$key]['php'] = isset($snippets[$key]['php']) ? $snippets[$key]['php'] : false;
+
 					$new_snippets[$key]['wptexturize'] = isset($_POST[$key.'_wptexturize']) ? true : false;
 
 					$new_snippets[$key]['snippet'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_snippet'])), ENT_NOQUOTES);
 					$new_snippets[$key]['description'] = wp_specialchars_decode( trim(stripslashes($_POST[$key.'_description'])), ENT_NOQUOTES);
 				}
-				update_option( self::PLUGIN_OPTION_KEY, $new_snippets );
+				update_option( PostSnippets::optionDBKey(), $new_snippets );
 				$this->message( __( 'Snippets have been updated.', 'post-snippets' ) );
 			}
 		}
@@ -111,7 +116,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 		{
 			$id = get_current_user_id();
 			$render = isset( $_POST['render'] ) ? true : false;
-			update_user_meta( $id, self::USER_OPTION_KEY, $render );
+			update_user_meta( $id, PostSnippets::userMetaKey(), $render );
 		}
 	}
 
@@ -126,7 +131,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 	private function get_user_options()
 	{
 		$id = get_current_user_id();
-		$options = get_user_meta( $id, self::USER_OPTION_KEY, true ); 
+		$options = get_user_meta( $id, PostSnippets::userMetaKey(), true ); 
 		return $options;
 	}
 
@@ -239,7 +244,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
     
         <tbody>
 		<?php 
-		$snippets = get_option( self::PLUGIN_OPTION_KEY );
+		$snippets = get_option( PostSnippets::optionDBKey() );
 		if (!empty($snippets)) {
 			foreach ($snippets as $key => $snippet) {
 			?>
@@ -258,8 +263,10 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 
 			echo '<br/><strong>Shortcode Options:</strong><br/>';
 
-			$this->checkbox(__('PHP Code', 'post-snippets'), $key.'_php',
-							$snippet['php']);
+			if ( PostSnippets::canExecutePHP() ) {
+				$this->checkbox(__('PHP Code', 'post-snippets'), $key.'_php',
+								$snippet['php']);
+			}
 
 			$wptexturize = isset( $snippet['wptexturize'] ) ? $snippet['wptexturize'] : false;
 			$this->checkbox('wptexturize', $key.'_wptexturize',	$wptexturize);
@@ -292,7 +299,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 	 */
 	private function tab_tools()
 	{
-		$ie = new Post_Snippets_ImportExport();
+		$ie = new PostSnippets_ImportExport();
 
 		// Create header and export html form
 		printf( "<h3>%s</h3>", __( 'Import/Export', 'post-snippets' ));
@@ -339,7 +346,7 @@ class Post_Snippets_Settings extends Post_Snippets_Base
 		echo '</form>';
 
 		// Snippet List
-		$snippets = get_option( self::PLUGIN_OPTION_KEY );
+		$snippets = get_option( PostSnippets::optionDBKey() );
 		if (!empty($snippets)) {
 			foreach ($snippets as $key => $snippet) {
 
