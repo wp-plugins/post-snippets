@@ -5,7 +5,7 @@ Plugin URI: http://wpstorm.net/wordpress-plugins/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
 Author: Johan Steen
 Author URI: http://johansteen.se/
-Version: 2.1
+Version: 2.1.1
 License: GPLv2 or later
 Text Domain: post-snippets 
 
@@ -629,7 +629,7 @@ function edOpenPostSnippets(myField) {
 								// Handle PHP shortcodes
 								$php = "'. $snippet["php"] .'";
 								if ($php == true) {
-									$snippet = Post_Snippets::php_eval( $snippet );
+									$snippet = PostSnippets::php_eval( $snippet );
 								}
 
 								// Strip escaping and execute nested shortcodes
