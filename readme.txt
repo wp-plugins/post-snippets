@@ -38,15 +38,12 @@ updating the snippet. PHP code is supported for snippets inserted as shortcodes.
 
 = Related Links =
 
-* [Documentation](http://wpstorm.net/wordpress-plugins/post-snippets/ 
-  "Complete usage instructions")
-* [Support Forum](http://wordpress.org/tags/post-snippets?forum_id=10 
+* [Documentation](http://johansteen.se/code/post-snippets/
+  "Usage instructions")
+* [Support Forum](http://wordpress.org/support/plugin/post-snippets
   "Use this for support and feature requests")
-* [GitHub](https://github.com/artstorm/post-snippets 
+* [GitHub](https://github.com/artstorm/post-snippets
   "Develop and contribute your code or report bugs")
-
-See the [Changelog](http://wordpress.org/extend/plugins/post-snippets/changelog/) 
-for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/post-snippets/#translations).
 
 
 == Installation ==
@@ -54,7 +51,7 @@ for what's new. Available [Translations](http://wpstorm.net/wordpress-plugins/po
 = Requirements =
 
 * PHP version 5.2.4 or greater.
-* WordPress version 3.0 or greater.
+* WordPress version 3.3 or greater.
 
 = Install =
 
