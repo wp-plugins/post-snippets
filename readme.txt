@@ -4,7 +4,7 @@ Donate link: http://johansteen.se/donate/
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,12 +117,16 @@ Contributions are appreciated and encouraged.
 
 == Changelog ==
 
+= Version 2.2.2 - 10 May 2013 =
+ * The Post Snippets buttons now works everywhere there is a wp_editor present
+   and not only on post/page edit screens.
+
 = Version 2.2.1 - 1 May 2013 =
  * Added an option to give users with `edit_posts` capability access to the
-   Post Snippets Admin. Fixes 
-   [issue #12](https://github.com/artstorm/post-snippets/issues/12). Add 
-   `define('POST_SNIPPETS_ALLOW_EDIT_POSTS', true);` to wp-config.php to enable
-   Post Snippets access for those users.
+   Post Snippets Admin. Add  
+   `define('POST_SNIPPETS_ALLOW_EDIT_POSTS', true);`  
+   to wp-config.php to enable access for those users. Fixes
+   [issue #12](https://github.com/artstorm/post-snippets/issues/12).
  * Optimizes code for the admin section.
 
 = Version 2.2 - 26 Apr 2013 =
