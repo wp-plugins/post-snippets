@@ -118,12 +118,12 @@ class PostSnippets_WPEditor
         echo "\n<!-- START: Add QuickTag button for Post Snippets -->\n";
         ?>
         <script type="text/javascript" charset="utf-8">
-            if(typeof QTags != 'undefined'){
-                QTags.addButton('post_snippets_id', 'Post Snippets', qt_post_snippets);
+            if (typeof QTags != 'undefined') {
                 function qt_post_snippets() {
                     post_snippets_caller = 'html';
                     jQuery("#post-snippets-dialog").dialog("open");
                 }
+                QTags.addButton('post_snippets_id', 'Post Snippets', qt_post_snippets);
             }
         </script>
         <?php

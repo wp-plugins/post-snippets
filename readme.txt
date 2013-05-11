@@ -4,7 +4,7 @@ Donate link: http://johansteen.se/donate/
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,9 @@ Contributions are appreciated and encouraged.
 
 
 == Changelog ==
+
+= Version 2.2.3 - 11 May 2013 =
+ * Fixes issue with the QuickTag button not being displayed in Firefox.
 
 = Version 2.2.2 - 10 May 2013 =
  * The Post Snippets buttons now works everywhere there is a wp_editor present
