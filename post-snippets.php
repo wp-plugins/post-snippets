@@ -5,7 +5,7 @@ Plugin URI: http://johansteen.se/code/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
 Author: Johan Steen
 Author URI: http://johansteen.se/
-Version: 2.3
+Version: 2.3.1
 License: GPLv2 or later
 Text Domain: post-snippets 
 
@@ -151,15 +151,14 @@ class PostSnippets
      * @param  string  $name  The name of the snippet to retrieve
      * @param  string|array  $variables  The variables to pass to the snippet, 
      *         formatted as a query string or an associative array.
-     * @param  bool    $isArray  Use an associative array for variables.
      * @return string  The Snippet
      */
-    public static function getSnippet($name, $variables = '', $isArray = false)
+    public static function getSnippet($name, $variables = '')
     {
         $snippets = get_option(self::OPTION_KEY, array());
         for ($i = 0; $i < count($snippets); $i++) {
             if ($snippets[$i]['title'] == $name) {
-                if (!$isArray) {
+                if (!is_array($variables)) {
                     parse_str(htmlspecialchars_decode($variables), $variables);
                 }
 

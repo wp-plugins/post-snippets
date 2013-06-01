@@ -4,7 +4,7 @@ Donate link: http://johansteen.se/donate/
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.3
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,14 +121,18 @@ Contributions are appreciated and encouraged.
 
 == Changelog ==
 
+= Version 2.3.1 - 1 Jun 2013 =
+ * Removes the `$isArray` argument from `PostSnippets::getSnippet()` as it was
+   not needed.
+
 = Version 2.3 - 1 Jun 2013 =
- * Updates `PostSnippets::getSnippet($name, $variables, $isArray)` to be able
+ * Updates `PostSnippets::getSnippet($name, $variables)` to be able
    to accept an array with variables and not only a querystring. Fixes
    [issue #22](https://github.com/artstorm/post-snippets/issues/22).
  * Removes `get_post_snippet()` which was deprecated in version 2.1.
  * Adds POST_SNIPPETS_ALLOW_EDIT_POSTS constant for easy disabling to PHP 
    code execution in snippets. Add  
-   `define('POST_SNIPPETS_DISABLE_PHP', true);`
+   `define('POST_SNIPPETS_DISABLE_PHP', true);`  
    to wp-config.php or the theme's functions.php to disable PHP execution in the
    plugin.
 
