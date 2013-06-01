@@ -41,7 +41,7 @@ class PostSnippets_Help
             'content' => $this->helpShortcode()
             )
         );
-        if (PostSnippets::canExecutePHP()) {
+        if (!defined('POST_SNIPPETS_DISABLE_PHP')) {
             $screen->add_help_tab(
                 array(
                 'id'      => 'php-plugin-help',

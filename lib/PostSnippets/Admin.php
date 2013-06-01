@@ -169,7 +169,7 @@ class PostSnippets_Admin
                     $new_snippets[$key]['vars'] = str_replace(' ', '', trim($_POST[$key.'_vars']));
                     $new_snippets[$key]['shortcode'] = isset($_POST[$key.'_shortcode']) ? true : false;
 
-                    if (PostSnippets::canExecutePHP()) {
+                    if (!defined('POST_SNIPPETS_DISABLE_PHP')) {
                         $new_snippets[$key]['php'] = isset($_POST[$key.'_php']) ? true : false;
                     } else {
                         $new_snippets[$key]['php'] = isset($snippets[$key]['php']) ? $snippets[$key]['php'] : false;

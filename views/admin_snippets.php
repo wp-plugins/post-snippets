@@ -41,7 +41,7 @@ if (!empty($snippets)) {
 
             echo '<br/><strong>Shortcode Options:</strong><br/>';
 
-        if (PostSnippets::canExecutePHP()) {
+        if (!defined('POST_SNIPPETS_DISABLE_PHP')) {
             PostSnippets_Admin::checkbox(
                 __('PHP Code', PostSnippets::TEXT_DOMAIN),
                 $key.'_php',

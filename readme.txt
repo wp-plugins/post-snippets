@@ -4,7 +4,7 @@ Donate link: http://johansteen.se/donate/
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.3
 Tested up to: 3.5.1
-Stable tag: 2.2.3
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,9 +83,11 @@ enter 'content' in the variable field, it's automatically assigned.
 
 = Where can I send bug reports? =
 
-Please visit the GitHub repository for [Post Snippet](https://github.com/artstorm/post-snippets)
+Please visit the GitHub repository for
+[Post Snippet](https://github.com/artstorm/post-snippets)
 and open an [issue](https://github.com/artstorm/post-snippets/issues).
-Please create an issue that conforms with [necolas's guidelines](https://github.com/necolas/issue-guidelines).
+Please create an issue that conforms with
+[necolas's guidelines](https://github.com/necolas/issue-guidelines).
 
 = Where can I get support? =
 
@@ -94,10 +96,12 @@ for questions, answers, support and feature requests.
 
 = How can I disable the PHP Code Execution feature? =
 
-﻿To disable the "PHP Code" execution feature in this plugin, add the following code your theme's functions.php file:
-`add_filter('post_snippets_php_execution_enabled', '__return_false');`
+﻿To disable the "PHP Code" execution feature in this plugin, add the following
+code your theme's functions.php or to wp-config.php:  
+`define('POST_SNIPPETS_DISABLE_PHP', true);`
 
-This is useful if you are using this plugin for client sites, and don't want your clients to be able to use PHP code in a post snippet.
+This is useful if you are using this plugin for client sites, and don't want
+your clients to be able to use PHP code in a post snippet.
 
 = How can I contribute to the plugin? =
 
@@ -116,6 +120,17 @@ Contributions are appreciated and encouraged.
 
 
 == Changelog ==
+
+= Version 2.3 - 1 Jun 2013 =
+ * Updates `PostSnippets::getSnippet($name, $variables, $isArray)` to be able
+   to accept an array with variables and not only a querystring. Fixes
+   [issue #22](https://github.com/artstorm/post-snippets/issues/22).
+ * Removes `get_post_snippet()` which was deprecated in version 2.1.
+ * Adds POST_SNIPPETS_ALLOW_EDIT_POSTS constant for easy disabling to PHP 
+   code execution in snippets. Add  
+   `define('POST_SNIPPETS_DISABLE_PHP', true);`
+   to wp-config.php or the theme's functions.php to disable PHP execution in the
+   plugin.
 
 = Version 2.2.3 - 11 May 2013 =
  * Fixes issue with the QuickTag button not being displayed in Firefox.
@@ -423,3 +438,10 @@ Most users are not affected by this change.
 
 = 2.2 =
 Note that at least WordPress v3.3 are required for Post Snippets v2.2.
+
+= 2.3 =
+The function `get_post_snippet()` used to retrieve snippets was deprecated
+in version 2.1. In this update it is now completely removed. Please update any
+code you might have that uses this function to use `PostSnippets::getSnippet()` instead, which replaces the deprecated function.
+
+Most users are not affected by this change.

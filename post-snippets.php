@@ -5,7 +5,7 @@ Plugin URI: http://johansteen.se/code/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
 Author: Johan Steen
 Author URI: http://johansteen.se/
-Version: 2.2.3
+Version: 2.3
 License: GPLv2 or later
 Text Domain: post-snippets 
 
@@ -69,9 +69,10 @@ class PostSnippets
         add_action('init', array($this, 'textDomain'));
         register_uninstall_hook(__FILE__, array(__CLASS__, 'uninstall'));
 
-        $this->createShortcodes();
+        add_action('after_setup_theme', array(&$this, 'phpExecState'));
         new PostSnippets_Admin;
         new PostSnippets_WPEditor;
+        new PostSnippets_Shortcode;
     }
 
     /**
@@ -139,99 +140,6 @@ class PostSnippets
 
 
     // -------------------------------------------------------------------------
-    // Shortcode
-    // -------------------------------------------------------------------------
-
-    /**
-     * Create the functions for shortcodes dynamically and register them
-     */
-    public function createShortcodes()
-    {
-        $snippets = get_option(self::OPTION_KEY);
-        if (!empty($snippets)) {
-            foreach ($snippets as $snippet) {
-                // If shortcode is enabled for the snippet, and a snippet has been entered, register it as a shortcode.
-                if ($snippet['shortcode'] && !empty($snippet['snippet'])) {
-                    
-                    $vars = explode(",", $snippet['vars']);
-                    $vars_str = "";
-                    foreach ($vars as $var) {
-                        $attribute = explode('=', $var);
-                        $default_value = (count($attribute) > 1) ? $attribute[1] : '';
-                        $vars_str .= "\"{$attribute[0]}\" => \"{$default_value}\",";
-                    }
-
-                    // Get the wptexturize setting
-                    $texturize = isset( $snippet["wptexturize"] ) ? $snippet["wptexturize"] : false;
-
-                    add_shortcode(
-                        $snippet['title'],
-                        create_function(
-                            '$atts,$content=null',
-                            '$shortcode_symbols = array('.$vars_str.');
-                            extract(shortcode_atts($shortcode_symbols, $atts));
-                            
-                            $attributes = compact( array_keys($shortcode_symbols) );
-                            
-                            // Add enclosed content if available to the attributes array
-                            if ( $content != null )
-                                $attributes["content"] = $content;
-                            
-
-                            $snippet = \''. addslashes($snippet["snippet"]) .'\';
-                            // Disables auto conversion from & to &amp; as that should be done in snippet, not code (destroys php etc).
-                            // $snippet = str_replace("&", "&amp;", $snippet);
-
-                            foreach ($attributes as $key => $val) {
-                                $snippet = str_replace("{".$key."}", $val, $snippet);
-                            }
-
-                            // Handle PHP shortcodes
-                            $php = "'. $snippet["php"] .'";
-                            if ($php == true) {
-                                $snippet = PostSnippets::phpEval( $snippet );
-                            }
-
-                            // Strip escaping and execute nested shortcodes
-                            $snippet = do_shortcode(stripslashes($snippet));
-
-                            // WPTexturize the Snippet
-                            $texturize = "'. $texturize .'";
-                            if ($texturize == true) {
-                                $snippet = wptexturize( $snippet );
-                            }
-
-                            return $snippet;'
-                        )
-                    );
-                }
-            }
-        }
-    }
-
-    /**
-     * Evaluate a snippet as PHP code.
-     *
-     * @since   Post Snippets 1.9
-     * @param   string  $content    The snippet to evaluate
-     * @return  string              The result of the evaluation
-     */
-    public static function phpEval($content)
-    {
-        if (!self::canExecutePHP()) {
-            return $content;
-        }
-
-        $content = stripslashes($content);
-
-        ob_start();
-        eval ($content);
-        $content = ob_get_clean();
-
-        return addslashes($content);
-    }
-
-    // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
 
@@ -240,43 +148,38 @@ class PostSnippets
      *
      * @since   Post Snippets 1.8.9.1
      *
-     * @param   string      $snippet_name
-     *          The name of the snippet to retrieve
-     * @param   string      $snippet_vars
-     *          The variables to pass to the snippet, formatted as a query string.
-     * @return  string
-     *          The Snippet
+     * @param  string  $name  The name of the snippet to retrieve
+     * @param  string|array  $variables  The variables to pass to the snippet, 
+     *         formatted as a query string or an associative array.
+     * @param  bool    $isArray  Use an associative array for variables.
+     * @return string  The Snippet
      */
-    public static function getSnippet($snippet_name, $snippet_vars = '')
+    public static function getSnippet($name, $variables = '', $isArray = false)
     {
         $snippets = get_option(self::OPTION_KEY, array());
         for ($i = 0; $i < count($snippets); $i++) {
-            if ($snippets[$i]['title'] == $snippet_name) {
-                parse_str(htmlspecialchars_decode($snippet_vars), $snippet_output);
+            if ($snippets[$i]['title'] == $name) {
+                if (!$isArray) {
+                    parse_str(htmlspecialchars_decode($variables), $variables);
+                }
+
                 $snippet = $snippets[$i]['snippet'];
                 $var_arr = explode(",", $snippets[$i]['vars']);
 
                 if (!empty($var_arr[0])) {
                     for ($j = 0; $j < count($var_arr); $j++) {
-                        $snippet = str_replace("{".$var_arr[$j]."}", $snippet_output[$var_arr[$j]], $snippet);
+                        $snippet = str_replace(
+                            "{".$var_arr[$j]."}",
+                            $variables[$var_arr[$j]],
+                            $snippet
+                        );
                     }
                 }
+                break;
             }
         }
         return do_shortcode($snippet);
     }
-
-    /**
-     * Allow other plugins to disable the PHP Code execution feature.
-     *
-     * @see   http://wordpress.org/extend/plugins/post-snippets/faq/
-     * @since 2.1
-     */
-    public static function canExecutePHP()
-    {
-        return apply_filters('post_snippets_php_execution_enabled', true);
-    }
-
 
     // -------------------------------------------------------------------------
     // Environment Checks
@@ -343,30 +246,31 @@ class PostSnippets
         $data = get_plugin_data(self::FILE);
         return $data['Name'];
     }
+
+    // -------------------------------------------------------------------------
+    // Deprecated methods
+    // -------------------------------------------------------------------------
+    /**
+     * Allow plugins to disable the PHP Code execution feature with a filter.
+     * Deprecated: Use the POST_SNIPPETS_DISABLE_PHP global constant to disable
+     * PHP instead.
+     *
+     * @see   http://wordpress.org/extend/plugins/post-snippets/faq/
+     * @since 2.1
+     * @deprecated 2.3
+     */
+    public function phpExecState()
+    {
+        $filter = apply_filters('post_snippets_php_execution_enabled', true);
+        if ($filter == false and !defined('POST_SNIPPETS_DISABLE_PHP')) {
+            _deprecated_function(
+                'post_snippets_php_execution_enabled',
+                '2.3',
+                'define(\'POST_SNIPPETS_DISABLE_PHP\', true);'
+            );
+            define('POST_SNIPPETS_DISABLE_PHP', true);
+        }
+    }
 }
 
 add_action('plugins_loaded', array('PostSnippets', 'getInstance'));
-
-// -----------------------------------------------------------------------------
-// Helper functions
-// -----------------------------------------------------------------------------
-
-/**
- * Allow snippets to be retrieved directly from PHP.
- * This function is a wrapper for Post_Snippets::get_snippet().
- *
- * @since   Post Snippets 1.6
- * @deprecated Post Snippets 2.1
- *
- * @param   string      $snippet_name
- *          The name of the snippet to retrieve
- * @param   string      $snippet_vars
- *          The variables to pass to the snippet, formatted as a query string.
- * @return  string
- *          The Snippet
- */
-function get_post_snippet($snippet_name, $snippet_vars = '')
-{
-    _deprecated_function(__FUNCTION__, '2.1', 'PostSnippets::getSnippet()');
-    return PostSnippets::getSnippet($snippet_name, $snippet_vars);
-}
