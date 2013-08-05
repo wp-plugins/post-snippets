@@ -5,7 +5,7 @@ Plugin URI: http://johansteen.se/code/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
 Author: Johan Steen
 Author URI: http://johansteen.se/
-Version: 2.3.1
+Version: 2.3.2
 License: GPLv2 or later
 Text Domain: post-snippets 
 
@@ -37,8 +37,10 @@ spl_autoload_register('PostSnippets::autoload');
  */
 class PostSnippets
 {
+    /** Holds the plugin instance */
     private static $instance = false;
 
+    /** Define plugin constants */
     const MIN_PHP_VERSION     = '5.2.4';
     const MIN_WP_VERSION      = '3.3';
     const OPTION_KEY          = 'post_snippets_options';

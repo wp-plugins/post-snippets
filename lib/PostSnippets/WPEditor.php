@@ -213,8 +213,8 @@ class PostSnippets_WPEditor
         }
         ?>
             
-            var $tabs = $("#post-snippets-tabs").tabs();
-            
+            var tabs = $("#post-snippets-tabs").tabs();
+
             $(function() {
                 $( "#post-snippets-dialog" ).dialog({
                     autoOpen: false,
@@ -225,8 +225,19 @@ class PostSnippets_WPEditor
                             $( this ).dialog( "close" );
                         },
                         "Insert": function() {
-                            $( this ).dialog( "close" );
-                            var selected = $tabs.tabs('option', 'selected');
+                            $(this).dialog("close");
+                        <?php
+                        global $wp_version;
+                        if (version_compare($wp_version, '3.5', '<')) {
+                        ?>
+                            var selected = tabs.tabs('option', 'selected');
+                        <?php
+                        } else {
+                        ?>
+                            var selected = tabs.tabs('option', 'active');
+                        <?php
+                        }
+                        ?>
                         <?php
         foreach ($snippets as $key => $snippet) {
                         ?>
@@ -255,9 +266,6 @@ class PostSnippets_WPEditor
                             if (post_snippets_caller == 'html') {
                                 // HTML editor in WordPress 3.3 and greater
                                 QTags.insertContent(insert_snippet);
-                            } else if (post_snippets_caller == 'html_pre33') {
-                                // HTML editor in WordPress below 3.3.
-                                edInsertContent(post_snippets_canvas, insert_snippet);
                             } else {
                                 // Visual Editor
                                 post_snippets_canvas.execCommand('mceInsertContent', false, insert_snippet);
