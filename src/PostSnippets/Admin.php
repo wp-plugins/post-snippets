@@ -14,6 +14,7 @@ class PostSnippets_Admin
     {
         add_filter('plugin_action_links', array(&$this, 'actionLinks'), 10, 2);
         add_action('admin_menu', array(&$this, 'menu'));
+        add_action('current_screen', array(&$this, 'addHeaderXss'));
     }
 
 
@@ -72,6 +73,20 @@ class PostSnippets_Admin
                 PostSnippets::FILE,
                 array(&$this, 'overviewPage')
             );
+        }
+    }
+
+    /**
+     * Add X-XSS-Protection header.
+     *
+     * Newer versions of Chrome does not allow form tags to be submitted in the
+     * forms. This header disables that functionlity on the Post Snippets admin
+     * screen only.
+     */
+    public function addHeaderXss($current_screen)
+    {
+        if ($current_screen->base == 'settings_page_post-snippets/post-snippets') {
+            header('X-XSS-Protection: 0');
         }
     }
 
@@ -322,7 +337,7 @@ class PostSnippets_Admin
     /**
      * Creates a read-only overview page.
      *
-     * For users with edit_posts capability but without manage_options 
+     * For users with edit_posts capability but without manage_options
      * capability.
      *
      * @since   Post Snippets 1.9.7
@@ -398,7 +413,7 @@ class PostSnippets_Admin
     // -------------------------------------------------------------------------
     // HTML and Form element methods
     // -------------------------------------------------------------------------
-    
+
     /**
      * Checkbox.
      *
