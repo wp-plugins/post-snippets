@@ -3,8 +3,8 @@ Contributors: artstorm
 Donate link: http://johansteen.se/donate/
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.3
-Tested up to: 3.9
-Stable tag: 2.3.3
+Tested up to: 4.0
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,11 @@ Contributions are appreciated and encouraged.
 
 
 == Changelog ==
+
+= Version 2.3.4 - 20 Sep 2014 =
+ * Tested up to WordPress v4.0.
+ * Update Swedish translation.
+ * Add Ukrainian translation.
 
 = Version 2.3.3 - 12 Apr 2014 =
  * Updates Post Snippets admin screen to not let Chrome XSS Auditor preventing
