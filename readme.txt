@@ -3,8 +3,8 @@ Contributors: artstorm
 Donate link: http://johansteen.se/donate/
 Tags: post, admin, snippet, shortcode, html, custom, page, dynamic, editor, php, code
 Requires at least: 3.3
-Tested up to: 4.0
-Stable tag: 2.3.4
+Tested up to: 4.1
+Stable tag: 2.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,11 @@ Contributions are appreciated and encouraged.
 
 
 == Changelog ==
+
+= Version 2.3.5 - 18 Jan 2015 =
+ * Adds new developer filter, `post_snippets_snippets_list`.
+ * Integrates plugin doc to the post editor help tab.
+ * Adds complete plugin usage documentation to the settings help tab.
 
 = Version 2.3.4 - 20 Sep 2014 =
  * Tested up to WordPress v4.0.

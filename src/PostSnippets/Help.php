@@ -8,37 +8,54 @@
 class PostSnippets_Help
 {
     /**
-     * Constructor.
+     * Define actions.
      *
-     * @since   Post Snippets 1.8.9
-     * @param   string  The option page to load the help text on
+     * @param  string
+     * @return void
      */
     public function __construct($optionPage)
     {
-        add_action('load-'.$optionPage, array(&$this,'addHelpTabs'));
+        add_action('load-'.$optionPage, array(&$this,'tabs'));
+
+        add_action('load-post.php', array(&$this,'postEditor'));
+        add_action('load-post-new.php', array(&$this,'postEditor'));
+    }
+
+    /**
+     * Load the post editor tab in the admin_head filter.
+     *
+     * We load the tab that will integrate in the post editor help menu via the
+     * admin_head hook, as we are not otherwise able to make it get ordered
+     * below the native help tabs.
+     *
+     * @return void.
+     */
+    public function postEditor()
+    {
+        add_action('admin_head', array(&$this,'postEditorTabs'));
     }
 
     /**
      * Setup the help tabs and sidebar.
      *
-     * @since   Post Snippets 1.8.9
+     * @return void
      */
-    public function addHelpTabs()
+    public function tabs()
     {
         $screen = get_current_screen();
-        $screen->set_help_sidebar($this->helpSidebar());
+        $screen->set_help_sidebar($this->content('help/sidebar'));
         $screen->add_help_tab(
             array(
-            'id'      => 'basic-plugin-help',
-            'title'   => __('Basic', PostSnippets::TEXT_DOMAIN),
-            'content' => $this->helpBasic()
+            'id'      => 'usage-plugin-help',
+            'title'   => __('Usage', PostSnippets::TEXT_DOMAIN),
+            'content' => $this->content('help/usage')
             )
         );
         $screen->add_help_tab(
             array(
-            'id'      => 'shortcode-plugin-help',
-            'title'   => __('Shortcode', PostSnippets::TEXT_DOMAIN),
-            'content' => $this->helpShortcode()
+            'id'      => 'post-plugin-help',
+            'title'   => __('Post Editor', PostSnippets::TEXT_DOMAIN),
+            'content' => $this->content('help/post')
             )
         );
         if (!defined('POST_SNIPPETS_DISABLE_PHP')) {
@@ -46,7 +63,7 @@ class PostSnippets_Help
                 array(
                 'id'      => 'php-plugin-help',
                 'title'   => __('PHP', PostSnippets::TEXT_DOMAIN),
-                'content' => $this->helpPhp()
+                'content' => $this->content('help/php')
                 )
             );
         }
@@ -54,58 +71,47 @@ class PostSnippets_Help
             array(
             'id'      => 'advanced-plugin-help',
             'title'   => __('Advanced', PostSnippets::TEXT_DOMAIN),
-            'content' => $this->helpAdvanced()
+            'content' => $this->content('help/advanced')
+            )
+        );
+        $screen->add_help_tab(
+            array(
+            'id'      => 'filters-plugin-help',
+            'title'   => __('Filters', PostSnippets::TEXT_DOMAIN),
+            'content' => $this->content('help/filters')
             )
         );
     }
 
     /**
-     * The right sidebar help text.
-     * 
-     * @return  string  The help text
+     * Setup the help tab for the post editor.
+     *
+     * @return void
      */
-    public function helpSidebar()
+    public function postEditorTabs()
     {
-        return PostSnippets_View::render('help_sidebar');
+        $screen = get_current_screen();
+
+        $screen->add_help_tab(
+            array(
+            'id'      => 'postsnippets-plugin-help',
+            'title'   => 'Post Snippets',
+            'content' => $this->content('help/post')
+            )
+        );
     }
 
     /**
-     * The basic help tab.
-     * 
-     * @return  string  The help text
+     * Get the content for a help tab
+     *
+     * @param  string  $tab
+     * @return string
      */
-    public function helpBasic()
+    private function content($tab)
     {
-        return PostSnippets_View::render('help_basic');
-    }
-
-    /**
-     * The shortcode help tab.
-     * 
-     * @return  string  The help text
-     */
-    public function helpShortcode()
-    {
-        return PostSnippets_View::render('help_shortcode');
-    }
-
-    /**
-     * The PHP help tab.
-     * 
-     * @return  string  The help text
-     */
-    public function helpPhp()
-    {
-        return PostSnippets_View::render('help_php');
-    }
-
-    /**
-     * The advanced help tab.
-     * 
-     * @return  string  The help text
-     */
-    public function helpAdvanced()
-    {
-        return PostSnippets_View::render('help_advanced');
+        return PostSnippets_View::render(
+            $tab,
+            array('td' => PostSnippets::TEXT_DOMAIN)
+        );
     }
 }

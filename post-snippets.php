@@ -5,11 +5,11 @@ Plugin URI: http://johansteen.se/code/post-snippets/
 Description: Build a library with snippets of HTML, PHP code or reoccurring text that you often use in your posts. Variables to replace parts of the snippet on insert can be used. The snippets can be inserted as-is or as shortcodes.
 Author: Johan Steen
 Author URI: http://johansteen.se/
-Version: 2.3.4
+Version: 2.3.5
 License: GPLv2 or later
 Text Domain: post-snippets
 
-Copyright 2009-2014 Johan Steen  (email : artstorm [at] gmail [dot] com)
+Copyright 2009-2015 Johan Steen  (email : artstorm [at] gmail [dot] com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -161,11 +161,15 @@ class PostSnippets_WPEditor
     {
         echo "\n<!-- START: Post Snippets jQuery UI and related functions -->\n";
         echo "<script type='text/javascript'>\n";
-        
+
         # Prepare the snippets and shortcodes into javascript variables
         # so they can be inserted into the editor, and get the variables replaced
         # with user defined strings.
         $snippets = get_option(PostSnippets::OPTION_KEY, array());
+
+        //Let other plugins change the snippets array
+        $snippets = apply_filters('post_snippets_snippets_list', $snippets);
+
         foreach ($snippets as $key => $snippet) {
             if ($snippet['shortcode']) {
                 # Build a long string of the variables, ie: varname1={varname1} varname2={varname2}
@@ -198,7 +202,7 @@ class PostSnippets_WPEditor
             }
         }
         ?>
-        
+
         jQuery(document).ready(function($){
         <?php
         # Create js variables for all form fields
@@ -212,7 +216,7 @@ class PostSnippets_WPEditor
             }
         }
         ?>
-            
+
             var tabs = $("#post-snippets-tabs").tabs();
 
             $(function() {
@@ -298,14 +302,19 @@ class PostSnippets_WPEditor
      */
     public function addJqueryUiDialog()
     {
-        $data = array('snippets' => get_option(PostSnippets::OPTION_KEY, array()));
+        $snippets = get_option(PostSnippets::OPTION_KEY, array());
+
+        //Let other plugins change the snippets array
+        $snippets = apply_filters('post_snippets_snippets_list', $snippets);
+        $data = array('snippets' => $snippets);
+
         echo PostSnippets_View::render('jquery-ui-dialog', $data);
     }
 
     /**
      * Strip Default Value.
      *
-     * Checks if a variable string contains a default value, and if it does it 
+     * Checks if a variable string contains a default value, and if it does it
      * will strip it away and return the string with only the variable name
      * kept.
      *
