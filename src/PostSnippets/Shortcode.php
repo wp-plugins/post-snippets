@@ -22,7 +22,6 @@ class PostSnippets_Shortcode
             foreach ($snippets as $snippet) {
                 // If shortcode is enabled for the snippet, and a snippet has been entered, register it as a shortcode.
                 if ($snippet['shortcode'] && !empty($snippet['snippet'])) {
-                    
                     $vars = explode(",", $snippet['vars']);
                     $vars_str = "";
                     foreach ($vars as $var) {
@@ -32,7 +31,7 @@ class PostSnippets_Shortcode
                     }
 
                     // Get the wptexturize setting
-                    $texturize = isset( $snippet["wptexturize"] ) ? $snippet["wptexturize"] : false;
+                    $texturize = isset($snippet["wptexturize"]) ? $snippet["wptexturize"] : false;
 
                     add_shortcode(
                         $snippet['title'],
@@ -95,7 +94,7 @@ class PostSnippets_Shortcode
         $content = stripslashes($content);
 
         ob_start();
-        eval ($content);
+        eval($content);
         $content = ob_get_clean();
 
         return addslashes($content);

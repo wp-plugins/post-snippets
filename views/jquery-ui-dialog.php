@@ -7,20 +7,29 @@
             <ul>
                 <?php
                 // Create a tab for each available snippet
-                foreach ($snippets as $key => $snippet) { ?>
-                    <li><a href="#ps-tabs-<?php echo $key; ?>"><?php echo $snippet['title']; ?></a></li>
-                <?php } ?>
+                foreach ($snippets as $key => $snippet) {
+                    ?>
+                    <li><a href="#ps-tabs-<?php echo $key;
+                    ?>"><?php echo $snippet['title'];
+                    ?></a></li>
+                <?php 
+                } ?>
             </ul>
 
             <?php
             // Create a panel with form fields for each available snippet
-            foreach ($snippets as $key => $snippet) { ?>
-                <div id="ps-tabs-<?php echo $key; ?>">
+            foreach ($snippets as $key => $snippet) {
+                ?>
+                <div id="ps-tabs-<?php echo $key;
+                ?>">
                 <?php
                 // Print a snippet description is available
-                if (isset($snippet['description'])) { ?>
-                    <p class="howto"><?php echo $snippet['description']; ?></p>
-                <?php }
+                if (isset($snippet['description'])) {
+                    ?>
+                    <p class="howto"><?php echo $snippet['description'];
+                    ?></p>
+                <?php 
+                }
 
                 // Get all variables defined for the snippet and output them as
                 // input fields
@@ -35,20 +44,33 @@
                             $def = $split[1];
                         } else {
                             $def = '';
-                        } ?>
-                        <label for="var_<?php echo $key.'_'.$key_2; ?>"><?php echo $var; ?>:</label>
-                        <input type="text" id="var_<?php echo $key.'_'.$key_2; ?>" name="var_<?php echo $key.'_'.$key_2; ?>" value="<?php echo $def; ?>" style="width: 190px" />
+                        }
+                        ?>
+                        <label for="var_<?php echo $key.'_'.$key_2;
+                        ?>"><?php echo $var;
+                        ?>:</label>
+                        <input type="text" id="var_<?php echo $key.'_'.$key_2;
+                        ?>" name="var_<?php echo $key.'_'.$key_2;
+                        ?>" value="<?php echo $def;
+                        ?>" style="width: 190px" />
                         <br/>
-                    <?php }
+                    <?php 
+                    }
                 } else {
                     // If no variables and no description available, output a text
                     // to inform the user that it's an insert snippet only.
-                    if (empty($snippet['description'])) { ?>
-                        <p class="howto"><?php _e('This snippet is insert only, no variables defined.', PostSnippets::TEXT_DOMAIN); ?></p>
-                    <?php }
-                } ?>
-                </div><!-- #ps-tabs-<?php echo $key; ?> -->
-            <?php }
+                    if (empty($snippet['description'])) {
+                        ?>
+                        <p class="howto"><?php _e('This snippet is insert only, no variables defined.', PostSnippets::TEXT_DOMAIN);
+                        ?></p>
+                    <?php 
+                    }
+                }
+                ?>
+                </div><!-- #ps-tabs-<?php echo $key;
+                ?> -->
+            <?php 
+            }
         // Close the tabs and dialog divs ?>
         </div><!-- #post-snippets-tabs -->
     </div><!-- #post-snippets-dialog -->

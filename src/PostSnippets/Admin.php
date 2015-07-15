@@ -214,7 +214,7 @@ class PostSnippets_Admin
             && wp_verify_nonce($_POST['post_snippets_user_nonce'], 'post_snippets_user_options')
         ) {
             $id = get_current_user_id();
-            $render = isset( $_POST['render'] ) ? true : false;
+            $render = isset($_POST['render']) ? true : false;
             update_user_meta($id, PostSnippets::USER_META_KEY, $render);
         }
     }
@@ -274,12 +274,12 @@ class PostSnippets_Admin
         ';
 
         // Tabs
-        $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'snippets';
+        $active_tab = isset($_GET[ 'tab' ]) ? $_GET[ 'tab' ] : 'snippets';
         $base_url = '?page=post-snippets/post-snippets.php&amp;tab=';
         $tabs = array('snippets' => __('Manage Snippets', PostSnippets::TEXT_DOMAIN), 'tools' => __('Import/Export', PostSnippets::TEXT_DOMAIN));
         echo '<h2 class="nav-tab-wrapper">';
         foreach ($tabs as $tab => $title) {
-            $active = ( $active_tab == $tab ) ? ' nav-tab-active' : '';
+            $active = ($active_tab == $tab) ? ' nav-tab-active' : '';
             echo "<a href='{$base_url}{$tab}' class='nav-tab {$active}'>{$title}</a>";
         }
         echo '</h2>';
@@ -366,7 +366,6 @@ class PostSnippets_Admin
         $snippets = get_option(PostSnippets::OPTION_KEY);
         if (!empty($snippets)) {
             foreach ($snippets as $key => $snippet) {
-
                 echo "<hr style='border: none;border-top:1px dashed #aaa; margin:24px 0;' />";
 
                 echo "<h3>{$snippet['title']}";

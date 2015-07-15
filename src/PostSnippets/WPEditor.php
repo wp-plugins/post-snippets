@@ -18,16 +18,16 @@ class PostSnippets_WPEditor
         // Add Editor QuickTag button:
         add_action(
             'admin_print_footer_scripts',
-            array(&$this,'addQuicktagButton'),
+            array(&$this, 'addQuicktagButton'),
             100
         );
 
-        add_action('admin_head', array(&$this,'jqueryUiDialog'));
-        add_action('admin_footer', array(&$this,'addJqueryUiDialog'));
+        add_action('admin_head', array(&$this, 'jqueryUiDialog'));
+        add_action('admin_footer', array(&$this, 'addJqueryUiDialog'));
 
         // Adds the JS and HTML code in the header and footer for the jQuery
         // insert UI dialog in the editor
-        add_action('admin_init', array(&$this,'enqueueAssets'));
+        add_action('admin_init', array(&$this, 'enqueueAssets'));
     }
 
 
@@ -232,29 +232,35 @@ class PostSnippets_WPEditor
                             $(this).dialog("close");
                         <?php
                         global $wp_version;
-                        if (version_compare($wp_version, '3.5', '<')) {
-                        ?>
+        if (version_compare($wp_version, '3.5', '<')) {
+            ?>
                             var selected = tabs.tabs('option', 'selected');
                         <?php
-                        } else {
-                        ?>
+
+        } else {
+            ?>
                             var selected = tabs.tabs('option', 'active');
                         <?php
-                        }
-                        ?>
+
+        }
+        ?>
                         <?php
         foreach ($snippets as $key => $snippet) {
-                        ?>
-                                if (selected == <?php echo $key; ?>) {
-                                    insert_snippet = postsnippet_<?php echo $key; ?>;
+            ?>
+                                if (selected == <?php echo $key;
+            ?>) {
+                                    insert_snippet = postsnippet_<?php echo $key;
+            ?>;
                                     <?php
                                     $var_arr = explode(",", $snippet['vars']);
             if (!empty($var_arr[0])) {
                 foreach ($var_arr as $key_2 => $var) {
-                    $varname = "var_" . $key . "_" . $key_2; ?>
+                    $varname = "var_" . $key . "_" . $key_2;
+                    ?>
                                             insert_snippet = insert_snippet.replace(/\{<?php
                                             echo $this->stripDefaultVal($var);
-                                            ?>\}/g, <?php echo $varname; ?>.val());
+                    ?>\}/g, <?php echo $varname;
+                    ?>.val());
             <?php
                     echo "\n";
                 }
@@ -262,6 +268,7 @@ class PostSnippets_WPEditor
             ?>
                                 }
         <?php
+
         }
         ?>
 

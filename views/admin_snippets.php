@@ -27,19 +27,24 @@ if (!empty($snippets)) {
     foreach ($snippets as $key => $snippet) {
         ?>
             <tr class='recent'>
-            <th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?php echo $key; ?>' /></th>
+            <th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='<?php echo $key;
+        ?>' /></th>
             <td class='row-title'>
-            <input type='text' name='<?php echo $key; ?>_title' value='<?php echo $snippet['title']; ?>' />
+            <input type='text' name='<?php echo $key;
+        ?>_title' value='<?php echo $snippet['title'];
+        ?>' />
             </td>
             <td class='name'>
-            <input type='text' name='<?php echo $key; ?>_vars' value='<?php echo $snippet['vars']; ?>' />
+            <input type='text' name='<?php echo $key;
+        ?>_vars' value='<?php echo $snippet['vars'];
+        ?>' />
             <br/>
             <br/>
             <?php
             PostSnippets_Admin::checkbox(__('Shortcode', PostSnippets::TEXT_DOMAIN), $key.'_shortcode',
                             $snippet['shortcode']);
 
-            echo '<br/><strong>Shortcode Options:</strong><br/>';
+        echo '<br/><strong>Shortcode Options:</strong><br/>';
 
         if (!defined('POST_SNIPPETS_DISABLE_PHP')) {
             PostSnippets_Admin::checkbox(
@@ -49,19 +54,26 @@ if (!empty($snippets)) {
             );
         }
 
-            $wptexturize = isset( $snippet['wptexturize'] ) ? $snippet['wptexturize'] : false;
-            PostSnippets_Admin::checkbox('wptexturize', $key.'_wptexturize', $wptexturize);
-            ?>
+        $wptexturize = isset($snippet['wptexturize']) ? $snippet['wptexturize'] : false;
+        PostSnippets_Admin::checkbox('wptexturize', $key.'_wptexturize', $wptexturize);
+        ?>
             </td>
             <td class='desc'>
-            <textarea name="<?php echo $key; ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippet['snippet'], ENT_NOQUOTES); ?></textarea>
-            <?php _e( 'Description', PostSnippets::TEXT_DOMAIN ) ?>:
-            <input type='text' style='width: 100%;' name='<?php echo $key; ?>_description' value='<?php if (isset( $snippet['description'] ) ) echo esc_html($snippet['description']); ?>' /><br/>
+            <textarea name="<?php echo $key;
+        ?>_snippet" class="large-text" style='width: 100%;' rows="5"><?php echo htmlspecialchars($snippet['snippet'], ENT_NOQUOTES);
+        ?></textarea>
+            <?php _e('Description', PostSnippets::TEXT_DOMAIN) ?>:
+            <input type='text' style='width: 100%;' name='<?php echo $key;
+        ?>_description' value='<?php if (isset($snippet['description'])) {
+    echo esc_html($snippet['description']);
+}
+        ?>' /><br/>
             </td>
             </tr>
         <?php
-            }
-        }
+
+    }
+}
         ?>
         </tbody>
     </table>

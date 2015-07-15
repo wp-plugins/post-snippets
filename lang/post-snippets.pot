@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-18 16:54+0700\n"
+"POT-Creation-Date: 2015-07-15 09:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,40 +23,40 @@ msgid "Title"
 msgstr ""
 
 #: views/admin_snippets.php:9 views/admin_snippets.php:18
-#: views/help/usage.php:10 src/PostSnippets/Admin.php:379
+#: views/help/usage.php:10 src/PostSnippets/Admin.php:378
 msgid "Variables"
 msgstr ""
 
 #: views/admin_snippets.php:10 views/admin_snippets.php:19
-#: views/help/usage.php:21 src/PostSnippets/Admin.php:398
+#: views/help/usage.php:21 src/PostSnippets/Admin.php:397
 msgid "Snippet"
 msgstr ""
 
-#: views/admin_snippets.php:39 views/help/usage.php:41
+#: views/admin_snippets.php:44 views/help/usage.php:41
 msgid "Shortcode"
 msgstr ""
 
-#: views/admin_snippets.php:46 views/help/usage.php:54
+#: views/admin_snippets.php:51 views/help/usage.php:54
 msgid "PHP Code"
 msgstr ""
 
-#: views/admin_snippets.php:58 views/help/usage.php:35
+#: views/admin_snippets.php:65 views/help/usage.php:35
 msgid "Description"
 msgstr ""
 
-#: views/admin_snippets.php:70
+#: views/admin_snippets.php:82
 msgid "Update Snippets"
 msgstr ""
 
-#: views/admin_snippets.php:71
+#: views/admin_snippets.php:83
 msgid "Add New Snippet"
 msgstr ""
 
-#: views/admin_snippets.php:72
+#: views/admin_snippets.php:84
 msgid "Delete Selected"
 msgstr ""
 
-#: views/jquery-ui-dialog.php:47
+#: views/jquery-ui-dialog.php:64
 msgid "This snippet is insert only, no variables defined."
 msgstr ""
 
@@ -74,7 +74,8 @@ msgid ""
 "by using the PostSnippets::getSnippet() method."
 msgstr ""
 
-#: views/help/advanced.php:18 src/PostSnippets/Help.php:50
+#: views/help/advanced.php:18 views/help/usage.php:1
+#: src/PostSnippets/Help.php:50
 msgid "Usage"
 msgstr ""
 
@@ -156,7 +157,7 @@ msgid ""
 "be wrapped in &lt;?php #code; ?&gt;."
 msgstr ""
 
-#: views/help/post.php:1 views/help/usage.php:1
+#: views/help/post.php:1
 msgid "The Post Editor"
 msgstr ""
 
@@ -191,6 +192,76 @@ msgstr ""
 
 #: views/help/sidebar.php:14
 msgid "Donate"
+msgstr ""
+
+#: views/help/translators.php:1 src/PostSnippets/Help.php:87
+msgid "Translators"
+msgstr ""
+
+#: views/help/translators.php:3
+msgid ""
+"Other than the default English language, Post Snippets has been translated "
+"to the following languages by these great people:"
+msgstr ""
+
+#: views/help/translators.php:19
+msgid "by"
+msgstr ""
+
+#: views/help/translators.php:22
+msgid "Belarusian"
+msgstr ""
+
+#: views/help/translators.php:23
+msgid "French"
+msgstr ""
+
+#: views/help/translators.php:24
+msgid "German"
+msgstr ""
+
+#: views/help/translators.php:25
+msgid "Hebrew"
+msgstr ""
+
+#: views/help/translators.php:26
+msgid "Lithuanian"
+msgstr ""
+
+#: views/help/translators.php:27
+msgid "Polish"
+msgstr ""
+
+#: views/help/translators.php:28
+msgid "Romanian"
+msgstr ""
+
+#: views/help/translators.php:29
+msgid "Russian"
+msgstr ""
+
+#: views/help/translators.php:30
+msgid "Slovak"
+msgstr ""
+
+#: views/help/translators.php:31
+msgid "Serbo-Croatian"
+msgstr ""
+
+#: views/help/translators.php:32
+msgid "Spanish"
+msgstr ""
+
+#: views/help/translators.php:33
+msgid "Swedish"
+msgstr ""
+
+#: views/help/translators.php:34
+msgid "Turkish"
+msgstr ""
+
+#: views/help/translators.php:35
+msgid "Ukrainian"
 msgstr ""
 
 #: views/help/usage.php:6
@@ -332,7 +403,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: src/PostSnippets/Admin.php:395
+#: src/PostSnippets/Admin.php:394
 msgid "Options"
 msgstr ""
 

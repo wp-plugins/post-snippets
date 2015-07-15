@@ -15,10 +15,10 @@ class PostSnippets_Help
      */
     public function __construct($optionPage)
     {
-        add_action('load-'.$optionPage, array(&$this,'tabs'));
+        add_action('load-'.$optionPage, array(&$this, 'tabs'));
 
-        add_action('load-post.php', array(&$this,'postEditor'));
-        add_action('load-post-new.php', array(&$this,'postEditor'));
+        add_action('load-post.php', array(&$this, 'postEditor'));
+        add_action('load-post-new.php', array(&$this, 'postEditor'));
     }
 
     /**
@@ -32,7 +32,7 @@ class PostSnippets_Help
      */
     public function postEditor()
     {
-        add_action('admin_head', array(&$this,'postEditorTabs'));
+        add_action('admin_head', array(&$this, 'postEditorTabs'));
     }
 
     /**
@@ -79,6 +79,13 @@ class PostSnippets_Help
             'id'      => 'filters-plugin-help',
             'title'   => __('Filters', PostSnippets::TEXT_DOMAIN),
             'content' => $this->content('help/filters')
+            )
+        );
+        $screen->add_help_tab(
+            array(
+            'id'      => 'translators-plugin-help',
+            'title'   => __('Translators', PostSnippets::TEXT_DOMAIN),
+            'content' => $this->content('help/translators')
             )
         );
     }

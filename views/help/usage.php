@@ -1,4 +1,4 @@
-<h2><?php _e('The Post Editor', $td); ?></h2>
+<h2><?php _e('Usage', $td); ?></h2>
 
 
 <h3><?php _e('Title', $td); ?></h3>
